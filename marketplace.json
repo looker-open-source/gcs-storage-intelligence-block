@@ -1,0 +1,27 @@
+{
+    "label": "GCS Storage Insights",
+    "category_label": "Models",
+    "branding": {
+      "image_uri": "https://marketplace-api.looker.com/block-icons/gcs-storage-insights-block.png",
+      "tagline": "This Looker Block is provided as a sample for Storage Insights Datasets. It showcases several visual insights and thus will consume significant BigQuery resources so consider using with a small Dataset first. For questions/feedback reach out to insights-customer-support@google.com"
+    },
+    "constants": {
+      "connection_name": {
+        "label": "Connection Name",
+        "value_constraint": "connection"
+      },
+      "project_id": {
+        "label": "BigQuery Project ID"
+      },
+      "bigquery_dataset": {
+          "label": "Storage Insights' linked dataset name",
+          "description": "Dataset name where your Storage Insights are located."
+      }
+    },
+    "models": [
+      {
+        "name": "gcs_storage_insights",
+        "connection_constant": "connection_name"
+      }
+    ]
+  }
