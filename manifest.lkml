@@ -3,17 +3,17 @@ project_name: "gcs_storage_intelligence_block"
 ################################### Constants ###################################
 
 constant: connection_name {
-  value: "gcs-storage-insights"
+  value: ""
   export: override_optional
 
 }
 
 constant: project_id {
-  value: "looker-marketplace"
+  value: ""
   export: override_optional
 }
 
 constant: bigquery_dataset {
-  value: "full_storage_insights_sync_data"
+  value: ""
   export: override_optional
 }
