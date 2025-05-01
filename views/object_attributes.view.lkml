@@ -2,11 +2,12 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
+# Modified Date: Apr 30, 2025
 # Purpose: Contains information about the Object Attributes View Table inside the Storage Insights linked Dataset.
 #####################################################################
 view: object_attributes {
   derived_table: {
-    datagroup_trigger: gcs_storage_object_attributes_datagroup
+    datagroup_trigger: gcs_storage_intelligence_datagroup
     sql: WITH
         distinct_snapshots AS (
         SELECT

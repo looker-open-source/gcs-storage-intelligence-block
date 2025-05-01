@@ -9,7 +9,7 @@
   elements:
   - title: Objects size information
     name: Objects size information
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [bucket_attributes.bucket_name, object_attributes.object_name, object_attributes.total_storage_size,
@@ -124,7 +124,7 @@
     height: 10
   - title: Distribution of Object sizes within the bucket
     name: Distribution of Object sizes within the bucket
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [bucket_attributes.bucket_name, object_attributes.object_count, object_attributes.total_storage_size]
@@ -237,14 +237,13 @@
     height: 10
   - title: Object size unit by Total objects
     name: Object size unit by Total objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.total_storage_size, object_attributes.object_size_unit]
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius: 50
@@ -308,7 +307,7 @@
     height: 10
   - title: Top Buckets by size unit
     name: Top Buckets by size unit
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_column
     fields: [bucket_attributes.bucket_name, object_attributes.object_size_unit, object_attributes.total_storage_size]
@@ -317,7 +316,6 @@
         desc 1]
     limit: 10
     column_limit: 50
-    query_timezone: America/Los_Angeles
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -371,7 +369,7 @@
     height: 10
   - title: Buckets with the highest number of files
     name: Buckets with the highest number of files
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [bucket_attributes.bucket_name, object_attributes.folder, object_attributes.object_count]
@@ -488,14 +486,13 @@
     height: 8
   - title: Content Type suffix breakdown by Total objects
     name: Content Type suffix breakdown by Total objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.content_type_suffix, object_attributes.object_count]
     sorts: [object_attributes.object_count desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius:
@@ -557,7 +554,7 @@
     height: 18
   - title: Objects General Information
     name: Objects General Information
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [project_attributes.project_id, bucket_attributes.bucket_name, object_attributes.object_name]
@@ -678,25 +675,25 @@
       flex; justify-content: center; gap: 20px;">
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::general_analysis">General Analysis</a>
+      dashboards/gcs_storage_intelligence::general_analysis">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::usage_and_saving_opportunity">Usage and saving opportunity</a>
+      dashboards/gcs_storage_intelligence::usage_and_saving_opportunity">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::security_and_compliance">Security and compliance</a>
+      dashboards/gcs_storage_intelligence::security_and_compliance">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black; font-weight: bold;" href="#">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::geographical_analysis">Geographical Analysis</a>
+      dashboards/gcs_storage_intelligence::geographical_analysis">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::errors">Errors</a>
+      dashboards/gcs_storage_intelligence::errors">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::events">Events</a>
+      dashboards/gcs_storage_intelligence::events">Events</a>
 
       </nav>
 
@@ -707,14 +704,14 @@
     height: 2
   - type: button
     name: button_616
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::geographical_analysis"}'
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::geographical_analysis"}'
     row: 73
     col: 22
     width: 2
     height: 2
   - type: button
     name: button_617
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::security_and_compliance"}'
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::security_and_compliance"}'
     row: 73
     col: 0
     width: 3
@@ -879,7 +876,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [2 - Bucket Name, 3 - Storage Class, 5 - Countries]
     field: project_attributes.project_name
@@ -892,7 +889,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [1 - Project Name, 3 - Location, 9 - Object size unit, 10
         - File extension, 12 - Object Name, 3 - Storage Class, 5 - Countries]
@@ -906,7 +903,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 9 - Object size unit, 10 - File extension,
       12 - Object Name, 2 - Bucket Name, 3 - Storage Class, 5 - Countries]
@@ -920,7 +917,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [1 - Project Name, 3 - Location, 9 - Object size unit, 10
         - File extension, 12 - Object Name, 2 - Bucket Name, 5 - Countries]
@@ -934,7 +931,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 3 - Location, 9 - Object size unit, 10
         - File extension, 12 - Object Name, 2 - Bucket Name, 3 - Storage Class, 5
@@ -949,7 +946,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 3 - Location, 9 - Object size unit, 10
         - File extension, 12 - Object Name, 2 - Bucket Name, 3 - Storage Class]
@@ -963,7 +960,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size_unit
@@ -977,7 +974,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: bucket_attributes.created_date
@@ -991,7 +988,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size
@@ -1004,7 +1001,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.object_size_unit
@@ -1017,7 +1014,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.file_extension
@@ -1032,7 +1029,7 @@
       display: inline
       options:
       - 'Yes'
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.inside_a_folder
@@ -1045,7 +1042,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.object_name

@@ -9,13 +9,12 @@
   elements:
   - title: Total storage size
     name: Total storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.total_storage_size]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -42,13 +41,12 @@
     height: 2
   - title: Total Buckets
     name: Total Buckets
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     type: single_value
     fields: [bucket_attributes.bucket_count]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -74,13 +72,12 @@
     height: 2
   - title: Total buckets with objects
     name: Total buckets with objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.bucket_count]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -107,13 +104,12 @@
     height: 2
   - title: Total objects
     name: Total objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.object_count]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -140,13 +136,12 @@
     height: 2
   - title: Average object size
     name: Average object size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.average_storage_size]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -173,14 +168,13 @@
     height: 2
   - title: Top Locations by Storage size
     name: Top Locations by Storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.location, object_attributes.total_storage_size]
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius: 50
@@ -242,14 +236,13 @@
     height: 6
   - title: Content-Type breakdown by Storage size
     name: Content-Type breakdown by Storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.total_storage_size, object_attributes.content_type_prefix]
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius:
@@ -311,14 +304,13 @@
     height: 6
   - title: Storage Class breakdown by Storage size
     name: Storage Class breakdown by Storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.total_storage_size, object_attributes.storage_class]
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius: 50
@@ -380,14 +372,13 @@
     height: 6
   - title: Top Locations by Object count
     name: Top Locations by Object count
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.location, object_attributes.object_count]
     sorts: [object_attributes.object_count desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius:
@@ -450,14 +441,13 @@
     height: 6
   - title: Content-Type breakdown by Object count
     name: Content-Type breakdown by Object count
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.object_count, object_attributes.content_type_prefix]
     sorts: [object_attributes.object_count desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius:
@@ -520,14 +510,13 @@
     height: 6
   - title: Storage Class breakdown by Object count
     name: Storage Class breakdown by Object count
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.object_count, object_attributes.storage_class]
     sorts: [object_attributes.object_count desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius:
@@ -590,7 +579,7 @@
     height: 6
   - title: Total objects and Storage size breakdown by Geographic area
     name: Total objects and Storage size breakdown by Geographic area
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_google_map
     fields: [regions_information.geographic_area, object_attributes.object_count,
@@ -599,7 +588,6 @@
         desc]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     hidden_fields: []
     hidden_points_if_no: []
     series_labels: {}
@@ -640,7 +628,7 @@
     height: 9
   - title: Cumulative Total Objects and Storage Size over time
     name: Cumulative Total Objects and Storage Size over time
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_line
     fields: [object_attributes.created_date, object_attributes.object_count, object_attributes.total_storage_size]
@@ -665,7 +653,6 @@
       _kind_hint: measure
       table_calculation: total_storage_size
       _type_hint: number
-    query_timezone: America/Los_Angeles
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -718,14 +705,13 @@
     height: 10
   - title: Top regions by number of buckets
     name: Top regions by number of buckets
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     type: looker_column
     fields: [bucket_attributes.bucket_count, bucket_attributes.location]
     sorts: [bucket_attributes.bucket_count desc]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -773,7 +759,7 @@
     height: 12
   - title: Top Projects by Storage size and Total objects
     name: Top Projects by Storage size and Total objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [project_attributes.project_name, object_attributes.total_storage_size,
@@ -781,7 +767,6 @@
     sorts: [object_attributes.object_count desc]
     limit: 10
     column_limit: 50
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -883,14 +868,13 @@
     height: 6
   - title: Object Status breakdown by Storage size
     name: Object Status breakdown by Storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.total_storage_size, object_attributes.object_status]
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius: 50
@@ -952,14 +936,13 @@
     height: 9
   - title: Object Status breakdown by Storage size
     name: Object Status breakdown by Storage size (2)
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.object_status, object_attributes.object_count]
     sorts: [object_attributes.object_count desc 0]
     limit: 30
     column_limit: 50
-    query_timezone: America/Los_Angeles
     value_labels: legend
     label_type: labPer
     inner_radius:
@@ -1032,22 +1015,22 @@
       bottom: solid 3px black; font-weight: bold;" href="#">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::usage_and_saving_opportunity">Usage and saving opportunity</a>
+      dashboards/gcs_storage_intelligence::usage_and_saving_opportunity">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::security_and_compliance">Security and compliance</a>
+      dashboards/gcs_storage_intelligence::security_and_compliance">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::data_discovery">Data Discovery</a>
+      dashboards/gcs_storage_intelligence::data_discovery">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::geographical_analysis">Geographical Analysis</a>
+      dashboards/gcs_storage_intelligence::geographical_analysis">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::errors">Errors</a>
+      dashboards/gcs_storage_intelligence::errors">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::events">Events</a>
+      dashboards/gcs_storage_intelligence::events">Events</a>
 
       </nav>
 
@@ -1058,7 +1041,7 @@
     height: 2
   - type: button
     name: button_541
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::usage_and_saving_opportunity"}'
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::usage_and_saving_opportunity"}'
     row: 71
     col: 22
     width: 2
@@ -1142,7 +1125,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [Bucket Name, Location, Storage Class, Geographic Area, Created
         Date]
@@ -1156,7 +1139,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [Project Name, Countries, Location, Storage Class, Geographic
         Area, Created Date]
@@ -1170,7 +1153,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [Project Name, Countries, Bucket Name, Storage Class, Geographic
         Area, Created Date]
@@ -1184,7 +1167,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [Project Name, Countries, Bucket Name, Location, Geographic
         Area, Created Date]
@@ -1198,7 +1181,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [Project Name, Countries, Bucket Name, Location, Storage Class,
       Created Date]
@@ -1212,7 +1195,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [Project Name, Bucket Name, Location, Storage Class, Geographic
         Area, Created Date]
@@ -1226,7 +1209,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size_unit
@@ -1240,7 +1223,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: bucket_attributes.created_date

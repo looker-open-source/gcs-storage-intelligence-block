@@ -1,4 +1,4 @@
-project_name: "gcs_storage_insights"
+project_name: "gcs_storage_intelligence_block"
 
 ################################### Constants ###################################
 

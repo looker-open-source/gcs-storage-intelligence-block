@@ -17,25 +17,25 @@
       flex; justify-content: center; gap: 20px;">
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::general_analysis">General Analysis</a>
+      dashboards/gcs_storage_intelligence::general_analysis">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::usage_and_saving_opportunity">Usage and saving opportunity</a>
+      dashboards/gcs_storage_intelligence::usage_and_saving_opportunity">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::security_and_compliance">Security and compliance</a>
+      dashboards/gcs_storage_intelligence::security_and_compliance">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::data_discovery">Data Discovery</a>
+      dashboards/gcs_storage_intelligence::data_discovery">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black; font-weight: bold;" href="#">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::errors">Errors</a>
+      dashboards/gcs_storage_intelligence::errors">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::events">Events</a>
+      dashboards/gcs_storage_intelligence::events">Events</a>
 
       </nav>
 
@@ -46,14 +46,14 @@
     height: 2
   - type: button
     name: button_634
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::errors"}'
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::errors"}'
     row: 28
     col: 22
     width: 2
     height: 2
   - type: button
     name: button_635
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::data_discovery"}'
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::data_discovery"}'
     row: 28
     col: 0
     width: 3
@@ -67,7 +67,7 @@
     height: 2
   - title: Countries or Region by Selected Aggregate Function
     name: Countries or Region by Selected Aggregate Function
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_google_map
     fields: [object_attributes.selected_measure, regions_information.geographical_value]
@@ -118,7 +118,7 @@
     height: 8
   - title: Selected Country Map
     name: Selected Country Map
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_google_map
     fields: [regions_information.selected_country]
@@ -173,7 +173,7 @@
     height: 8
   - title: Total aggregated measure
     name: Total aggregated measure
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [regions_information.selected_country, object_attributes.selected_measure]
@@ -320,7 +320,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [2 - Bucket Name, 3 - Location, 4 - Storage Class, 5 - Geographic
         Area, 6 - Countries, 11 - Location Type]
@@ -334,7 +334,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [12 - Country Options, 1 - Project Name, 3 - Location, 4 -
         Storage Class, 5 - Geographic Area, 6 - Countries, 11 - Location Type]
@@ -348,7 +348,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [12 - Country Options, 2 - Bucket Name, 1 - Project Name,
       4 - Storage Class, 5 - Geographic Area, 6 - Countries, 11 - Location Type]
@@ -362,7 +362,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [12 - Country Options, 2 - Bucket Name, 1 - Project Name,
       3 - Location, 5 - Geographic Area, 6 - Countries, 11 - Location Type]
@@ -376,7 +376,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [12 - Country Options, 2 - Bucket Name, 1 - Project Name,
       3 - Location, 4 - Storage Class, 6 - Countries, 11 - Location Type]
@@ -390,7 +390,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [12 - Country Options, 2 - Bucket Name, 1 - Project Name,
       3 - Location, 4 - Storage Class, 5 - Geographic Area, 11 - Location Type]
@@ -404,7 +404,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size_unit
@@ -418,7 +418,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: bucket_attributes.created_date
@@ -431,7 +431,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.aggregate_function
@@ -444,7 +444,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: regions_information.map_selection
@@ -457,7 +457,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [12 - Country Options, 2 - Bucket Name, 1 - Project Name,
       3 - Location, 4 - Storage Class, 5 - Geographic Area, 6 - Countries]
@@ -471,7 +471,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: regions_information.country_options

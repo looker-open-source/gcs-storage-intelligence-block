@@ -1,4 +1,11 @@
-datagroup: gcs_storage_object_attributes_datagroup {
+#####################################################################
+# Owner: Google Cloud Storage
+# Contact Method: insights-customer-support@google.com
+# Created Date: March 24, 2025
+# Modified Date: Apr 30, 2025
+# Purpose: The object attrbutes and bucket attributes datagroup. This file defines a SQL trigger that will be used to regenerate two PDTs.
+#####################################################################
+datagroup: gcs_storage_intelligence_datagroup {
   sql_trigger:
     WITH st_total AS (
       SELECT

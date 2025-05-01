@@ -18,25 +18,25 @@
       flex; justify-content: center; gap: 20px;">
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::general_analysis">General Analysis</a>
+      dashboards/gcs_storage_intelligence::general_analysis">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::usage_and_saving_opportunity">Usage and saving opportunity</a>
+      dashboards/gcs_storage_intelligence::usage_and_saving_opportunity">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::security_and_compliance">Security and compliance</a>
+      dashboards/gcs_storage_intelligence::security_and_compliance">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::data_discovery">Data Discovery</a>
+      dashboards/gcs_storage_intelligence::data_discovery">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::geographical_analysis">Geographical Analysis</a>
+      dashboards/gcs_storage_intelligence::geographical_analysis">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black; font-weight: bold;" href="#">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::events">Events</a>
+      dashboards/gcs_storage_intelligence::events">Events</a>
 
       </nav>
 
@@ -47,7 +47,7 @@
     height: 2
   - type: button
     name: button_385
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::geographical_analysis"}'
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::geographical_analysis"}'
     row: 52
     col: 0
     width: 3
@@ -61,7 +61,7 @@
     height: 2
   - title: Code by Total Errors
     name: Code by Total Errors
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     type: looker_pie
     fields: [error_attributes.error_code, error_attributes.total_errors]
@@ -117,7 +117,7 @@
     height: 12
   - title: Total Errors
     name: Total Errors
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     type: single_value
     fields: [error_attributes.total_errors]
@@ -182,7 +182,7 @@
     height: 6
   - title: Total buckets with errors
     name: Total buckets with errors
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     type: single_value
     fields: [error_attributes.total_errors]
@@ -249,7 +249,7 @@
     height: 6
   - title: Total errors over time
     name: Total errors over time
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     type: looker_line
     fields: [error_attributes.error_date, error_attributes.total_errors]
@@ -305,7 +305,7 @@
     height: 10
   - title: Top buckets by number of errors
     name: Top buckets by number of errors
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     type: looker_column
     fields: [error_attributes.total_errors, error_attributes.bucket_error_record__bucket_name]
@@ -396,7 +396,7 @@
     height: 11
   - title: Errors breakdown by Geographic area
     name: Errors breakdown by Geographic area
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     type: looker_google_map
     fields: [error_attributes.total_errors, regions_information.geographic_area]
@@ -589,7 +589,7 @@
     height: 2
   - type: button
     name: button_506
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::events"}'
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::events"}'
     row: 52
     col: 21
     width: 3
@@ -604,7 +604,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [2 - Location, 4 - Countries]
     field: bucket_attributes.bucket_name
@@ -617,7 +617,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Bucket Name, 4 - Countries]
     field: regions_information.location
@@ -630,7 +630,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Bucket Name, 2 - Location, 4 - Countries]
     field: regions_information.geographic_area
@@ -643,7 +643,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Bucket Name, 2 - Location]
     field: regions_information.countries
@@ -657,7 +657,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: error_attributes
     listens_to_filters: []
     field: error_attributes.error_date

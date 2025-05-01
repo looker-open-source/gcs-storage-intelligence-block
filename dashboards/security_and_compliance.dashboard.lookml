@@ -9,7 +9,7 @@
   elements:
   - title: Top Buckets by Public Access type & Versioning
     name: Top Buckets by Public Access type & Versioning
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_bar
     fields: [object_attributes.bucket_name, object_attributes.total_storage_size]
@@ -65,7 +65,7 @@
     height: 11
   - title: Total storage size
     name: Total storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.total_storage_size]
@@ -99,7 +99,7 @@
     height: 3
   - title: Total objects
     name: Total objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.object_count]
@@ -133,7 +133,7 @@
     height: 3
   - title: Total buckets
     name: Total buckets
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     type: single_value
     fields: [bucket_attributes.bucket_count]
@@ -166,7 +166,7 @@
     height: 3
   - title: Buckets general information
     name: Buckets general information
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [bucket_attributes.project, bucket_attributes.bucket_name, regions_information.countries,
@@ -284,7 +284,7 @@
     height: 9
   - title: Top 100 objects with retention expiration time
     name: Top 100 objects with retention expiration time
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.object_name, object_attributes.retention_expiration_time,
@@ -400,7 +400,7 @@
     height: 9
   - title: Location Type by Storage size
     name: Location Type by Storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.total_storage_size, regions_information.location_type]
@@ -468,7 +468,7 @@
     height: 9
   - title: Location Type by Total buckets
     name: Location Type by Total buckets
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     type: looker_pie
     fields: [regions_information.location_type, bucket_attributes.bucket_count]
@@ -543,25 +543,25 @@
       flex; justify-content: center; gap: 20px;">
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::general_analysis">General Analysis</a>
+      dashboards/gcs_storage_intelligence::general_analysis">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::usage_and_saving_opportunity">Usage and saving opportunity</a>
+      dashboards/gcs_storage_intelligence::usage_and_saving_opportunity">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black; font-weight: bold;" href="#">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::data_discovery">Data Discovery</a>
+      dashboards/gcs_storage_intelligence::data_discovery">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::geographical_analysis">Geographical Analysis</a>
+      dashboards/gcs_storage_intelligence::geographical_analysis">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::errors">Errors</a>
+      dashboards/gcs_storage_intelligence::errors">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::events">Events</a>
+      dashboards/gcs_storage_intelligence::events">Events</a>
 
       </nav>
 
@@ -572,14 +572,14 @@
     height: 2
   - type: button
     name: button_586
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::data_discovery"}'
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::data_discovery"}'
     row: 72
     col: 22
     width: 2
     height: 2
   - type: button
     name: button_587
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::usage_and_saving_opportunity"}'
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::usage_and_saving_opportunity"}'
     row: 72
     col: 0
     width: 3
@@ -799,7 +799,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [2 - Bucket Name, 3 - Location, 5 - Geographic Area]
     field: project_attributes.project_name
@@ -812,7 +812,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 3 - Location, 5 - Geographic
         Area]
@@ -826,7 +826,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 2 - Bucket Name, 5 - Geographic
         Area]
@@ -840,7 +840,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 2 - Bucket Name, 3 - Location,
       5 - Geographic Area]
@@ -854,7 +854,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 2 - Bucket Name, 3 - Location]
     field: regions_information.geographic_area
@@ -867,7 +867,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 2 - Bucket Name, 3 - Location, 5 - Geographic
         Area]
@@ -881,7 +881,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size_unit
@@ -895,7 +895,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: bucket_attributes.created_date
@@ -908,7 +908,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: []
     field: bucket_attributes.public_access_prevention
@@ -921,7 +921,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: []
     field: bucket_attributes.versioning
@@ -936,7 +936,7 @@
       display: inline
       options:
       - 'Yes'
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: regions_information.outside_usa
@@ -951,7 +951,7 @@
       display: inline
       options:
       - 'Yes'
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: regions_information.outside_eu
@@ -965,7 +965,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.days_until_expiration

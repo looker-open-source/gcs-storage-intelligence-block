@@ -9,14 +9,13 @@
   elements:
   - title: Top 5 fast-growing buckets by storage size
     name: Top 5 fast-growing buckets by storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_column
     fields: [object_attributes.bucket_name, object_attributes.total_storage_size]
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 5
     column_limit: 50
-    query_timezone: America/Los_Angeles
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -64,7 +63,7 @@
     height: 20
   - title: Top buckets by Lifecycle & Autoclass
     name: Top buckets by Lifecycle & Autoclass
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.total_storage_size, object_attributes.bucket_name]
@@ -72,7 +71,6 @@
     sorts: [object_attributes.total_storage_size desc 0]
     limit: 100
     column_limit: 50
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -176,7 +174,7 @@
     height: 11
   - title: Total objects and Storage size broken down by prefix
     name: Total objects and Storage size broken down by prefix
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.total_storage_size, object_attributes.object_count,
@@ -289,7 +287,7 @@
     height: 10
   - title: Objects Non-Live status breakdown
     name: Objects Non-Live status breakdown
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.object_status, object_attributes.object_name, object_attributes.total_storage_size]
@@ -404,7 +402,7 @@
     height: 9
   - title: Total Objects and Storage size over hard deletion
     name: Total Objects and Storage size over hard deletion
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_line
     fields: [object_attributes.object_count, object_attributes.total_storage_size,
@@ -496,7 +494,7 @@
     height: 9
   - title: Total Storage Size
     name: Total Storage Size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.total_storage_size]
@@ -532,7 +530,7 @@
     height: 3
   - title: Total Objects
     name: Total Objects
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.object_count]
@@ -569,7 +567,7 @@
     height: 3
   - title: Average storage size
     name: Average storage size
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: single_value
     fields: [object_attributes.average_storage_size]
@@ -606,7 +604,7 @@
     height: 3
   - title: Top 100 objects with Soft-Deleted policy enabled
     name: Top 100 objects with Soft-Deleted policy enabled
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.object_name, object_attributes.total_storage_size,
@@ -731,25 +729,25 @@
       flex; justify-content: center; gap: 20px;">
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::general_analysis">General Analysis</a>
+      dashboards/gcs_storage_intelligence::general_analysis">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black; font-weight: bold;" href="#">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::security_and_compliance">Security and compliance</a>
+      dashboards/gcs_storage_intelligence::security_and_compliance">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::data_discovery">Data Discovery</a>
+      dashboards/gcs_storage_intelligence::data_discovery">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::geographical_analysis">Geographical Analysis</a>
+      dashboards/gcs_storage_intelligence::geographical_analysis">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::errors">Errors</a>
+      dashboards/gcs_storage_intelligence::errors">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::events">Events</a>
+      dashboards/gcs_storage_intelligence::events">Events</a>
 
       </nav>
 
@@ -760,14 +758,14 @@
     height: 2
   - type: button
     name: button_558
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::security_and_compliance"}'
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::security_and_compliance"}'
     row: 79
     col: 22
     width: 2
     height: 2
   - type: button
     name: button_559
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::general_analysis"}'
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::general_analysis"}'
     row: 79
     col: 0
     width: 3
@@ -964,7 +962,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [2 - Bucket Name, 3 - Location, 4 - Storage Class, 5 - Geographic
         Area, 8 - Created Date, 9 - Lifecycle, 10 - Autoclass, 12 - Object Status,
@@ -979,7 +977,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 3 - Location, 4 - Storage
         Class, 5 - Geographic Area, 8 - Created Date, 9 - Lifecycle, 10 - Autoclass,
@@ -994,7 +992,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 2 - Bucket Name, 4 - Storage
         Class, 5 - Geographic Area, 8 - Created Date, 9 - Lifecycle, 10 - Autoclass,
@@ -1009,7 +1007,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 2 - Bucket Name, 3 - Location,
       5 - Geographic Area, 8 - Created Date, 9 - Lifecycle, 10 - Autoclass, 12 - Object
@@ -1024,7 +1022,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 6 - Countries, 2 - Bucket Name, 3 - Location,
       4 - Storage Class, 8 - Created Date, 9 - Lifecycle, 10 - Autoclass, 12 - Object
@@ -1039,7 +1037,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: [1 - Project Name, 2 - Bucket Name, 3 - Location, 4 - Storage
         Class, 5 - Geographic Area, 8 - Created Date, 9 - Lifecycle, 10 - Autoclass,
@@ -1054,7 +1052,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size_unit
@@ -1068,7 +1066,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: bucket_attributes.created_date
@@ -1081,7 +1079,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: bucket_attributes.lifecycle
@@ -1094,7 +1092,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: bucket_attributes
     listens_to_filters: []
     field: bucket_attributes.enabled
@@ -1107,7 +1105,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.prefix_depth
@@ -1123,7 +1121,7 @@
       options:
       - Noncurrent
       - Soft-deleted
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.object_status
@@ -1140,7 +1138,7 @@
       - '1'
       - '2'
       - '3'
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.days_until_hard_deletion

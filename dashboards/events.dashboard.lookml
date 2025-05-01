@@ -17,22 +17,22 @@
       flex; justify-content: center; gap: 20px;">
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::general_analysis">General Analysis</a>
+      dashboards/gcs_storage_intelligence::general_analysis">General Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::usage_and_saving_opportunity">Usage and saving opportunity</a>
+      dashboards/gcs_storage_intelligence::usage_and_saving_opportunity">Usage and saving opportunity</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::security_and_compliance">Security and compliance</a>
+      dashboards/gcs_storage_intelligence::security_and_compliance">Security and compliance</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::data_discovery">Data Discovery</a>
+      dashboards/gcs_storage_intelligence::data_discovery">Data Discovery</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::geographical_analysis">Geographical Analysis</a>
+      dashboards/gcs_storage_intelligence::geographical_analysis">Geographical Analysis</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #999999;" href="/
-      dashboards/gcs_storage_insights::errors">Errors</a>
+      dashboards/gcs_storage_intelligence::errors">Errors</a>
 
       <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black; font-weight: bold;" href="#">Events</a>
@@ -46,7 +46,7 @@
     height: 2
   - type: button
     name: button_666
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_insights::errors"}'
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#b0ccfc","href":"/dashboards/gcs_storage_intelligence::errors"}'
     row: 28
     col: 0
     width: 3
@@ -100,7 +100,7 @@
     height: 2
   - title: Total Snapshots
     name: Total Snapshots
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     type: single_value
     fields: [events.total_snaphsots]
@@ -128,7 +128,7 @@
     height: 3
   - title: Total Events
     name: Total Events
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     type: single_value
     fields: [events.total_events]
@@ -157,7 +157,7 @@
     height: 3
   - title: Latest Snapshot
     name: Latest Snapshot
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     type: single_value
     fields: [events.manifest_snapshot_date]
@@ -188,7 +188,7 @@
     height: 3
   - title: Countries or Region by Total Events
     name: Countries or Region by Total Events
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     type: looker_google_map
     fields: [regions_information.geographical_value, events.total_events]
@@ -233,7 +233,7 @@
     height: 8
   - title: Latest event logs
     name: Latest event logs
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     type: looker_grid
     fields: [events.manifest_snapshot_date, events.event_time, events.location, events.view_name]
@@ -292,7 +292,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     listens_to_filters: [2 - Geographic Area, 3 - Countries, 4 - Snapshot Date]
     field: events.location
@@ -305,7 +305,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     listens_to_filters: [5 - Location Type, 1 - Location, 3 - Countries, 4 - Snapshot
         Date]
@@ -319,7 +319,7 @@
     ui_config:
       type: tag_list
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     listens_to_filters: [5 - Location Type, 1 - Location, 2 - Geographic Area, 4 -
         Snapshot Date]
@@ -334,7 +334,7 @@
       type: advanced
       display: popover
       options: []
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     listens_to_filters: []
     field: events.manifest_snapshot_date
@@ -347,7 +347,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     listens_to_filters: [1 - Location, 2 - Geographic Area, 3 - Countries, 4 - Snapshot
         Date]
@@ -361,7 +361,7 @@
     ui_config:
       type: dropdown_menu
       display: inline
-    model: gcs_storage_insights
+    model: gcs_storage_intelligence
     explore: events
     listens_to_filters: []
     field: regions_information.map_selection

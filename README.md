@@ -1,13 +1,13 @@
-# <span style="color:blue"> Google Cloud Storage - Storage Insights - Looker Dashboard </span>
+# <span style="color:blue"> Google Cloud Storage - Storage Intelligence - Looker Dashboard </span>
 
 <div style="text-align: justify; line-height: 1.5;">
-<p>Please be advised that this <b> Google Cloud Storage - Storage Insights </b> LookML code is currently under development and subject to change. As customer needs evolve, the LookML code may be modified accordingly.
+<p> This Google <b> Cloud Storage - Storage Intelligence </b> LookML code is currently under active development and is subject to modification based on evolving customer requirements. </p>
 
-<p> Please be aware that this dashboard may consume significant BigQuery resources, potentially incurring additional costs. </p>
+<p> Users should be aware that this dashboard may require substantial BigQuery resources, potentially leading to increased costs.</p>
 
-<p>This dashboard is exclusively compatible with your Storage Insights linked dataset within BigQuery. Any attempt to utilize this dashboard with an alternative database or data warehouse will result in query errors.</p>
+<p>This dashboard is exclusively compatible with the Storage Insights linked dataset residing within your BigQuery environment. Utilizing this dashboard with any alternative database or data warehouse is not supported and will result in query errors.</p>
 
-<p>This dashboard utilizes two Persistent Derived Tables (PDTs). To ensure successful operation, it is imperative to configure your connection to enable PDT functionality within Looker. </p>
+<p>This dashboard utilizes two Persistent Derived Tables (PDTs). For proper functionality, it is essential that your Looker connection is configured to enable PDT functionality.</p>
 
 <p>In case you need some help with the connection, plase refer to this Looker Documentation: <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery" target="_blank">BigQuery</a></p>
 
@@ -20,19 +20,20 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 <div style="text-align: justify; line-height: 1.5;">
 
 <ol>
-    <li>We are excited for customers to use the Datasets feature and share feedback.</li>
-    <li>If you are experiencing any issues related to permissions configuration and timeliness of reports availability. The team is available at insights-customer-support@google.com to help troubleshoot and address any concerns.</li>
+    <li>We are excited for customers to use the atasets Google Cloud Storage is providing. To start the setup process, we recommend reviewing the introductory statement on <a href="https://cloud.google.com/storage/docs/storage-intelligence/overview" target="_blank">Storage Intelligence</a>. Following this, please consult the guidelines for activating your GCS datasets within your GCP environment, detailed under <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a>.</li>
+    <li>If you are experiencing any issues related to permissions configuration and timeliness of reports availability. The team is available at <i>insights-customer-support@google.com</i> to help troubleshoot and address any concerns.</li>
     <li>Enabling these Datasets for your production environment (GCP Projects) will not have any operational impact on the GCS Bucket storage/serving workloads. However you will be applying new permissions to production resources so please plan accordingly.</li>
     <li>Datasets generated can be configured to capture data from different GCP Regions and consolidate into a single Linked Dataset in BigQuery. Please take that into consideration if your metadata has regional/sovereignty requirements. Configuring one Dataset per sovereign region is one option available to help address these requirements.</li>
 </ol>
 
 </div>
+
 # Google Cloud Storage Insights
 ## What does this Looker Block do for me?
 
 <div style="text-align: justify; line-height: 1.5;">
 
-<p>This Looker block empowers GCS users to gain comprehensive insights from large datasets by seamlessly integrating their own data with Looker. Through regular audits, it enables the identification of potential vulnerabilities, opportunities, and the execution of advanced analytics tasks. </p>
+<p>Designed for Google Cloud Storage (GCS) users, this Looker block facilitates obtaining deep analytical insights from extensive datasets by seamlessly integrating Storage Insights data into Looker. It supports the identification of key usage patterns, potential inefficiencies, and opportunities for optimization and cost management, enabling advanced data analysis.</p>
 
 <p>In order to obtain these high level dashboards this block creates:</p>
 
@@ -42,7 +43,7 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
     <li>Different parameters to determine the row - columns format. </li>
 </ul>
 
-<p> To successfully integrate GCS Storage Insights data into BigQuery, please refer to the detailed instructions provided in the Storage Insights User Guide.</p>
+<p> To successfully integrate GCS Storage Insights data into BigQuery, please refer to the detailed instructions provided in the <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a> guide.</p>
 
 </div>
 
@@ -68,7 +69,7 @@ The tables are currently divided into five different options:
 
 <div style="text-align: justify; line-height: 1.5;">
 
-Inside this view we can see metadata about the available buckets inside your projects or organization.
+This view provides metadata regarding the available buckets across your projects or organization.
 
 <br>
 
@@ -174,7 +175,7 @@ This table has the following columns:
 
 <div style="text-align: justify; line-height: 1.5;">
 
-This view will let you know the exact timestamp that your data was appended to the Object Attributes or Bucket Attributes views.
+This view displays the timestamp at which data became available in the Object Attributes or Bucket Attributes views.
 <br>
 
 This table has the following columns:
@@ -200,6 +201,7 @@ This table has the following columns:
 
 Inside this view we can see metadata about the available objects inside your projects or organization.
 <br>
+
 This table has the following columns:
 <br>
 
@@ -245,7 +247,7 @@ This table has the following columns:
 
 <div style="text-align: justify; line-height: 1.5;">
 
-Inside this view we can see metadata about the available projects inside your projects or organization.
+Inside this view we can see metadata about the available projects inside your organization.
 
 <br>
 This table has the following columns:
@@ -262,6 +264,7 @@ This table has the following columns:
 
 <div style="text-align: justify; line-height: 1.5;">
 The <i>Regions Information</i> Common Table Expression (CTE) provides foundational geographical information for all analyses. It joins the location column to approximate latitude and longitude for each region, identifies associated countries, and facilitates map generation using a predefined GeoJSON file.
+
 <br>
 This table has the following columns:
 <br>
@@ -277,12 +280,15 @@ This table has the following columns:
     <li><b>longitude</b>: The longitude of the selected region.</li>
 </ul>
 </div>
+
 # Bucket and Object Attributes Persistent Derived Tables
 <div style="text-align: justify; line-height: 1.5;">
 To optimize performance for large Bucket Attributes and Object Attributes tables, we implemented a method to retrieve the latest information without querying the original tables. This data is stored in a <i>looker-scratch-schema</i> within a separate dataset, preconfigured during the gcs-storage-insights dataset setup in Looker.
 <br>
-To explain these CTEs that are going to loaded inside a Persistent Derived Tavle, we should start with the following SQL statement:
+
+To explain the CTEs incorporated within this Persistent Derived Table, we will begin by examining the following SQL statement:
 </div>
+
 
 ```
 
@@ -305,10 +311,15 @@ WITH
 ```
 
 <div style="text-align: justify; line-height: 1.5;">
-This <b>distinct_snapshots</b> table let us obtain the all the different snapshots along the Bucket and Objects tables. This will help us to obtain the current or the latest snapshot in subsequent queries.
+The <b>distinct_snapshots</b> table provides a comprehensive list of all unique snapshot timestamps found across the Bucket and Object tables. This resource facilitates the retrieval of the latest snapshot for subsequent querying and analysis.
+
+
 <br>
-Subsequently, we will retrieve the latest bucket and object attributes by filtering for the <i>MAX(snapshotTime)</i>.
+Subsequently, the latest bucket and object attributes are retrieved by filtering based on the maximum snapshotTime value.
+
 </div>
+
+
 
 ```
 bucket_attributes_latest AS (
@@ -341,9 +352,11 @@ object_attributes_latest AS (
 ```
 
 <div style="text-align: justify; line-height: 1.5;">
-These Derived Tables will be materialized as actual tables within your Looker scratch schema dataset. To control the table creation process, both table types will utilize a datagroup parameter: gcs_storage_bucket_attributes_datagroup for the Bucket Attributes and gcs_storage_object_attributes_datagroup for the Object Attributes tables.
+These Derived Tables will be materialized as actual tables within your Looker scratch schema dataset. To control the table creation process, both table types will utilize a datagroup parameter: <i>gcs_storage_intelligence_datagroup</i> .
+
 <br>
-To understand the datagroup value used by Looker, it is essential to understand the datagroup's SQL trigger:
+To understand how this datagroup is utilized by Looker, it is essential to examine its associated SQL trigger:
+
 </div>
 
 ```
@@ -366,7 +379,7 @@ sql_trigger:
 ```
 
 <div style="text-align: justify; line-height: 1.5;">
-The SQL statement defines a CTE, st_total, which compares the manifest.snapshotTime and the aggregated count of events from objects_attributes_view. If either the snapshotTime or the event count changes, the datagroup's sql_trigger signals Looker to regenerate the table with the latest data.
+The provided SQL statement defines a Common Table Expression (CTE) named st_total. This CTE retrieves the snapshotTime from the manifest table and an aggregated count of events derived from the objects_attributes_view. Should either of these values change, the datagroup's sql_trigger prompts Looker to rebuild the associated Persistent Derived Table (PDT) utilizing the latest data.
 </div>
 
 
@@ -374,38 +387,39 @@ The SQL statement defines a CTE, st_total, which compares the manifest.snapshotT
 
 <div style="text-align: justify; line-height: 1.5;">
 
-Inside this section, we are going to explain some general steps to connect your Google Cloud Storage Insights dataset with Looker.
+This section provides an overview of the necessary steps to connect your Google Cloud Storage Intelligence dataset with Looker.
 <ol>
-    <li>Enable the Google Cloude Storage - Storage Insights Dataset by following the detailed instructions provided in the Storage Insights User Guide.</li>
+    <li>Enable the Google Cloud Storage - Storage Intelligence Dataset by following the instructions in the Storage Insights User Guide.
+    </li>
     <li>Create the connection with Looker:
         <ol>
-            <li>On your BigQuery database, configure the authentication that Looker will use to access your BigQuery database. Looker supports the following authentication options for BigQuery:
+            <li>Within your Google Cloud project, configure the authentication method that Looker will utilize to access your BigQuery environment. Looker supports the following authentication options for BigQuery:
             <ul>
-                <li>Service account: See the <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#bigquery_service_accounts" target="_blank">Authentication with BigQuery service accounts</a> section on this page for information.</li>
-                <li>OAuth: See the <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#oauth_for_bigquery_connections" target="_blank">Authentication with OAuth</a> section on this page for information.</li>
+                <li><b>Service Account</b>: Refer to the documentation section titled <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#bigquery_service_accounts" target="_blank">Authentication with BigQuery service accounts</a> for detailed information.</li>
+                <li><b>OAuth</b>: Refer to the documentation section titled <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#oauth_for_bigquery_connections" target="_blank">Authentication with OAuth</a> for detailed information.</li>
             </ul>
             </li>
-            <li>On your BigQuery database create a temporary dataset that Looker can use to create <a href="https://cloud.google.com/looker/docs/derived-tables#persistent-derived-tables" target="_blank">persistent derived tables (PDTs)</a> on your database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#creating_a_temporary_dataset_for_persistent_derived_tables" target="_blank">Creating a temporary dataset for persistent derived</a> tables on this page for the procedure.
+            <li>Within your BigQuery project, create a temporary dataset that Looker will utilize for Persistent Derived Tables (PDTs). (Learn more about <a href="https://cloud.google.com/looker/docs/derived-tables#persistent-derived-tables" target="_blank">persistent derived tables (PDTs)</a>). The procedure for creating this temporary dataset is detailed in the documentation section: <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#creating_a_temporary_dataset_for_persistent_derived_tables" target="_blank">Creating a temporary dataset for persistent derived</a> for the necessary procedure.
             <ul>
-                <li><b>Note</b>: If you are using OAuth and you want to enable PDTs on the connection, you need to create a BigQuery service account specifically for Looker to use for PDT processes on your BigQuery database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#bq_pdts_oauth" target="_blank">Enabling PDTs for Looker connections to BigQuery with OAuth</a> on this page for the procedure.</li>
+                <li><b>Note</b>: If utilizing OAuth authentication and enabling PDT functionality on the connection, a dedicated BigQuery service account must be created for Looker's PDT operations. The procedure is detailed in the documentation section: <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#bq_pdts_oauth" target="_blank">Enabling PDTs for Looker connections to BigQuery with OAuth</a>.</li>
             </ul>
             </li>
             <li>In Looker, set up the Looker connection to your BigQuery database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#connecting_looker_to_bigquery" target="_blank">Connecting Looker to BigQuery</a> on this page for the procedure.</li>
             <li>In Looker, test the connection between Looker and your BigQuery database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#testing_the_connection" target="_blank">Testing the connection</a> on this page for the procedure.</li>
         </ol>
     </li>
-    <li> <b>IF YOU ARE USING A CUSTOMER - HOSTED INSTANCE: Follow steps 3 and 4 of this guide. IF YOU HAVE ACCESS TO THE MARKETPLACE, follow step 5.</b> Download the <b>GCS - Storage Insights</b> LookML code from the Looker Open Source Git Repository:
+    <li> <b>IF YOU ARE USING A CUSTOMER - HOSTED INSTANCE: Follow steps 3 and 4 of this guide. IF YOU HAVE ACCESS TO THE MARKETPLACE, follow step 5.</b> Download the <b>GCS - Storage Intelligence</b> LookML code from the Looker Open Source Git Repository:
         <ol>
-            <li>Inside the GCS - Storage Insights - Looker Open Source Git Repository, click on the 'CODE' button and download the ZIP with all the LookML files </li>
-            <li>As soon as the files are available, you can upload those documents to your own enterprise Git repository. At the end of this document you will find a Bash Script to upload the LookML files to your own GitHub repository.</li>
+            <li>Navigate to the GCS - Storage Intelligence - Looker Open Source Git Repository. Select the 'CODE' button and download the repository as a ZIP archive. </li>
+            <li>Once the files have been obtained, you may integrate these files into your enterprise Git repository.</li>
         </ol>
     </li>
     <li>Create a New LookMl project:
         <ol>
             <li><a href="https://cloud.google.com/looker/docs/dev-mode-prod-mode#switching_in_and_out_of_development_mode" target="_blank">Verify that you are in Development Mode</a>.</li>
             <li>Select <b>Projects</b> from the <b>Develop</b> section of the navigation panel.</li>
-            <li>On the <b>LookML Projects</b> page, select <b>New LookML Project</b> to select the options for your project.</li>
-            <li>Name the project: <b><i>gcs_storage_insights</i></b> and select: <b>"Create Blank Project"</b></li>
+            <li>On the <b>LookML Projects</b> page, select <b>New LookML Project</b>  to configure the settings for your project.</li>
+            <li>Name the project: <b><i>gcs_storage_intelligence_block</i></b> and select: <b>"Create Blank Project"</b></li>
             <li>Upload all the files and folders to the created project.</li>
             <li>Inside the manifest you will see the following code snippet. Please update these values with the corresponding names for your looker connection name, GCP project ID and BigQuery dataset ID:
             <pre>
@@ -427,7 +441,7 @@ Inside this section, we are going to explain some general steps to connect your 
             </li>
         </ol>
     </li>
-    <li>To install the GCS - Storage Insights Dashboard, navigate to your Looker instance's marketplace. Locate the dashboard, click 'Install,' and provide the connection details when prompted.</li>
+    <li>To install the GCS - Storage Intelligence Dashboard from the Looker Marketplace, navigate to your Looker instance's Marketplace. Locate the dashboard, click 'Install', and provide the connection details when prompted.</li>
     <li>Visualize the dashboards under the <a href="/dashboards/gcs_storage_insights::general_analysis" target="_blank">LookML dashboard folder</a></li>
 </ol>
 </div>
