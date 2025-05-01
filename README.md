@@ -5,7 +5,7 @@
 
 <p> Users should be aware that this dashboard may require substantial BigQuery resources, potentially leading to increased costs.</p>
 
-<p>This dashboard is exclusively compatible with the Storage Insights linked dataset residing within your BigQuery environment. Utilizing this dashboard with any alternative database or data warehouse is not supported and will result in query errors.</p>
+<p>This dashboard is exclusively compatible with the Storage Intelligence linked dataset residing within your BigQuery environment. Utilizing this dashboard with any alternative database or data warehouse is not supported and will result in query errors.</p>
 
 <p>This dashboard utilizes two Persistent Derived Tables (PDTs). For proper functionality, it is essential that your Looker connection is configured to enable PDT functionality.</p>
 
@@ -28,12 +28,12 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 </div>
 
-# Google Cloud Storage Insights
+# Google Cloud Storage Intelligence
 ## What does this Looker Block do for me?
 
 <div style="text-align: justify; line-height: 1.5;">
 
-<p>Designed for Google Cloud Storage (GCS) users, this Looker block facilitates obtaining deep analytical insights from extensive datasets by seamlessly integrating Storage Insights data into Looker. It supports the identification of key usage patterns, potential inefficiencies, and opportunities for optimization and cost management, enabling advanced data analysis.</p>
+<p>Designed for Google Cloud Storage (GCS) users, this Looker block facilitates obtaining deep analytical insights from extensive datasets by seamlessly integrating Storage Intelligence data into Looker. It supports the identification of key usage patterns, potential inefficiencies, and opportunities for optimization and cost management, enabling advanced data analysis.</p>
 
 <p>In order to obtain these high level dashboards this block creates:</p>
 
@@ -43,11 +43,11 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
     <li>Different parameters to determine the row - columns format. </li>
 </ul>
 
-<p> To successfully integrate GCS Storage Insights data into BigQuery, please refer to the detailed instructions provided in the <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a> guide.</p>
+<p> To successfully integrate GCS Storage Intelligence data into BigQuery, please refer to the detailed instructions provided in the <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a> guide.</p>
 
 </div>
 
-# GCS Storage Insights Data Structure
+# GCS Storage Intelligence Data Structure
 
 <div style="text-align: justify; line-height: 1.5;">
 
@@ -389,7 +389,7 @@ The provided SQL statement defines a Common Table Expression (CTE) named st_tota
 
 This section provides an overview of the necessary steps to connect your Google Cloud Storage Intelligence dataset with Looker.
 <ol>
-    <li>Enable the Google Cloud Storage - Storage Intelligence Dataset by following the instructions in the Storage Insights User Guide.
+    <li>Enable the Google Cloud Storage - Storage Intelligence Dataset by following the instructions in the Storage Intelligence User Guide.
     </li>
     <li>Create the connection with Looker:
         <ol>
@@ -442,7 +442,7 @@ This section provides an overview of the necessary steps to connect your Google 
         </ol>
     </li>
     <li>To install the GCS - Storage Intelligence Dashboard from the Looker Marketplace, navigate to your Looker instance's Marketplace. Locate the dashboard, click 'Install', and provide the connection details when prompted.</li>
-    <li>Visualize the dashboards under the <a href="/dashboards/gcs_storage_insights::general_analysis" target="_blank">LookML dashboard folder</a></li>
+    <li>Visualize the dashboards under the <a href="/dashboards/gcs_storage_intelligence::general_analysis" target="_blank">LookML dashboard folder</a></li>
 </ol>
 </div>
 
@@ -450,7 +450,7 @@ This section provides an overview of the necessary steps to connect your Google 
 
 <div style="text-align: justify; line-height: 1.5;">
 <h1>Coming Soon</h1>
-This section details the projects that will be integrated into Storage Insights: <br> <br>
+This section details the projects that will be integrated into Storage Intelligence: <br> <br>
 
 <br>
 We are currently developing additional features that will provide complementary insights to your Google Cloud Storage analysis.
