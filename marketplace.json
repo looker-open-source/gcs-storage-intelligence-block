@@ -2,7 +2,7 @@
     "label": "GCS Storage Intelligence Block",
     "category_label": "Models",
     "branding": {
-      "image_uri": "https://marketplace-api.looker.com/block-icons/gcs-storage-insights-block.png",
+      "image_uri": "https://marketplace-api.looker.com/block-icons/gcs-storage-intelligence.png",
       "tagline": "This Looker Block is provided as a sample for Storage Insights Datasets. It showcases several visual insights and thus will consume significant BigQuery resources so consider using with a small Dataset first. For questions/feedback reach out to insights-customer-support@google.com"
     },
     "constants": {
