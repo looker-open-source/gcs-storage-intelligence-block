@@ -14,7 +14,7 @@
         "label": "BigQuery Project ID"
       },
       "bigquery_dataset": {
-          "label": "Storage Insights' linked dataset name",
+          "label": "Storage Intelligence linked dataset name",
           "description": "Dataset name where your Storage Insights are located."
       }
     },
