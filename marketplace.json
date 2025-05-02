@@ -1,5 +1,5 @@
 {
-    "label": "GCS Storage Insights",
+    "label": "GCS Storage Intelligence Block",
     "category_label": "Models",
     "branding": {
       "image_uri": "https://marketplace-api.looker.com/block-icons/gcs-storage-insights-block.png",
@@ -20,7 +20,7 @@
     },
     "models": [
       {
-        "name": "gcs_storage_insights",
+        "name": "gcs_storage_intelligence",
         "connection_constant": "connection_name"
       }
     ]
