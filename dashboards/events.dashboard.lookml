@@ -1,6 +1,6 @@
 ---
 - dashboard: events
-  title: GCS Insights - Events
+  title: GCS Intelligence - Events
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

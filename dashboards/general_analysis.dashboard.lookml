@@ -1,6 +1,6 @@
 ---
 - dashboard: general_analysis
-  title: GCS Insights - General Analysis
+  title: GCS Intelligence - General Analysis
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

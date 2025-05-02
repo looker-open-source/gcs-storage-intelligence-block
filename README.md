@@ -283,7 +283,7 @@ This table has the following columns:
 
 # Bucket and Object Attributes Persistent Derived Tables
 <div style="text-align: justify; line-height: 1.5;">
-To optimize performance for large Bucket Attributes and Object Attributes tables, we implemented a method to retrieve the latest information without querying the original tables. This data is stored in a <i>looker-scratch-schema</i> within a separate dataset, preconfigured during the gcs-storage-insights dataset setup in Looker.
+To optimize performance for large Bucket Attributes and Object Attributes tables, we implemented a method to retrieve the latest information without querying the original tables. This data is stored in a <i>looker-scratch-schema</i> within a separate dataset, preconfigured during the gcs-storage-intelligence dataset setup in Looker.
 <br>
 
 To explain the CTEs incorporated within this Persistent Derived Table, we will begin by examining the following SQL statement:

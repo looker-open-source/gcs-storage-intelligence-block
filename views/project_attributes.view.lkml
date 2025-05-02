@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Purpose: Contains information about the Project Attributes View Table inside the Storage Insights linked Dataset.
+# Purpose: Contains information about the Project Attributes View Table inside the Storage Intelligence linked Dataset.
 #####################################################################
 view: project_attributes {
   derived_table: {

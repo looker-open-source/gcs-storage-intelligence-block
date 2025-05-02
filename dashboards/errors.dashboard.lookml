@@ -1,6 +1,6 @@
 ---
 - dashboard: errors
-  title: GCS Insights - Errors
+  title: GCS Intelligence - Errors
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

@@ -1,6 +1,6 @@
 ---
 - dashboard: usage_and_saving_opportunity
-  title: GCS Insights - Usage and saving opportunity
+  title: GCS Intelligence - Usage and saving opportunity
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

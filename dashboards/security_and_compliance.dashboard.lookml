@@ -1,6 +1,6 @@
 ---
 - dashboard: security_and_compliance
-  title: GCS Insights - Security and compliance
+  title: GCS Intelligence - Security and compliance
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

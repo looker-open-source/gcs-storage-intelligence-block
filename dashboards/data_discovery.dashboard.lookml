@@ -1,6 +1,6 @@
 ---
 - dashboard: data_discovery
-  title: GCS Insights - Data discovery
+  title: GCS Intelligence - Data discovery
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

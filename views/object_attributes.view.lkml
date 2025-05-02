@@ -3,7 +3,7 @@
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
 # Modified Date: Apr 30, 2025
-# Purpose: Contains information about the Object Attributes View Table inside the Storage Insights linked Dataset.
+# Purpose: Contains information about the Object Attributes View Table inside the Storage Intelligence linked Dataset.
 #####################################################################
 view: object_attributes {
   derived_table: {
@@ -404,7 +404,7 @@ view: object_attributes {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.snapshotTime ;;
-    description: "The snapshotTime field in the GCS Storage Insights table is a timestamp string in RFC 3339 format. It represents the point-in-time when the object snapshot was captured, effectively grouping object snapshots. For the precise time rows were inserted into the table, refer to the Events Explore."
+    description: "The snapshotTime field in the GCS Storage Intelligence table is a timestamp string in RFC 3339 format. It represents the point-in-time when the object snapshot was captured, effectively grouping object snapshots. For the precise time rows were inserted into the table, refer to the Events Explore."
   }
 
   dimension_group: soft_delete {

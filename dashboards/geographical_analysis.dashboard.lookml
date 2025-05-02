@@ -1,6 +1,6 @@
 ---
 - dashboard: geographical_analysis
-  title: GCS Insights - Geographical Analysis
+  title: GCS Intelligence - Geographical Analysis
   layout: newspaper
   preferred_viewer: dashboards-next
   load_configuration: wait

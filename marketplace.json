@@ -15,7 +15,7 @@
       },
       "bigquery_dataset": {
           "label": "Storage Intelligence linked dataset name",
-          "description": "Dataset name where your Storage Insights are located."
+          "description": "Dataset name where your Storage Intelligence are located."
       }
     },
     "models": [
