@@ -6,7 +6,7 @@
 #####################################################################
 view: error_attributes {
 
-  sql_table_name: `@{bigquery_dataset}.error_attributes_view` ;;
+  sql_table_name: `@{BIGQUERY_DATASET}.error_attributes_view` ;;
 
   ################################### Primary Key #################################
 

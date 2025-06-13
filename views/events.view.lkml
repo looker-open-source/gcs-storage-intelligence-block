@@ -5,7 +5,7 @@
 # Purpose: Contains information about the Events View inside the Storage Intelligence linked Dataset.
 #####################################################################
 view: events {
-  sql_table_name: `@{bigquery_dataset}.events_view` ;;
+  sql_table_name: `@{BIGQUERY_DATASET}.events_view` ;;
 
   ################################### Primary Key #################################
 

@@ -2,18 +2,17 @@ project_name: "gcs_storage_intelligence_block"
 
 ################################### Constants ###################################
 
-constant: connection_name {
+constant: CONNECTION_NAME {
   value: ""
-  export: override_optional
-
+  export: override_required
 }
 
-constant: project_id {
+constant: PROJECT_ID {
   value: ""
-  export: override_optional
+  export: override_required
 }
 
-constant: bigquery_dataset {
+constant: BIGQUERY_DATASET {
   value: ""
-  export: override_optional
+  export: override_required
 }

@@ -12,7 +12,7 @@ view: project_attributes {
         id,
         CAST(number AS STRING) number
       FROM
-        `@{project_id}.@{bigquery_dataset}.project_attributes_view` ;;
+        `@{PROJECT_ID}.@{BIGQUERY_DATASET}.project_attributes_view` ;;
   }
 
   ################################### Primary Key #################################

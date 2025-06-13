@@ -13,20 +13,20 @@ view: object_attributes {
         SELECT
           DISTINCT snapshotTime
         FROM
-          `@{project_id}.@{bigquery_dataset}.object_attributes_view`
+          `@{PROJECT_ID}.@{BIGQUERY_DATASET}.object_attributes_view`
         WHERE
           snapshotTime IS NOT NULL
         INTERSECT DISTINCT
         SELECT
           DISTINCT snapshotTime
         FROM
-          `@{project_id}.@{bigquery_dataset}.bucket_attributes_view`
+          `@{PROJECT_ID}.@{BIGQUERY_DATASET}.bucket_attributes_view`
         WHERE
           snapshotTime IS NOT NULL), object_attributes_latest AS (
         SELECT
           *
         FROM
-          `@{project_id}.@{bigquery_dataset}.object_attributes_view`
+          `@{PROJECT_ID}.@{BIGQUERY_DATASET}.object_attributes_view`
         WHERE
           snapshotTime = (
             SELECT

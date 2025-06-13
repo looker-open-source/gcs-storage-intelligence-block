@@ -12,12 +12,12 @@ datagroup: gcs_storage_intelligence_datagroup {
         DATE(manifest.snapshotTime) AS snapshotTime,
         COUNT(*) AS total
       FROM
-        `@{project_id}.@{bigquery_dataset}.events_view`
+        `@{PROJECT_ID}.@{BIGQUERY_DATASET}.events_view`
       WHERE
         manifest.viewName = 'object_attributes_view' AND
         manifest.snapshotTime = (
           SELECT MAX(manifest.snapshotTime)
-          FROM `@{project_id}.@{bigquery_dataset}.events_view`
+          FROM `@{PROJECT_ID}.@{BIGQUERY_DATASET}.events_view`
         )
       GROUP BY 1)
     SELECT CONCAT(CAST(snapshotTime AS STRING), ' | ', CAST(total AS STRING)) AS combined_value

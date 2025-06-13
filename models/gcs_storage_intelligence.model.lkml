@@ -5,7 +5,7 @@
 # Modified Date: Apr 30, 2025
 # Purpose: Main model inside the gcs_storage_intelligence_block project.
 #####################################################################
-connection: "@{connection_name}"
+connection: "@{CONNECTION_NAME}"
 
 # views
 include: "/views/*.view.lkml"

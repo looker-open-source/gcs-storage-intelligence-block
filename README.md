@@ -20,7 +20,7 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 <div style="text-align: justify; line-height: 1.5;">
 
 <ol>
-    <li>We are excited for customers to use the atasets Google Cloud Storage is providing. To start the setup process, we recommend reviewing the introductory statement on <a href="https://cloud.google.com/storage/docs/storage-intelligence/overview" target="_blank">Storage Intelligence</a>. Following this, please consult the guidelines for activating your GCS datasets within your GCP environment, detailed under <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a>.</li>
+    <li>We are excited for customers to use the datasets Google Cloud Storage is providing. To start the setup process, we recommend reviewing the introductory statement on <a href="https://cloud.google.com/storage/docs/storage-intelligence/overview" target="_blank">Storage Intelligence</a>. Following this, please consult the guidelines for activating your GCS datasets within your GCP environment, detailed under <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a>.</li>
     <li>If you are experiencing any issues related to permissions configuration and timeliness of reports availability. The team is available at <i>insights-customer-support@google.com</i> to help troubleshoot and address any concerns.</li>
     <li>Enabling these Datasets for your production environment (GCP Projects) will not have any operational impact on the GCS Bucket storage/serving workloads. However you will be applying new permissions to production resources so please plan accordingly.</li>
     <li>Datasets generated can be configured to capture data from different GCP Regions and consolidate into a single Linked Dataset in BigQuery. Please take that into consideration if your metadata has regional/sovereignty requirements. Configuring one Dataset per sovereign region is one option available to help address these requirements.</li>
@@ -35,12 +35,12 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 <p>Designed for Google Cloud Storage (GCS) users, this Looker block facilitates obtaining deep analytical insights from extensive datasets by seamlessly integrating Storage Intelligence data into Looker. It supports the identification of key usage patterns, potential inefficiencies, and opportunities for optimization and cost management, enabling advanced data analysis.</p>
 
-<p>In order to obtain these high level dashboards this block creates:</p>
+<p>In order to obtain these high-level dashboards, this block creates:</p>
 
 <ul>
-    <li>Two <a href="https://cloud.google.com/looker/docs/derived-tables#creating_pdts" target="_blank">Persistent derived tables</a> - <i>Object Attributes</i> and <i>Bucket Attributes</i> to filter the Snapshot Time. The PDT's are created inside your defined looker_scratch_schema, and are regenerated once the table <b><i>Events view</i></b> inside BigQuery has a different row count.</li>
-    <li>One derived table that will be joined to all the available views. This derived table contains the <a href="https://cloud.google.com/about/locations" target="_blank">GCP regions information</a>. This table helps us understand geolocation based on GCP regions and country positions.</li>
-    <li>Different parameters to determine the row - columns format. </li>
+    <li>Two <a href="https://cloud.google.com/looker/docs/derived-tables#creating_pdts" target="_blank">Persistent derived tables</a> - <i>Object Attributes</i> and <i>Bucket Attributes</i> to filter the Snapshot Time. The PDTs are created inside your defined <i>looker_scratch_schema</i>, and are regenerated once the <b><i>Events view</i></b> table within BigQuery has a different row count.</li>
+    <li>One derived table that will be joined to all the available views. This derived table contains the <a href="https://cloud.google.com/about/locations" target="_blank">GCP regions information</a>. This table helps us understand geolocation based on GCP regions and country locations.</li>
+    <li>Different parameters to determine the row-column format. </li>
 </ul>
 
 <p> To successfully integrate GCS Storage Intelligence data into BigQuery, please refer to the detailed instructions provided in the <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a> guide.</p>
@@ -404,7 +404,7 @@ This section provides an overview of the necessary steps to connect your Google 
                 <li><b>Note</b>: If utilizing OAuth authentication and enabling PDT functionality on the connection, a dedicated BigQuery service account must be created for Looker's PDT operations. The procedure is detailed in the documentation section: <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#bq_pdts_oauth" target="_blank">Enabling PDTs for Looker connections to BigQuery with OAuth</a>.</li>
             </ul>
             </li>
-            <li>In Looker, set up the Looker connection to your BigQuery database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#connecting_looker_to_bigquery" target="_blank">Connecting Looker to BigQuery</a> on this page for the procedure.</li>
+            <li>In Looker, test the connection to your BigQuery database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#connecting_looker_to_bigquery" target="_blank">Connecting Looker to BigQuery</a> on this page for the procedure.</li>
             <li>In Looker, test the connection between Looker and your BigQuery database. See the section <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery#testing_the_connection" target="_blank">Testing the connection</a> on this page for the procedure.</li>
         </ol>
     </li>
@@ -424,17 +424,17 @@ This section provides an overview of the necessary steps to connect your Google 
             <li>Inside the manifest you will see the following code snippet. Please update these values with the corresponding names for your looker connection name, GCP project ID and BigQuery dataset ID:
             <pre>
             <code>
-                constant: connection_name {
+                constant: CONNECTION_NAME {
                     value: "your_connection_name"
-                    export: override_optional
+                    export: override_required
                 }
-                constant: project_id {
+                constant: PROJECT_ID {
                     value: "your_project_id"
-                    export: override_optional
+                    export: override_required
                 }
-                constant: bigquery_dataset {
+                constant: BIGQUERY_DATASET {
                     value: "your_bigquery_dataset"
-                    export: override_optional
+                    export: override_required
                 }
             </code>
             </pre>

@@ -6,14 +6,14 @@
       "tagline": "This template is provided as a sample for Storage Intelligence Datasets. It showcases several visual insights and thus will consume significant BigQuery resources so consider using with a small Dataset first. For questions/feedback reach out to insights-customer-support@google.com"
     },
     "constants": {
-      "connection_name": {
+      "CONNECTION_NAME": {
         "label": "Connection Name",
         "value_constraint": "connection"
       },
-      "project_id": {
+      "PROJECT_ID": {
         "label": "BigQuery Project ID"
       },
-      "bigquery_dataset": {
+      "BIGQUERY_DATASET": {
           "label": "Storage Intelligence linked dataset name",
           "description": "Dataset name where your Storage Intelligence are located."
       }
@@ -21,7 +21,7 @@
     "models": [
       {
         "name": "gcs_storage_intelligence",
-        "connection_constant": "connection_name"
+        "connection_constant": "CONNECTION_NAME"
       }
     ]
   }
