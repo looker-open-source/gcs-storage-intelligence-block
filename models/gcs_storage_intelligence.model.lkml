@@ -1,4 +1,4 @@
-#####################################################################
+ #####################################################################
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
@@ -11,10 +11,10 @@ connection: "@{CONNECTION_NAME}"
 include: "/views/*.view.lkml"
 # datagorups
 include: "/attributes/datagroups/*.lkml"
-# map_layers
-include: "/attributes/map_layers/*.lkml"
 # explores
 include: "/explores/*.explore.lkml"
+# map_layers
+include: "/attributes/map_layers/*.lkml"
 # dashboards
 include: "/dashboards/*.dashboard.lookml"
 

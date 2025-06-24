@@ -421,6 +421,23 @@ This section provides an overview of the necessary steps to connect your Google 
             <li>On the <b>LookML Projects</b> page, select <b>New LookML Project</b>  to configure the settings for your project.</li>
             <li>Name the project: <b><i>gcs_storage_intelligence_block</i></b> and select: <b>"Create Blank Project"</b></li>
             <li>Upload all the files and folders to the created project.</li>
+            <li>By default, this Looker Block fetches GeoJSON map files from a public URL. If your Looker instance does not have access to the public internet, you will need to configure the map layers to use the local files included in this repository.
+              <ol>
+                  <li>Locate the configuration files inside the `/attributes/map_layers/` directory.</li>
+                  <li>For each map_layer definition, you must modify the code to use the file parameter instead of the url parameter.</li>
+                  <li>Comment out the line containing the url parameter.</li>
+                  <li>Uncomment and verify the line containing the file parameter. The path should be relative to your project root.</li>
+              </ol>
+              <pre>
+              <code>
+                map_layer: gcs_regions {
+                  file: "/maps/regions.geojson"
+                  #url: "https://storage.googleapis.com/gcs-storage-intelligence-looker-files/regions.geojson"
+                  property_key: "Region"
+                }
+              </code>
+              </pre>
+            </li>
             <li>Inside the manifest you will see the following code snippet. Please update these values with the corresponding names for your looker connection name, GCP project ID and BigQuery dataset ID:
             <pre>
             <code>
