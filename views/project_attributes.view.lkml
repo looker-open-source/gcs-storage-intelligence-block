@@ -1,9 +1,11 @@
-#####################################################################
+# -------------------------------------------------------------------------
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
+# Modified Date: Feb 12, 2026
 # Purpose: Contains information about the Project Attributes View Table inside the Storage Intelligence linked Dataset.
-#####################################################################
+# -------------------------------------------------------------------------
+
 view: project_attributes {
   derived_table: {
     sql:
@@ -15,7 +17,9 @@ view: project_attributes {
         `@{PROJECT_ID}.@{BIGQUERY_DATASET}.project_attributes_view` ;;
   }
 
-  ################################### Primary Key #################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Primary Key -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
     hidden: yes
@@ -25,7 +29,9 @@ view: project_attributes {
     description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each project, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
   }
 
-  ################################## Dimensions ##################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Dimensions -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: project_name {
     type: string
@@ -41,8 +47,9 @@ view: project_attributes {
   }
 
   dimension: project {
+    label: "Project Number"
     type: string
-    sql: ${TABLE}.number ;;
+    sql: CAST(${TABLE}.number AS STRING) ;;
     description: "The Google Cloud project number associated with the project ID"
   }
 

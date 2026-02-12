@@ -1,4 +1,4 @@
-# <span style="color:blue"> Google Cloud Storage - Storage Intelligence - Looker Dashboard </span>
+# Google Cloud Storage - Storage Intelligence - Looker Dashboard
 
 <div style="text-align: justify; line-height: 1.5;">
 <p> This Google <b> Cloud Storage - Storage Intelligence </b> LookML code is currently under active development and is subject to modification based on evolving customer requirements. </p>
@@ -37,10 +37,47 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 <p>In order to obtain these high-level dashboards, this block creates:</p>
 
+<h3>Implementation Details</h3>
+
 <ul>
-    <li>Two <a href="https://cloud.google.com/looker/docs/derived-tables#creating_pdts" target="_blank">Persistent derived tables</a> - <i>Object Attributes</i> and <i>Bucket Attributes</i> to filter the Snapshot Time. The PDTs are created inside your defined <i>looker_scratch_schema</i>, and are regenerated once the <b><i>Events view</i></b> table within BigQuery has a different row count.</li>
-    <li>One derived table that will be joined to all the available views. This derived table contains the <a href="https://cloud.google.com/about/locations" target="_blank">GCP regions information</a>. This table helps us understand geolocation based on GCP regions and country locations.</li>
-    <li>Different parameters to determine the row-column format. </li>
+    <li>
+        <b>Dynamic Derived Tables</b> — These tables are calculated at runtime to provide context-aware data based on user selections:
+        <ul>
+            <li>
+                <i>Bucket Attributes History:</i> Aggregates snapshot data—including location, project, and storage class—directly from the <code>bucket_attributes_view</code>.
+            </li>
+            <li>
+                <i>Bucket Totals Summary:</i> Calculates total ingress and egress per bucket. It utilizes Looker <code>{% condition %}</code> filters to ensure totals align dynamically with the user's selected <b>snapshot_start_date</b> and <b>snapshot_end_date</b>.
+            </li>
+        </ul>
+    </li>
+    <li>
+        <b>Static Helper Tables (Unpivoting)</b> — These views are used via <code>CROSS JOIN</code> to transform separate status columns into a single dimension, enabling improved breakdown visualizations like Pie Charts or Bar Graphs:
+        <ul>
+            <li>
+                <i>Client Error Status:</i> Generates a static list of 4xx error codes (400, 401, 403, 429).
+            </li>
+            <li>
+                <i>Status Values:</i> Provides a global mapping for status labels (2xx, 4xx, 5xx).
+            </li>
+        </ul>
+    </li>
+    <li>
+        <b>Regional Insights</b> — A specific Derived Table containing <a href="https://cloud.google.com/about/locations" target="_blank">GCP regions information</a> is joined to all available views to enable geolocation-based analysis by country and region.
+    </li>
+    <li>
+        <b>Row-Column Flexibility</b> — Various <b>parameters</b> are implemented within the LookML to allow users to dynamically control the report format and layout.
+    </li>
+</ul>
+
+<h3>Project Structure</h3>
+
+<ul>
+    <li><b>Explores:</b> Business-ready entry points (e.g., <code>bucket_activity</code>, <code>object_events</code>) for self-service analysis.</li>
+    <li><b>Views:</b> LookML representations of BigQuery tables and the custom Derived Tables described above.</li>
+    <li><b>Attributes:</b> Centralized configurations for <code>datagroups</code>, <code>map_layers</code>, and <code>value_formats</code>.</li>
+    <li><b>Dashboards:</b> Pre-built operational dashboards, including <i>Bucket Region Activity</i> and <i>Security & Compliance</i>.</li>
+    <li><b>Maps:</b> Custom <code>geojson</code> files used to support specialized geographical visualizations.</li>
 </ul>
 
 <p> To successfully integrate GCS Storage Intelligence data into BigQuery, please refer to the detailed instructions provided in the <a href="https://cloud.google.com/storage/docs/storage-intelligence/configure-and-manage-storage-intelligence" target="_blank">Configure and manage Storage Intelligence</a> guide.</p>
@@ -51,214 +88,365 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 <div style="text-align: justify; line-height: 1.5;">
 
-The tables are currently divided into five different options:
+<h3>Available BigQuery Views</h3>
+
+<p>The solution utilizes the following views as primary data sources:</p>
 
 <ul>
-    <li> bucket_attributes_view </li>
-    <li> error_attributes_view </li>
-    <li> events_view </li>
-    <li> object_attributes_view </li>
-    <li> project_attributes_view </li>
-
+    <li><code>bucket_activity_view</code></li>
+    <li><code>bucket_attributes_view</code></li>
+    <li><code>bucket_attributes_latest_snapshot_view</code></li>
+    <li><code>bucket_region_activity_view</code></li>
+    <li><code>error_attributes_view</code></li>
+    <li><code>events_view</code></li>
+    <li><code>object_attributes_view</code></li>
+    <li><code>object_attributes_latest_snapshot_view</code></li>
+    <li><code>object_events_view</code></li>
+    <li><code>project_activity_view</code></li>
+    <li><code>project_attributes_view</code></li>
 </ul>
 
 </div>
 
 
-# Bucket Attributes
+# Bucket Metadata
 
 <div style="text-align: justify; line-height: 1.5;">
 
-This view provides metadata regarding the available buckets across your projects or organization.
-
-<br>
-
-This table has the following columns:
-
-<br>
+<p>The bucket metadata schema includes the <code>bucket_attributes_view</code> and <code>bucket_attributes_latest_snapshot_view</code> tables. These tables contain the following fields:</p>
 
 <ul>
-    <li> <b>snapshotTime</b>: The snapshot time of the object metadata in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a>. </li>
-    <li> <b>name</b>: The name of the source bucket.</li>
-    <li>location: Object data for objects in the bucket resides in physical storage within this region or multi-region. Defaults to "US". See <a href="https://cloud.google.com/storage/docs/locations" target="_blank">Cloud Storage bucket locations</a> for the authoritative list. </li>
-    <li> <b>project</b>: The project number of the project the bucket belongs to. </li>
-    <li> <b>storageClass</b>: The bucket's default storage class, used whenever no storageClass is specified for a newly-created object. If storageClass is not specified when the bucket is created, it defaults to <i>"STANDARD"</i>. For available storage classes, see <a href="https://cloud.google.com/storage/docs/storage-classes" target="_blank">Storage classes</a>. </li>
-    <li> <b>versioning</b>:The bucket's versioning configuration. For more information, see <a href="https://cloud.google.com/storage/docs/object-versioning" target="_blank">Object Versioning</a>. </li>
-    <li> <b>lifecycle</b>: The bucket's lifecycle configuration status. See <a href="https://cloud.google.com/storage/docs/lifecycle" target="_blank"> lifecycle management </a> for more information. </li>
-    <li> <b>metageneration</b>: The metadata generation of this bucket. </li>
-    <li> <b>timeCreated</b>: The creation time of the bucket in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
-    <li> <b>public</b>: The bucket's IAM configuration.
-    <ul>
-        <li> <b>public.bucketPolicyOnly</b> </li>
-        <li> <b>public.publicAccessPrevention</b>: The bucket's <a href="https://cloud.google.com/storage/docs/public-access-prevention" target="_blank"> public access prevention status </a>, which is either "inherited" or "enforced". If "inherited", the bucket uses public access prevention only if the bucket is subject to the <a href="https://cloud.google.com/storage/docs/org-policy-constraints#public-access-prevention" target="_blank"> public access prevention organization policy constraint</a>. Defaults to "inherited".</li>
-    </ul>
-    </li>
-    <li> <b>autoclass</b>: The bucket's <a href="https://cloud.google.com/storage/docs/autoclass" target="_blank">Autoclass configuration</a>, which, when enabled, controls the storage class of objects based on how and when the objects are accessed.
-    <ul>
-        <li> <b>autoclass.enabled</b>: Whether or not Autoclass is enabled. By default, this boolean is not set, and Autoclass is disabled.</li>
-        <li> <b>autoclass.toggleTime</b>: The time at which Autoclass was last enabled or disabled for this bucket, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
-    </ul>
-    </li>
-    <li> <b>softDeletePolicy</b>: The bucket’s soft delete policy, which defines the period of time that soft-deleted objects will be retained, and cannot be permanently deleted.
-    <ul>
-        <li> <b>softDeletePolicy.effectiveTime</b>: The time from which the policy, or one with a greater retention duration, was effective. This value is in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. <br> Note that the bucket metadata is cached for 10 seconds. This means that for 10 seconds after the effective time, soft-deleted objects may be subject to the old soft delete policy or the new soft delete policy. </li>
-        <li> <b>softDeletePolicy.retentionDurationSeconds</b>: The period of time in seconds that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. <br> The value must be greater than or equal to 604,800 seconds (7 days) and less than 7,776,000 seconds (90 days). This value follows the <a href="https://cloud.google.com/storage/docs/bucket-lock#retention-periods" target="_blank">retention period</a> time unit conventions.</li>
-    </ul>
-    </li>
-    <li> <b>tags</b>: Tags are key-value pairs you can apply to your resources for fine-grained access control. See <a href="https://cloud.google.com/storage/docs/tags-and-labels#tags" target="_blank">Bucket Tags</a> for more details.
-    <ul>
-        <li> <b>tags.lastUpdatedTime</b> </li>
-        <li> <b>tags.tagMap</b>
+    <li><b>snapshotTime</b>: The time of the bucket metadata snapshot refresh in <a href="https://datatracker.ietf.org/doc/html/rfc3339">RFC 3339</a> format. All records from the same snapshot refresh share this value.</li>
+    <li><b>name</b>: The name of the bucket.</li>
+    <li><b>location</b>: The location where object data resides. See <a href="https://cloud.google.com/storage/docs/locations">Cloud Storage bucket locations</a>.</li>
+    <li><b>project</b>: The project number of the project the bucket belongs to.</li>
+    <li><b>storageClass</b>: The bucket's default storage class. See <a href="https://cloud.google.com/storage/docs/storage-classes">Storage classes</a>.</li>
+    <li><b>lifecycle</b>: A boolean indicating if the bucket has a <a href="https://cloud.google.com/storage/docs/lifecycle">lifecycle configuration</a>.</li>
+    <li><b>metageneration</b>: The metadata generation of this bucket.</li>
+    <li><b>timeCreated</b>: The creation time of the bucket in <a href="https://datatracker.ietf.org/doc/html/rfc3339">RFC 3339</a> format.</li>
+    <li><b>iamConfiguration</b>: The IAM configuration for the bucket.
         <ul>
-            <li><b>tags.tagMap.key</b></li>
-            <li><b>tags.tagMap.value</b></li>
-        </ul>
-        </li>
-    </ul>
-    </li>
-    <li> <b>labels</b>: User-provided <a href="https://cloud.google.com/storage/docs/tags-and-labels#bucket-labels" target="_blank">bucket labels </a>, in key/value pairs.
-    <ul>
-        <li> <b>labels.key</b>: An individual label entry key.</li>
-        <li> <b>labels.value</b>: An individual label entry value. </li>
-    </ul>
-    </li>
-</ul>
-</div>
-
-
-
-# Error Attributes
-
-<div style="text-align: justify; line-height: 1.5;">
-
-
-This view will display the errors related to GCS
-
-<br>
-
-This table has the following columns:
-
-<br>
-
-<ul>
-    <li><b>errorCode</b>: The error code associated with this entry. See below for currently supported error codes.</li>
-    <li><b>errorSource</b>: The source of the error (currently only CONFIGURATION_PREPROCESSING).</li>
-    <li><b>errorTime</b>: The time the error happened.</li>
-    <li><b>sourceGcsLocation</b>: The source GCS location of the error. For projects this field is null given they are locationless.</li>
-    <li><b>bucketErrorRecord</b>: Record with information needed to debug a bucket error.
-        <ul>
-            <li><b>bucketErrorRecord.bucketName</b>: The name of the bucket involved in the error.</li>
-            <li><b>bucketErrorRecord.serviceAccount</b>: The service account that needs permission to ingest objects from the bucket.</li>
+            <li><b>iamConfiguration.publicAccessPrevention</b>: Status of <a href="https://cloud.google.com/storage/docs/public-access-prevention">public access prevention</a> ("inherited" or "enforced").</li>
+            <li><b>iamConfiguration.uniformBucketLevelAccess.enabled</b>: Whether <a href="https://cloud.google.com/storage/docs/uniform-bucket-level-access">uniform bucket-level access</a> is enabled.</li>
         </ul>
     </li>
-    <li><b>projectErrorRecord</b>: Record with information needed to debug a project error.
-    <ul>
-        <li><b>projectErrorRecord.projectNumber</b>: The number of the project involved in the error.</li>
-        <li><b>projectErrorRecord.organizationName</b>: The name of the organization the project must belong to in order to be processed.</li>
-    </ul>
+    <li><b>autoclass</b>: The bucket's <a href="https://cloud.google.com/storage/docs/autoclass">Autoclass configuration</a>.
+        <ul>
+            <li><b>autoclass.enabled</b>: Whether Autoclass is enabled.</li>
+            <li><b>autoclass.toggleTime</b>: The last time Autoclass was enabled or disabled.</li>
+        </ul>
     </li>
+    <li><b>softDeletePolicy</b>: Defines the retention period for soft-deleted objects.
+        <ul>
+            <li><b>softDeletePolicy.effectiveTime</b>: The time from which the current policy (or a stricter one) became effective.</li>
+            <li><b>softDeletePolicy.retentionDurationSeconds</b>: Retention period in seconds (between 604,800 and 7,776,000).</li>
+        </ul>
+    </li>
+    <li><b>resourceTags</b>: The bucket's <a href="https://cloud.google.com/storage/docs/tags-and-labels#tags">Tags</a> for access control.
+        <ul>
+            <li><b>resourceTags.key</b>: The tag key.</li>
+            <li><b>resourceTags.value</b>: The tag value.</li>
+        </ul>
+    </li>
+    <li><b>labels</b>: User-provided <a href="https://cloud.google.com/storage/docs/tags-and-labels#bucket-labels">bucket labels</a> (key-value pairs).
+        <ul>
+            <li><b>labels.key</b>: The label key.</li>
+            <li><b>labels.value</b>: The label value.</li>
+        </ul>
+    </li>
+    <li><b>public <small>(Deprecated)</small></b>: Indicates public accessibility. Use <code>iamConfiguration</code> instead.</li>
+    <li><b>tags <small>(Deprecated)</small></b>: User-defined key-value pairs. Use <code>resourceTags</code> instead.</li>
 </ul>
 </div>
 
 
-| Error Code | Error Case                                   | Error Message                                                                                                      | Troubleshooting                                                                                                                                  |
-|------------|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1          |Source project not in organization error      |"Source project *projectErrorRecord.projectNumber not in organization* projectErrorRecord.organizationName."        |"Add source project *projectErrorRecord.projectNumber* to organization *projectErrorRecord.organizationName*."                                    |
-| 2          |Bucket authorization error                    |"Permission denied for ingesting objects for bucket *bucketErrorRecord.bucketName*."                                |"Give service account *bucketErrorRecord.serviceAccount* IAM permissions to allow ingestion of objects for bucket *bucketErrorRecord.bucketName*."|
-| 3          |Destination project not in organization error |"Destination project *projectErrorRecord.projectNumber* not in organization *projectErrorRecord.organizationName*." |"Add destination project *projectErrorRecord.projectNumber* to organization *projectErrorRecord.organizationName*."                               |
-| 4          |Source project not Management Hub entitled    |"Source project *projectErrorRecord.projectNumber* is not Management Hub entitled."                                 |"Configure Management Hub for source project *projectErrorRecord.projectNumber*."                                                                 |
-| 5          |Bucket not Management Hub entitled            |"Bucket *bucketErrorRecord.bucketName* is not Management Hub entitled."                                             |"Configure Management Hub for bucket *bucketErrorRecord.bucketName*."                                                                             |
 
-
-
-# Events
+# Error codes
 
 <div style="text-align: justify; line-height: 1.5;">
 
-This view displays the timestamp at which data became available in the Object Attributes or Bucket Attributes views.
-<br>
-
-This table has the following columns:
-<br>
+<h3>Error Attributes Schema</h3>
+<p>The <code>error_attributes_view</code> view displays errors related to snapshot processing and configuration. Use this table to debug why certain projects or buckets may be missing from your reports.</p>
 
 <ul>
-    <li><b>manifest</b>
-    <ul>
-        <li><b>location</b>:GCS source location.</li>
-        <li><b>snapshotTime</b>: snapshotTime of the manifest row.</li>
-        <li><b>viewName</b>:Table category associated with the row. Currently it supports ‘bucket_attributes_view’ and ‘object_attributes_view’.</li>
-    </ul>
+    <li><b>errorCode</b>: The unique numerical code for the error. See the troubleshooting table below for details.</li>
+    <li><b>errorSource</b>: The source of the error. Valid value: <code>CONFIGURATION_PREPROCESSING</code>.</li>
+    <li><b>errorTime</b>: The time the error occurred in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>sourceGcsLocation</b>: The source location of the error. This field is <code>null</code> for project-level errors.</li>
+    <li><b>bucketErrorRecord</b>: Data for debugging bucket-level issues.
+        <ul>
+            <li><b>bucketName</b>: The name of the bucket involved in the error.</li>
+            <li><b>serviceAccount</b>: The service account that requires permissions for the bucket.</li>
+        </ul>
     </li>
-    <li><b>eventTime</b>: Time of completion of the event. The standard currently is the BigQuery job end time (precision to milliseconds level).</li>
-    <li><b>eventCode</b>: Unique code given to each type of event.</li>
+    <li><b>projectErrorRecord</b>: Data for debugging project-level issues.
+        <ul>
+            <li><b>projectNumber</b>: The number of the project involved in the error.</li>
+            <li><b>organizationName</b>: The name of the organization the project must belong to. A value of <code>0</code> indicates the project is not in the organization.</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Troubleshoot Dataset Errors</h4>
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Error Case</th>
+            <th>Troubleshooting</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>1</b></td>
+            <td>Source project not in organization</td>
+            <td>Ensure <code>projectErrorRecord.projectNumber</code> is correctly added to the organization.</td>
+        </tr>
+        <tr>
+            <td><b>2</b></td>
+            <td>Bucket authorization error</td>
+            <td>Grant the service agent IAM permissions to allow ingestion of objects for <code>bucketErrorRecord.bucketName</code>.</td>
+        </tr>
+        <tr>
+            <td><b>3</b></td>
+            <td>Destination project not in organization</td>
+            <td>Add the destination project to the organization.</td>
+        </tr>
+        <tr>
+            <td><b>4</b></td>
+            <td>Source project Storage Intelligence error</td>
+            <td>Ensure <a href="https://cloud.google.com/storage/docs/insights/configure-datasets" target="_blank">Storage Intelligence</a> is configured for the source project.</td>
+        </tr>
+        <tr>
+            <td><b>5</b></td>
+            <td>Bucket Storage Intelligence error</td>
+            <td>Ensure <a href="https://cloud.google.com/storage/docs/insights/configure-datasets" target="_blank">Storage Intelligence</a> is configured for the specific bucket.</td>
+        </tr>
+        <tr>
+            <td><b>6</b></td>
+            <td>Activity access authentication error</td>
+            <td>Grant IAM permissions to the service agent to allow ingestion of <b>activity data</b> for the bucket.</td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>
+
+# Object Activity Data
+
+<div style="text-align: justify; line-height: 1.5;">
+<p>The <code>object_events_view</code> table provides queryable records of create, update, and delete object operations, metadata, and details about errors encountered. This data includes the following fields:</p>
+
+<ul>
+    <li><b>bucketName</b>: The name of the bucket specified in the request.</li>
+    <li><b>errorReason</b>: The reason for the error (currently limited to 429 errors).</li>
+    <li><b>generation</b>: The content generation of the object, used for object versioning.</li>
+    <li><b>location</b>: The physical location of the object.</li>
+    <li><b>objectName</b>: The name of the object specified in the request. This field can be null.</li>
+    <li><b>project</b>: The project number that owns the bucket resource.</li>
+    <li><b>requestBytes</b>: The number of bytes sent in the request.</li>
+    <li><b>requestCompletionTimestamp</b>: The timestamp when the request was completed, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>requestHost</b>: The host specified in the original request.</li>
+    <li><b>requestHttpMethod</b>: The HTTP method used for the request (e.g., PUT, POST, DELETE).</li>
+    <li><b>requestId</b>: The unique identifier for the request.</li>
+    <li><b>requestOperation</b>: The Cloud Storage operation performed (limited to write, update, and delete operations). This field can be null.</li>
+    <li><b>requestProcessingTimeMicros</b>: The time in microseconds the server took to process the request.</li>
+    <li><b>requestReferrer</b>: The HTTP referrer for the request.</li>
+    <li><b>responseBytes</b>: The number of bytes sent in the response.</li>
+    <li><b>responseStatus</b>: The HTTP status code sent in the server's response.</li>
+    <li><b>size</b>: The size of the object in bytes.</li>
+    <li><b>storageClass</b>: The storage class of the object.</li>
+    <li><b>timeCreated</b>: The object's creation time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+</ul>
+</div>
+
+# Project Activity
+
+<div style="text-align: justify; line-height: 1.5;">
+
+<p>The <code>project_activity_view</code> table offers aggregated operational insights across your projects. This table summarizes activity by counting operation types, bytes transferred, and response codes.</p>
+
+<ul>
+    <li><b>count2xx</b>: The total number of 2xx success responses.</li>
+    <li><b>count400</b>: The total number of 400 errors for bad requests.</li>
+    <li><b>count401</b>: The total number of 401 errors for unauthorized requests.</li>
+    <li><b>count403</b>: The total number of 403 errors for forbidden requests.</li>
+    <li><b>count429</b>: The total number of 429 errors for usage limit exceeded requests.</li>
+    <li><b>count4xx</b>: The total number of 4xx errors.</li>
+    <li><b>count5xx</b>: The total number of 5xx errors.</li>
+    <li><b>project</b>: The project number.</li>
+    <li><b>snapshotEndTime</b>: The snapshot's end time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>snapshotStartTime</b>: The snapshot's start time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>totalDeletes</b>: The total number of delete operations.</li>
+    <li><b>totalLists</b>: The total number of list operations.</li>
+    <li><b>totalReads</b>: The total number of read operations.</li>
+    <li><b>totalRequestBytes</b>: The total number of request bytes transferred.</li>
+    <li><b>totalRequests</b>: The total number of requests made across the project.</li>
+    <li><b>totalResponseBytes</b>: The total number of response bytes transferred.</li>
+    <li><b>totalUpdates</b>: The total number of update operations.</li>
+    <li><b>totalWrites</b>: The total number of write operations.</li>
 </ul>
 
 </div>
 
-# Object Attributes
+# Bucket Activity
+
+<div style="text-align: justify; line-height: 1.5;">
+    <p>The <code>bucket_activity_view</code> table offers aggregated operational insights across your buckets, including operation types, bytes transferred, response codes, and top prefixes. </p>
+
+<ul>
+    <li><b>count2xx</b>: The total number of 2xx success responses.</li>
+    <li><b>count400</b>: The total number of 400 errors for bad requests.</li>
+    <li><b>count401</b>: The total number of 401 errors for unauthorized requests.</li>
+    <li><b>count403</b>: The total number of 403 errors for forbidden requests.</li>
+    <li><b>count429</b>: The total number of 429 errors for usage limit exceeded requests.</li>
+    <li><b>count4xx</b>: The total number of 4xx errors.</li>
+    <li><b>count5xx</b>: The total number of 5xx errors.</li>
+    <li><b>generation</b>: The bucket's generation number.</li>
+    <li><b>location</b>: The location of the bucket.</li>
+    <li><b>name</b>: The name of the bucket.</li>
+    <li><b>project</b>: The project number.</li>
+    <li><b>snapshotEndTime</b>: The snapshot's end time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>snapshotStartTime</b>: The snapshot's start time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>topPrefixes429Errors</b>: The top 5 bucket prefixes with the most 429 errors.
+        <ul>
+            <li><b>prefix</b>: The bucket prefix string.</li>
+            <li><b>count</b>: The error count.</li>
+        </ul>
+    </li>
+    <li><b>topPrefixesHighestOperations</b>: The top 5 bucket prefixes with the highest number of operations.
+        <ul>
+            <li><b>prefix</b>: The bucket prefix string.</li>
+            <li><b>count</b>: The operation count.</li>
+        </ul>
+    </li>
+    <li><b>topPrefixesRequestBytes</b>: The top 5 bucket prefixes with the highest number of requested bytes.
+        <ul>
+            <li><b>prefix</b>: The bucket prefix string.</li>
+            <li><b>count</b>: The byte count.</li>
+        </ul>
+    </li>
+    <li><b>topPrefixesResponseBytes</b>: The top 5 bucket prefixes with the highest number of response bytes.
+        <ul>
+            <li><b>prefix</b>: The bucket prefix string.</li>
+            <li><b>count</b>: The byte count.</li>
+        </ul>
+    </li>
+    <li><b>totalDeletes</b>: The total number of delete operations.</li>
+    <li><b>totalLists</b>: The total number of list operations.</li>
+    <li><b>totalReads</b>: The total number of read operations.</li>
+    <li><b>totalRequestBytes</b>: The total number of request bytes transferred.</li>
+    <li><b>totalRequests</b>: The total number of requests made on the bucket.</li>
+    <li><b>totalResponseBytes</b>: The total number of response bytes transferred.</li>
+    <li><b>totalUpdates</b>: The total number of update operations.</li>
+    <li><b>totalWrites</b>: The total number of write operations.</li>
+</ul>
+</div>
+
+# Bucket Region Activity
 
 <div style="text-align: justify; line-height: 1.5;">
 
-Inside this view we can see metadata about the available objects inside your projects or organization.
-<br>
-
-This table has the following columns:
-<br>
+<p>The <code>bucket_region_activity_view</code> table summarizes the total bytes sent and received for a bucket, aggregated by destination region. Use this data to identify regional egress patterns and optimize bucket placement for performance and cost.</p>
 
 <ul>
-    <li><b>snapshotTime</b>: The snapshot time of the object metadata in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>bucketLocation</b>: The location of the bucket.</li>
+    <li><b>generation</b>: The bucket's generation number.</li>
+    <li><b>name</b>: The name of the bucket.</li>
+    <li><b>project</b>: The project number for the bucket.</li>
+    <li><b>requestBytes</b>: The total number of bytes transferred for requests between the specified bucket and the <code>requestLocation</code>.</li>
+    <li><b>requestLocation</b>: The Google Cloud location where the request originated.</li>
+    <li><b>responseBytes</b>: The total number of bytes transferred for responses between the specified bucket and the <code>requestLocation</code>.</li>
+    <li><b>snapshotEndTime</b>: The snapshot's end time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>snapshotStartTime</b>: The snapshot's start time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+</ul>
+
+</div>
+
+# Events log
+
+<div style="text-align: justify; line-height: 1.5;">
+
+<p>The events log schema includes the <code>events_log_view</code> table. This view displays the timestamps and status codes for when data becomes available in the metadata or activity views.</p>
+
+<ul>
+    <li><b>eventCode</b>: The event code associated with the corresponding entry. The values are as follows:
+        <ul>
+            <li><b>eventCode 1</b>: Indicates that the <code>manifest.viewName</code> view is refreshed with all entries for the source location (<code>manifest.location</code>) within the snapshot (<code>manifest.snapshotTime</code>).</li>
+            <li><b>eventCode 2</b>: Indicates that the dataset is refreshed with the bucket and object entries for all source locations. The refresh occurs within the snapshot (<code>globalManifest.snapshotTime</code>).</li>
+            <li><b>eventCode 3</b>: Refers to the activity data views being refreshed with all entries for the source location (<code>manifest.location</code>) within the log window.</li>
+        </ul>
+    </li>
+    <li><b>eventTime</b>: The time the event occurred in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>globalManifest.snapshotTime</b>: The ingestion completion time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format, for the bucket and object attributes tables across all source locations.</li>
+    <li><b>manifest</b>: Information regarding the specific data refresh event.
+        <ul>
+            <li><b>manifest.location</b>: The source location (region or multi-region) of the data that refreshes.</li>
+            <li><b>manifest.snapshotTime</b>: The time, in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format, when the snapshot of the events is refreshed.</li>
+            <li><b>manifest.viewName</b>: The name of the view that refreshes (e.g., <code>bucket_attributes_view</code>, <code>object_attributes_view</code>, or activity views).</li>
+        </ul>
+    </li>
+</ul>
+
+</div>
+
+# Object Metadata
+
+<div style="text-align: justify; line-height: 1.5;">
+<p>The object metadata schema includes the <code>object_attributes_view</code> and <code>object_attributes_latest_snapshot_view</code> tables. These tables have the following fields:</p>
+
+<ul>
+    <li><b>snapshotTime</b>: The time of the object metadata snapshot refresh in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. All records generated from the same snapshot refresh have the same <code>snapshotTime</code>.</li>
     <li><b>bucket</b>: The name of the bucket containing this object.</li>
-    <li><b>location</b>: The <a href="https://cloud.google.com/storage/docs/locations" target="_blank"> location</a> of the source bucket.</li>
-    <li><b>componentCount</b>: Returned for <a href="https://cloud.google.com/storage/docs/composite-objects" target="_blank">composite</a> objects only. Number of non-composite objects in the composite object. componentCount includes non-composite objects that were part of any composite objects used to compose the current object. Note: Composite objects do not have an MD5 hash metadata field.</li>
-    <li><b>contentDisposition</b>: <a href="https://datatracker.ietf.org/doc/html/rfc6266" target="_blank">Content-Disposition</a> of the object data.</li>
-    <li><b>contentEncoding</b>: <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.2.2" target="_blank">Content-Encoding</a> of the object data.</li>
-    <li><b>contentLanguage</b>: <a href="https://cloud.google.com/storage/docs/metadata#content-language" target="_blank">Content-Language</a> of the object data.</li>
-    <li><b>contentLanguage</b>: <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.1.5" target="_blank">Content-Type</a> of the object data. If an object is stored without a Content-Type, it is served as application/octet-stream.</li>
-    <li><b>crc32c</b>: CRC32c checksum, as described in <a href="https://datatracker.ietf.org/doc/html/rfc4960#appendix-B" target="_blank">RFC 4960</a>, Appendix B; encoded using <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-4" target="_blank">base64</a> in big-endian byte order. For more information about using the CRC32c checksum, see <a href="https://cloud.google.com/storage/docs/data-validation#json-api" target="_blank"> Hashes and eTags: best practices</a>. </li>
-    <li><b>customTime</b>: A user-specified timestamp for the object in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. Once set on an object, customTime cannot be removed and cannot be set to an earlier datetime. For more information, see <a href="https://cloud.google.com/storage/docs/metadata#custom-time" target="_blank">custom time metadata</a>.</li>
-    <li><b>etag</b>: HTTP 1.1 <a href="https://datatracker.ietf.org/doc/html/rfc7232#section-2.3" target="_blank">Entity tag</a> for the object.</li>
-    <li><b>eventBasedHold</b>: Whether or not the object is subject to an <a href="https://cloud.google.com/storage/docs/object-holds#hold-types" target="_blank">event-based hold</a>.</li>
-    <li><b>generation</b>: The content <a href="https://cloud.google.com/storage/docs/metadata#generation-number" target="_blank">generation</a> of this object. Used for object versioning.</li>
-    <li><b>md5Hash</b>: MD5 hash of the data, encoded using <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-4" target="_blank">base64</a>. This field is not present for <a href="https://cloud.google.com/storage/docs/composite-objects" target="_blank">composite objects</a>. For more information about using the MD5 hash, see <a href="https://cloud.google.com/storage/docs/data-validation#json-api" target="_blank">Hashes and ETags: Best Practices</a>.</li>
-    <li><b>mediaLink</b>: A URL for downloading the object's data. You should generally use one of the other <a href="https://cloud.google.com/storage/docs/request-endpoints#typical" target="_blank">JSON API endpoints</a> instead.</li>
-    <li><b>metageneration</b>: The version of the metadata for this object at this generation. Used for preconditions and for detecting changes in metadata. A metageneration number is only meaningful in the context of a particular generation of a particular object.</li>
-    <li><b>name</b>: The name of the object. Required if not specified by URL parameter.</li>
-    <li><b>selfLink</b>: A URL for this object. You should generally use one of the other <a href="https://cloud.google.com/storage/docs/request-endpoints#typical" target="_blank">JSON API endpoints</a> instead.</li>
+    <li><b>name</b>: The name of the object.</li>
     <li><b>size</b>: <a href="https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.2" target="_blank">Content-Length</a> of the data in bytes.</li>
-    <li><b>storageClass</b>: <a href="https://cloud.google.com/storage/docs/storage-classes" target="_blank">Storage class</a> of the object. To change an object's storage class, use <a href="https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite" target="_blank">objects rewrite</a>.</li>
-    <li><b>temporaryHold</b>: Whether or not the object is subject to a <a href="https://cloud.google.com/storage/docs/object-holds#hold-types" target="_blank">temporary hold</a>.</li>
+    <li><b>storageClass</b>: Storage class of the object.</li>
+    <li><b>generation</b>: The content <a href="https://cloud.google.com/storage/docs/metadata#generation-number" target="_blank">generation</a> of this object. Used for object versioning.</li>
+    <li><b>metageneration</b>: The version of the metadata for this object at this generation. Used for preconditions and for detecting changes in metadata.</li>
+    <li><b>contentType</b>: <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.1.5" target="_blank">Content-Type</a> of the object data. If an object is stored without a Content-Type, it is served as <code>application/octet-stream</code>.</li>
+    <li><b>contentEncoding</b>: <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.2.2" target="_blank">Content-Encoding</a> of the object data.</li>
+    <li><b>contentDisposition</b>: <a href="https://datatracker.ietf.org/doc/html/rfc6266" target="_blank">Content-Disposition</a> of the object data.</li>
+    <li><b>contentLanguage</b>: <a href="https://cloud.google.com/storage/docs/metadata#content-language" target="_blank">Content-Language</a> of the object data.</li>
     <li><b>timeCreated</b>: The creation time of the object in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
-    <li><b>timeDeleted</b>: The deletion time of the object in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. Returned if and only if this version of the object is no longer a live version, but remains in the bucket as a <a href="https://cloud.google.com/storage/docs/object-versioning" target="_blank">noncurrent version</a>.</li>
-    <li><b>updated</b>: The <a href="https://cloud.google.com/storage/docs/metadata#modification-time" target="_blank">modification time</a> of the object metadata in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. Set initially to object creation time and then updated whenever any metadata of the object changes. This includes changes made by a requester, such as modifying custom metadata, as well as changes made by Cloud Storage on behalf of a requester, such as changing the storage class based on an Object Lifecycle Configuration.</li>
-    <li><b>timeStorageClassUpdated</b>: The time at which the object's storage class was last changed. When the object is initially created, it will be set to timeCreated.</li>
-    <li><b>retentionExpirationTime</b>: The earliest time that the object can be deleted, which depends on any <a href="https://cloud.google.com/storage/docs/object-lock" target="_blank">retention configuration</a> set for the object and any <a href="https://cloud.google.com/storage/docs/bucket-lock#retention-policy" target="_blank">retention policy</a> set for the bucket that contains the object. The value for retentionExpriationTime is given in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>updated</b>: The <a href="https://cloud.google.com/storage/docs/metadata#modification-time" target="_blank">modification time</a> of the object metadata in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>timeDeleted</b>: The time the object was deleted in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. Returned only if the version is a <a href="https://cloud.google.com/storage/docs/object-versioning" target="_blank">noncurrent version</a>.</li>
+    <li><b>timeStorageClassUpdated</b>: The time at which the object's storage class was last changed.</li>
+    <li><b>customTime</b>: A user-specified timestamp for the object in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
+    <li><b>crc32c</b>: CRC32c checksum, as described in <a href="https://datatracker.ietf.org/doc/html/rfc4960#appendix-B" target="_blank">RFC 4960, Appendix B</a>; encoded using <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-4" target="_blank">base64</a>.</li>
+    <li><b>md5Hash</b>: MD5 hash of the data, encoded using <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-4" target="_blank">base64</a>. This field is not present for composite objects.</li>
+    <li><b>etag</b>: HTTP 1.1 <a href="https://datatracker.ietf.org/doc/html/rfc7232#section-2.3" target="_blank">Entity tag</a> for the object.</li>
+    <li><b>componentCount</b>: Returned for <a href="https://cloud.google.com/storage/docs/composite-objects" target="_blank">composite objects</a> only. The number of non-composite objects in the composite object.</li>
+    <li><b>kmsKeyName</b>: The Cloud KMS resource name of the <a href="https://cloud.google.com/storage/docs/encryption/customer-managed-keys" target="_blank">customer-managed encryption key</a> used to encrypt the object.</li>
+    <li><b>temporaryHold</b>: Whether or not the object is subject to a <a href="https://cloud.google.com/storage/docs/object-holds#hold-types" target="_blank">temporary hold</a>.</li>
+    <li><b>eventBasedHold</b>: Whether or not the object is subject to an <a href="https://cloud.google.com/storage/docs/object-holds#hold-types" target="_blank">event-based hold</a>.</li>
+    <li><b>retentionExpirationTime</b>: The earliest time that the object can be deleted, based on <a href="https://cloud.google.com/storage/docs/object-lock" target="_blank">retention configurations</a>.</li>
     <li><b>softDeleteTime</b>: If this object has been soft-deleted, this is the time at which it became soft-deleted.</li>
-    <li><b>hardDeleteTime</b>: This is the time (in the future) when the object will no longer be restorable. It is equal to the soft delete time plus the soft delete retention duration of the bucket. Note that the hard delete time will not change in response to future changes to the bucket soft delete retention duration. <br> This property is only set for soft-deleted objects.</li>
+    <li><b>hardDeleteTime</b>: The time when the object will no longer be restorable. Set only for soft-deleted objects.</li>
     <li><b>metadata</b>: User-provided metadata, in key/value pairs.
-    <ul>
-        <li><b>metadata.key</b>: An individual metadata entry key.</li>
-        <li><b>metadata.value</b>: An individual metadata entry value.</li>
-    </ul>
+        <ul>
+            <li><b>metadata.key</b>: An individual metadata entry key.</li>
+            <li><b>metadata.value</b>: An individual metadata entry value.</li>
+        </ul>
     </li>
+    <li><b>selfLink</b>: A URL for this object.</li>
+    <li><b>mediaLink</b>: A URL for downloading the object's data.</li>
 </ul>
 </div>
 
-# Project Attributes
+# Project Metadata
 
 <div style="text-align: justify; line-height: 1.5;">
 
-Inside this view we can see metadata about the available projects inside your organization.
-
-<br>
-This table has the following columns:
-<br>
+<p>The project metadata schema includes the <code>project_attributes_view</code> table. This table have the following fields:</p>
 
 <ul>
-    <li><b>snapshotTime</b>: The snapshot time of the object metadata in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format.</li>
-    <li><b>project</b>: The project number</li>
-    <li><b>projectName</b>: The project name</li>
-    <li><b>projectID</b>: The project ID</li>
+    <li><b>snapshotTime</b>: The <code>snapshotTime</code> field stores the time of the project metadata snapshot refresh in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. All records that are generated from the same snapshot refresh have the same <code>snapshotTime</code>.</li>
+    <li><b>project</b>: The project number of the project.</li>
+    <li><b>projectId</b>: The project ID of the project.</li>
+    <li><b>projectName</b>: The name of the project.</li>
 </ul>
+</div>
 
 # Regions Information CTE
 
@@ -271,7 +459,7 @@ This table has the following columns:
 
 <ul>
     <li><b>location</b>: The <a href="https://cloud.google.com/storage/docs/locations" target="_blank"> location</a> of the source bucket.</li>
-    <li><b>geographic_area</b>: The Gographic Area is determined by the bucket's location, as specified in the official documentation for <a href="https://cloud.google.com/storage/docs/locations#location-r" target="_blank"> location</a>Single-Region locations</a>. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa</li>
+    <li><b>geographic_area</b>: The Gographic Area is determined by the bucket's location, as specified in the official documentation for <a href="https://cloud.google.com/storage/docs/locations#location-r" target="_blank"> location</a>. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa</li>
     <li><b>location_type</b>: The location type is contingent upon the region configuration. It may be Single-Region, Dual-Region, or Multi-Region.</li>
     <li><b>countries</b>: The different countries' combinations that are based on the selected region.</li>
     <li><b>state</b>: The different state combinations that are based on the selected region.</li>
@@ -281,107 +469,31 @@ This table has the following columns:
 </ul>
 </div>
 
-# Bucket and Object Attributes Persistent Derived Tables
+# Visualizations
 <div style="text-align: justify; line-height: 1.5;">
-To optimize performance for large Bucket Attributes and Object Attributes tables, we implemented a method to retrieve the latest information without querying the original tables. This data is stored in a <i>looker-scratch-schema</i> within a separate dataset, preconfigured during the gcs-storage-intelligence dataset setup in Looker.
-<br>
+<h3>Sankey Visualization for Bucket Region Activity</h3>
+<p>The <b>Bucket Region Activity</b> dashboard utilizes the <b>Sankey Diagram Visualization</b> to effectively map the flow of data between your bucket locations and the regions where requests originate. This visualization must be installed in your Looker instance for the dashboard to render correctly.</p>
 
-To explain the CTEs incorporated within this Persistent Derived Table, we will begin by examining the following SQL statement:
+<h4>Option 1: Install via Looker Marketplace</h4>
+<ol>
+    <li>Navigate to your Looker instance and click the <b>Marketplace icon</b> (storefront symbol) in the top-right corner.</li>
+    <li>Select <b>Manage</b> to check if the "Sankey" visualization is already installed.</li>
+    <li>If it is not installed, click <b>Discover</b> and search for "Sankey Visualization".</li>
+    <li>Select the visualization, click <b>Install</b>, and follow the on-screen steps to complete the setup.</li>
+</ol>
+
+<h4>Option 2: Manual Installation (GitHub Fallback)</h4>
+<p>If you do not have access to the Looker Marketplace, you can install the visualization manually:</p>
+<ol>
+    <li>Visit the <a href="https://github.com/looker-open-source/viz-sankey-marketplace" target="_blank">Sankey Visualization GitHub repository</a>.</li>
+    <li>Download the repository files to your local machine.</li>
+    <li>In Looker, create a new blank project (e.g., <code>sankey-viz</code>).</li>
+    <li>Upload the downloaded files into this new Looker project.</li>
+    <li>Once the project is saved and deployed, the Sankey diagram will become available for use in your dashboards.</li>
+</ol>
+
+<p><i>Note: If you encounter any technical issues during the installation process, please contact Looker Support for assistance.</i></p>
 </div>
-
-
-```
-
-WITH
-    distinct_snapshots AS (
-        SELECT
-          DISTINCT snapshotTime
-        FROM
-          `@{project_id}.@{bigquery_dataset}.object_attributes_view`
-        WHERE
-          snapshotTime IS NOT NULL
-        INTERSECT DISTINCT
-        SELECT
-          DISTINCT snapshotTime
-        FROM
-          `@{project_id}.@{bigquery_dataset}.bucket_attributes_view`
-        WHERE
-          snapshotTime IS NOT NULL)
-
-```
-
-<div style="text-align: justify; line-height: 1.5;">
-The <b>distinct_snapshots</b> table provides a comprehensive list of all unique snapshot timestamps found across the Bucket and Object tables. This resource facilitates the retrieval of the latest snapshot for subsequent querying and analysis.
-
-
-<br>
-Subsequently, the latest bucket and object attributes are retrieved by filtering based on the maximum snapshotTime value.
-
-</div>
-
-
-
-```
-bucket_attributes_latest AS (
-        SELECT
-          *
-        FROM
-          `@{project_id}.@{bigquery_dataset}.bucket_attributes_view`
-        WHERE
-          snapshotTime = (
-            SELECT
-              MAX(snapshotTime)
-            FROM
-              distinct_snapshots
-          )
-```
-
-```
-object_attributes_latest AS (
-        SELECT
-          *
-        FROM
-          `@{project_id}.@{bigquery_dataset}.object_attributes_view`
-        WHERE
-          snapshotTime = (
-            SELECT
-              MAX(snapshotTime)
-            FROM
-              distinct_snapshots
-          )
-```
-
-<div style="text-align: justify; line-height: 1.5;">
-These Derived Tables will be materialized as actual tables within your Looker scratch schema dataset. To control the table creation process, both table types will utilize a datagroup parameter: <i>gcs_storage_intelligence_datagroup</i> .
-
-<br>
-To understand how this datagroup is utilized by Looker, it is essential to examine its associated SQL trigger:
-
-</div>
-
-```
-sql_trigger:
-    WITH st_total AS (
-      SELECT
-        DATE(manifest.snapshotTime) AS snapshotTime,
-        COUNT(*) AS total
-      FROM
-        `@{project_id}.@{bigquery_dataset}.events_view`
-      WHERE
-        manifest.viewName = 'object_attributes_view' AND
-        manifest.snapshotTime = (
-          SELECT MAX(manifest.snapshotTime)
-          FROM `@{project_id}.@{bigquery_dataset}.events_view`
-        )
-      GROUP BY 1)
-    SELECT CONCAT(CAST(snapshotTime AS STRING), ' | ', CAST(total AS STRING)) AS combined_value
-    FROM st_total;;
-```
-
-<div style="text-align: justify; line-height: 1.5;">
-The provided SQL statement defines a Common Table Expression (CTE) named st_total. This CTE retrieves the snapshotTime from the manifest table and an aggregated count of events derived from the objects_attributes_view. Should either of these values change, the datagroup's sql_trigger prompts Looker to rebuild the associated Persistent Derived Table (PDT) utilizing the latest data.
-</div>
-
 
 # Connection
 
@@ -467,8 +579,5 @@ This section provides an overview of the necessary steps to connect your Google 
 
 <div style="text-align: justify; line-height: 1.5;">
 <h1>Coming Soon</h1>
-This section details the projects that will be integrated into Storage Intelligence: <br> <br>
-
-<br>
 We are currently developing additional features that will provide complementary insights to your Google Cloud Storage analysis.
 </div>

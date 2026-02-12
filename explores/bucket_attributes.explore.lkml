@@ -1,16 +1,17 @@
-include: "/views/*.view.lkml"
-
-#####################################################################
+# --------------------------------------------------------------------------
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-#####################################################################
+# Modified Date: Feb 12, 2026
+# --------------------------------------------------------------------------
+
+include: "/views/*.view.lkml"
 
 explore: bucket_attributes  {
-  description: "The Explore establishes relationships between the Bucket Attributes table (primary), the Regions CTE View (via INNER JOIN), and the Project Attributes View (via LEFT OUTER JOIN)."
+  description: "A comprehensive view of the latest bucket-level attributes, mapping each bucket to its physical region and parent project for cross-functional reporting."
 
   join: regions_information {
-    type: inner
+    type: left_outer
     sql_on: ${bucket_attributes.location} = ${regions_information.location} ;;
     relationship: many_to_one
   }
