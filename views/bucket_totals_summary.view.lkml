@@ -16,7 +16,7 @@ view: bucket_totals_summary {
         SUM(CAST(responseBytes AS FLOAT64)) AS total_egress_bytes,
         SUM(CAST(requestBytes AS FLOAT64)) AS total_ingress_bytes
       FROM
-        `@{BIGQUERY_DATASET}.bucket_region_activity_view`
+        `@{PROJECT_ID}.@{BIGQUERY_DATASET}.bucket_region_activity_view`
       WHERE
         {% condition bucket_region_activity.snapshot_start_date %} snapshotStartTime {% endcondition %}
         AND {% condition bucket_region_activity.snapshot_end_date %} snapshotEndTime {% endcondition %}

@@ -8,7 +8,7 @@
 
 view: events {
 
-  sql_table_name: `@{BIGQUERY_DATASET}.events_view` ;;
+  sql_table_name: `@{PROJECT_ID}.@{BIGQUERY_DATASET}.events_view` ;;
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Primary Key -------------------------------
