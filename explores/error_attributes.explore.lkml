@@ -1,13 +1,14 @@
-include: "/views/*.view.lkml"
-
-#####################################################################
+# --------------------------------------------------------------------------
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-#####################################################################
+# Modified Date: Feb 12, 2026
+# --------------------------------------------------------------------------
+
+include: "/views/*.view.lkml"
 
 explore: error_attributes  {
-  description: "The Explore establishes relationships between the Error Attributes table (primary) and the Regions CTE View (via INNER JOIN)."
+  description: "Diagnostic view for identifying and resolving errors encountered during the setup of GCP Storage Intelligence datasets. Includes regional metadata to pinpoint location-specific deployment failures."
 
   join: regions_information {
     type: inner

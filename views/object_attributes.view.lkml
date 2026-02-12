@@ -1,89 +1,43 @@
-#####################################################################
+# --------------------------------------------------------------------------
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Apr 30, 2025
+# Modified Date: Feb 11, 2025
 # Purpose: Contains information about the Object Attributes View Table inside the Storage Intelligence linked Dataset.
-#####################################################################
+# --------------------------------------------------------------------------
 view: object_attributes {
-  derived_table: {
-    datagroup_trigger: gcs_storage_intelligence_datagroup
-    sql: WITH
-        distinct_snapshots AS (
-        SELECT
-          DISTINCT snapshotTime
-        FROM
-          `@{PROJECT_ID}.@{BIGQUERY_DATASET}.object_attributes_view`
-        WHERE
-          snapshotTime IS NOT NULL
-        INTERSECT DISTINCT
-        SELECT
-          DISTINCT snapshotTime
-        FROM
-          `@{PROJECT_ID}.@{BIGQUERY_DATASET}.bucket_attributes_view`
-        WHERE
-          snapshotTime IS NOT NULL), object_attributes_latest AS (
-        SELECT
-          *
-        FROM
-          `@{PROJECT_ID}.@{BIGQUERY_DATASET}.object_attributes_view`
-        WHERE
-          snapshotTime = (
-            SELECT
-              MAX(snapshotTime)
-            FROM
-              distinct_snapshots
-          )
-      )
-      SELECT
-        oa.snapshotTime,
-        oa.bucket,
-        oa.location,
-        oa.componentCount,
-        oa.contentDisposition,
-        oa.contentEncoding,
-        oa.contentLanguage,
-        oa.contentType,
-        oa.crc32c,
-        oa.customTime,
-        oa.etag,
-        oa.eventBasedHold,
-        oa.generation,
-        oa.md5Hash,
-        oa.mediaLink,
-        oa.metageneration,
-        oa.name,
-        oa.selfLink,
-        oa.size,
-        oa.storageClass,
-        oa.temporaryHold,
-        oa.timeCreated,
-        oa.timeDeleted,
-        oa.updated,
-        oa.timeStorageClassUpdated,
-        oa.retentionExpirationTime,
-        oa.softDeleteTime,
-        oa.hardDeleteTime
-      FROM
-        object_attributes_latest AS oa ;;
-  }
 
-  ################################### Primary Key #################################
+  sql_table_name: `@{BIGQUERY_DATASET}.object_attributes_latest_snapshot_view` ;;
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Primary Key -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
     hidden: yes
     primary_key: yes
     type: string
-    sql: GENERATE_UUID();;
-    description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each object, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
+    sql:
+      CONCAT(
+        CAST(${TABLE}.snapshotTime AS STRING), '_',
+        CAST(${TABLE}.generation AS STRING), '_',
+        ${TABLE}.name, '_',
+        ${TABLE}.location, '_',
+        CAST(${TABLE}.project AS STRING), '_',
+        CAST(${TABLE}.timeCreated AS STRING)
+      ) ;;
+    description: "A hidden, composite primary key used to uniquely identify records. It is constructed by concatenating the snapshot time, generation, name, location, project, and time created."
   }
 
-  ################################## Dimensions ##################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Dimensions -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_name {
+    label: "Bucket Name"
     type: string
     sql: ${TABLE}.bucket ;;
-    description: "The name of the Google Cloud Storage (GCS) bucket from which data is being sourced."
+    description: "The unique name of the Google Cloud Storage (GCS) bucket where the object resides."
   }
 
   dimension: component_count {
@@ -167,10 +121,24 @@ view: object_attributes {
     description: "The metadata version (metageneration) for this object's current generation. It is used for preconditions and metadata change detection, and is specific to the object's generation."
   }
 
+  dimension: object_age {
+    label: "Object Age (Days)"
+    type: number
+    sql: DATE_DIFF(CURRENT_DATE(), DATE(${TABLE}.timeCreated), DAY) ;;
+    description: "The date difference between the current date and the object's created date in days."
+  }
+
   dimension: object_name {
     type: string
     sql: ${TABLE}.name ;;
     description: "The name of the Google Cloud Storage (GCS) object from which data is being sourced."
+  }
+
+  dimension: project {
+    label: "Project Number"
+    type: string
+    sql: CAST(${TABLE}.project AS STRING) ;;
+    description: "The Google Cloud project number associated with the project that contains the bucket."
   }
 
   dimension: self_link {
@@ -179,19 +147,20 @@ view: object_attributes {
   }
 
   dimension: size {
+    label: "Object Size"
     type: number
     value_format: "#,##0.00"
     sql:
       {% if size_unit._parameter_value == "PiB" %}
-        ${TABLE}.size / (1125899906842624)
+        ${TABLE}.size / POW(1024, 5)
       {% elsif size_unit._parameter_value == "TiB" %}
-        ${TABLE}.size / (1099511627776)
+        ${TABLE}.size / POW(1024, 4)
       {% elsif size_unit._parameter_value == "GiB" %}
-        ${TABLE}.size / (1073741824)
+        ${TABLE}.size / POW(1024, 3)
       {% elsif size_unit._parameter_value == "MiB" %}
-        ${TABLE}.size / (1048576)
+        ${TABLE}.size / POW(1024, 2)
       {% elsif size_unit._parameter_value == "KiB" %}
-        ${TABLE}.size / (1024)
+        ${TABLE}.size / 1024
       {% else %}
         ${TABLE}.size
       {% endif %};;
@@ -203,7 +172,7 @@ view: object_attributes {
   dimension: storage_class {
     type: string
     sql: ${TABLE}.storageClass ;;
-    description: "The storage class of this Google Cloud Storage (GCS) bucket, such as Standard, Nearline, Coldline, or Archive."
+    description: "The storage class of a Google Cloud Storage (GCS) object. It can be Standard, Nearline, Coldline, Archive or Rapid."
   }
 
   dimension: temporary_hold {
@@ -214,7 +183,9 @@ view: object_attributes {
 
   }
 
-  ############################### Extra Dimensions #############################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Extra Dimensions -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: content_type_prefix {
     group_label: "Content Type"
@@ -290,12 +261,12 @@ view: object_attributes {
     type: string
     sql:
       CASE
-        WHEN ${TABLE}.size > 1125899906842624 THEN "PiB"
-        WHEN ${TABLE}.size  > 1099511627776 THEN "TiB"
-        WHEN ${TABLE}.size > 1073741824 THEN "GiB"
-        WHEN ${TABLE}.size  > 1048576 THEN "MiB"
-        WHEN ${TABLE}.size  > 1024 THEN " KiB"
-        WHEN ${TABLE}.size  <= 1024 THEN "B"
+        WHEN ${TABLE}.size >= POW(1024, 5) THEN "PiB"
+        WHEN ${TABLE}.size >= POW(1024, 4) THEN "TiB"
+        WHEN ${TABLE}.size >= POW(1024, 3) THEN "GiB"
+        WHEN ${TABLE}.size >= POW(1024, 2) THEN "MiB"
+        WHEN ${TABLE}.size >= 1024 THEN " KiB"
+        ELSE "B"
       END;;
     description: "The byte-based unit of measure for the object's storage size, such as B, KiB, MiB, etc."
   }
@@ -319,12 +290,36 @@ view: object_attributes {
     type: string
     sql:
       COALESCE(
-        {% if prefix_depth._parameter_value == "First" %}
-          REGEXP_EXTRACT(${TABLE}.name, r'^([^\/]*\/).*')
-        {% elsif prefix_depth._parameter_value == "Second" %}
-          REGEXP_EXTRACT(${TABLE}.name, r'^([^\/]*\/[^\/]*\/).*')
-        {% elsif prefix_depth._parameter_value == "Third" %}
-          REGEXP_EXTRACT(${TABLE}.name, r'^([^\/]*\/[^\/]*\/[^\/]*\/).*')
+        {% if prefix_depth._parameter_value == "1" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){1})')
+        {% elsif prefix_depth._parameter_value == "2" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){2})')
+        {% elsif prefix_depth._parameter_value == "3" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){3})')
+        {% elsif prefix_depth._parameter_value == "4" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){4})')
+        {% elsif prefix_depth._parameter_value == "5" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){5})')
+        {% elsif prefix_depth._parameter_value == "6" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){6})')
+        {% elsif prefix_depth._parameter_value == "7" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){7})')
+        {% elsif prefix_depth._parameter_value == "8" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){8})')
+        {% elsif prefix_depth._parameter_value == "9" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){9})')
+        {% elsif prefix_depth._parameter_value == "10" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){10})')
+        {% elsif prefix_depth._parameter_value == "11" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){11})')
+        {% elsif prefix_depth._parameter_value == "12" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){12})')
+        {% elsif prefix_depth._parameter_value == "13" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){13})')
+        {% elsif prefix_depth._parameter_value == "14" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){14})')
+        {% elsif prefix_depth._parameter_value == "15" %}
+          REGEXP_EXTRACT(${TABLE}.name, r'^((?:[^/]+/){15})')
         {% else %}
           REGEXP_EXTRACT(${TABLE}.name, r'^(.*\/)[^\/]+$')
         {% endif %}
@@ -340,24 +335,28 @@ view: object_attributes {
     description: "A boolean flag denoting if the object is in a Soft-deleted state."
   }
 
-  ############################### Aid Dimensions ###############################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Aid Dimensions -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: size_aid {
-    hidden: no
+    hidden: yes
     type: string
     sql:
-      CASE
-        WHEN ${TABLE}.size > 1125899906842624 THEN CONCAT(round(${TABLE}.size / 1125899906842624, 2), " PiB")
-        WHEN ${TABLE}.size > 1099511627776 THEN CONCAT(round(${TABLE}.size / 1099511627776, 2), " TiB")
-        WHEN ${TABLE}.size > 1073741824 THEN CONCAT(round(${TABLE}.size / 1073741824,1), " GiB")
-        WHEN ${TABLE}.size > 1048576 THEN CONCAT(round(${TABLE}.size / 1048576, 0), " MiB")
-        WHEN ${TABLE}.size > 1024 THEN CONCAT(round(${TABLE}.size / 1024, 0), " KiB")
-        WHEN ${TABLE}.size <= 1024 THEN CONCAT(${TABLE}.size," B")
-      END;;
+    CASE
+      WHEN ${TABLE}.size >= POW(1024,5) THEN CONCAT(CAST(ROUND(${TABLE}.size / POW(1024,5), 2) AS STRING), " PiB")
+      WHEN ${TABLE}.size >= POW(1024,4) THEN CONCAT(CAST(ROUND(${TABLE}.size / POW(1024,4), 2) AS STRING), " TiB")
+      WHEN ${TABLE}.size >= POW(1024,3) THEN CONCAT(CAST(ROUND(${TABLE}.size / POW(1024,3), 2) AS STRING), " GiB")
+      WHEN ${TABLE}.size >= POW(1024,2) THEN CONCAT(CAST(ROUND(${TABLE}.size / POW(1024,2), 2) AS STRING), " MiB")
+      WHEN ${TABLE}.size >= 1024 THEN CONCAT(CAST(ROUND(${TABLE}.size / 1024, 2) AS STRING), " KiB")
+      ELSE CONCAT(CAST(${TABLE}.size AS STRING), " B")
+    END ;;
     description: "This hidden dimension supports the size dimension by providing the object's size in the most appropriate unit. The value is displayed through an html parameter."
   }
 
-  ################################## Dimension Group ##################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Dimension Group -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension_group: created {
     group_label: "Time Created"
@@ -431,22 +430,24 @@ view: object_attributes {
     description: "The time of the object's most recent update, shown in date/time format. This reflects all changes to the object's settings/metadata."
   }
 
-  ################################## Measures ##################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   measure: average_storage_size {
     type: average
     value_format: "#,##0.00"
     sql:
       {% if size_unit._parameter_value == "PiB" %}
-        ${TABLE}.size / (1125899906842624)
+        ${TABLE}.size / POW(1024,5)
       {% elsif size_unit._parameter_value == "TiB" %}
-        ${TABLE}.size / (1099511627776)
+        ${TABLE}.size / POW(1024,4)
       {% elsif size_unit._parameter_value == "GiB" %}
-        ${TABLE}.size / (1073741824)
+        ${TABLE}.size / POW(1024,3)
       {% elsif size_unit._parameter_value == "MiB" %}
-        ${TABLE}.size / (1048576)
+        ${TABLE}.size / POW(1024,2)
       {% elsif size_unit._parameter_value == "KiB" %}
-        ${TABLE}.size / (1024)
+        ${TABLE}.size / 1024
       {% else %}
         ${TABLE}.size
       {% endif %};;
@@ -455,14 +456,14 @@ view: object_attributes {
   }
 
   measure: bucket_count {
-    label: "Total buckets"
+    label: "Total Buckets"
     type: count_distinct
     sql: ${bucket_name} ;;
     description: "This measure calculates the count of unique buckets within the object's snapshot."
   }
 
   measure: object_count {
-    label: "Total objects"
+    label: "Total Objects"
     value_format: "#,##0"
     type: count
     drill_fields: [detail*]
@@ -498,15 +499,15 @@ view: object_attributes {
     value_format: "#,##0.00"
     sql:
       {% if size_unit._parameter_value == "PiB" %}
-        ${TABLE}.size / (1125899906842624)
+        ${TABLE}.size / POW(1024,5)
       {% elsif size_unit._parameter_value == "TiB" %}
-        ${TABLE}.size / (1099511627776)
+        ${TABLE}.size / POW(1024,4)
       {% elsif size_unit._parameter_value == "GiB" %}
-        ${TABLE}.size / (1073741824)
+        ${TABLE}.size / POW(1024,3)
       {% elsif size_unit._parameter_value == "MiB" %}
-        ${TABLE}.size / (1048576)
+        ${TABLE}.size / POW(1024,2)
       {% elsif size_unit._parameter_value == "KiB" %}
-        ${TABLE}.size / (1024)
+        ${TABLE}.size / 1024
       {% else %}
         ${TABLE}.size
       {% endif %};;
@@ -514,20 +515,23 @@ view: object_attributes {
     description: "A measure that display the storage size sum for all the objects, automatically using the best unit (KiB, MiB, etc.) in Looker. For CSV or Sheets downloads, select your preferred unit with the 'Size Unit' parameter."
   }
 
-  ################################ Aid Measures ################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Aid Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   measure: avg_storage_aid {
     hidden: yes
     type: string
     sql:
       CASE
-        WHEN AVG(${TABLE}.size) > 1152921504606846976 THEN CONCAT(round(AVG(${TABLE}.size) / 1152921504606846976, 2), " EiB")
-        WHEN AVG(${TABLE}.size) > 1125899906842624 THEN CONCAT(round(AVG(${TABLE}.size) / 1125899906842624, 2), " PiB")
-        WHEN AVG(${TABLE}.size) > 1099511627776 THEN CONCAT(round(AVG(${TABLE}.size) / 1099511627776, 2), " TiB")
-        WHEN AVG(${TABLE}.size) > 1073741824 THEN CONCAT(round(AVG(${TABLE}.size) / 1073741824,1), " GiB")
-        WHEN AVG(${TABLE}.size) > 1048576 THEN CONCAT(round(AVG(${TABLE}.size) / 1048576, 0), " MiB")
-        WHEN AVG(${TABLE}.size) > 1024 THEN CONCAT(round(AVG(${TABLE}.size) / 1024, 0), " KiB")
-      END;;
+        WHEN AVG(${TABLE}.size) >= POW(1024,6) THEN CONCAT(CAST(ROUND(AVG(${TABLE}.size) / POW(1024,6), 2) AS STRING), " EiB")
+        WHEN AVG(${TABLE}.size) >= POW(1024,5) THEN CONCAT(CAST(ROUND(AVG(${TABLE}.size) / POW(1024,5), 2) AS STRING), " PiB")
+        WHEN AVG(${TABLE}.size) >= POW(1024,4) THEN CONCAT(CAST(ROUND(AVG(${TABLE}.size) / POW(1024,4), 2) AS STRING), " TiB")
+        WHEN AVG(${TABLE}.size) >= POW(1024,3) THEN CONCAT(CAST(ROUND(AVG(${TABLE}.size) / POW(1024,3), 2) AS STRING), " GiB")
+        WHEN AVG(${TABLE}.size) >= POW(1024,2) THEN CONCAT(CAST(ROUND(AVG(${TABLE}.size) / POW(1024,2), 2) AS STRING), " MiB")
+        WHEN AVG(${TABLE}.size) >= 1024 THEN CONCAT(CAST(ROUND(AVG(${TABLE}.size) / 1024, 2) AS STRING), " KiB")
+        ELSE CONCAT(CAST(ROUND(AVG(${TABLE}.size), 2) AS STRING), " B")
+      END ;;
     description: "This hidden measure supports the 'Average Storage Size' measure by aggregating and formatting the size in the optimal unit. The result is presented via an html parameter."
   }
 
@@ -543,44 +547,107 @@ view: object_attributes {
     type: string
     sql:
       CASE
-        WHEN SUM(${TABLE}.size) > 1152921504606846976 THEN CONCAT(round(SUM(${TABLE}.size) / 1152921504606846976, 2), " EiB")
-        WHEN SUM(${TABLE}.size) > 1125899906842624 THEN CONCAT(round(SUM(${TABLE}.size) / 1125899906842624, 2), " PiB")
-        WHEN SUM(${TABLE}.size) > 1099511627776 THEN CONCAT(round(SUM(${TABLE}.size) / 1099511627776, 2), " TiB")
-        WHEN SUM(${TABLE}.size) > 1073741824 THEN CONCAT(round(SUM(${TABLE}.size) / 1073741824,1), " GiB")
-        WHEN SUM(${TABLE}.size) > 1048576 THEN CONCAT(round(SUM(${TABLE}.size) / 1048576, 0), " MiB")
-        WHEN SUM(${TABLE}.size) > 1024 THEN CONCAT(round(SUM(${TABLE}.size) / 1024, 0), " KiB")
-      END;;
+        WHEN SUM(${TABLE}.size) >= POW(1024,6) THEN CONCAT(CAST(ROUND(SUM(${TABLE}.size) / POW(1024,6), 2) AS STRING), " EiB")
+        WHEN SUM(${TABLE}.size) >= POW(1024,5) THEN CONCAT(CAST(ROUND(SUM(${TABLE}.size) / POW(1024,5), 2) AS STRING), " PiB")
+        WHEN SUM(${TABLE}.size) >= POW(1024,4) THEN CONCAT(CAST(ROUND(SUM(${TABLE}.size) / POW(1024,4), 2) AS STRING), " TiB")
+        WHEN SUM(${TABLE}.size) >= POW(1024,3) THEN CONCAT(CAST(ROUND(SUM(${TABLE}.size) / POW(1024,3), 2) AS STRING), " GiB")
+        WHEN SUM(${TABLE}.size) >= POW(1024,2) THEN CONCAT(CAST(ROUND(SUM(${TABLE}.size) / POW(1024,2), 2) AS STRING), " MiB")
+        WHEN SUM(${TABLE}.size) >= 1024 THEN CONCAT(CAST(ROUND(SUM(${TABLE}.size) / 1024, 2) AS STRING), " KiB")
+        ELSE CONCAT(CAST(SUM(${TABLE}.size) AS STRING), " B")
+      END ;;
     description: "This hidden measure supports the 'Total Storage Size' measure by aggregating and formatting the size in the optimal unit. The result is presented via an html parameter."
   }
 
-  ################################### Parameters ################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Parameters -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   parameter: prefix_depth {
 
     type: unquoted
 
     allowed_value: {
-      label: "First"
-      value: "First"
+      label: "1"
+      value: "1"
     }
 
     allowed_value: {
-      label: "Second"
-      value: "Second"
+      label: "2"
+      value: "2"
     }
 
     allowed_value: {
-      label: "Third"
-      value: "Third"
+      label: "3"
+      value: "3"
     }
 
     allowed_value: {
-      label: "Full"
-      value: "Full"
+      label: "4"
+      value: "4"
     }
 
-    default_value: "Full"
-    description: "This parameter allows users to specify the prefix depth for the prefix dimension. The default value, 'Full', displays the complete prefix for objects within a directory hierarchy."
+    allowed_value: {
+      label: "5"
+      value: "5"
+    }
+
+    allowed_value: {
+      label: "6"
+      value: "6"
+    }
+
+    allowed_value: {
+      label: "7"
+      value: "7"
+    }
+
+    allowed_value: {
+      label: "8"
+      value: "8"
+    }
+
+    allowed_value: {
+      label: "9"
+      value: "9"
+    }
+
+    allowed_value: {
+      label: "10"
+      value: "10"
+    }
+
+    allowed_value: {
+      label: "11"
+      value: "11"
+    }
+
+    allowed_value: {
+      label: "12"
+      value: "12"
+    }
+
+    allowed_value: {
+      label: "13"
+      value: "13"
+    }
+
+    allowed_value: {
+      label: "14"
+      value: "14"
+    }
+
+    allowed_value: {
+      label: "15"
+      value: "15"
+    }
+
+    allowed_value: {
+      label: "Full Prefix"
+      value: "full_prefix"
+    }
+
+    default_value: "full_prefix"
+    description: "This parameter allows users to specify the prefix depth for the prefix dimension. The default value, 'Full Prefix', displays the complete prefix for objects within a directory hierarchy."
   }
 
   parameter: size_unit {
@@ -621,7 +688,9 @@ view: object_attributes {
     description: "This parameter allows users to select the desired byte unit for storage size visualizations and file downloads (CSV, Sheets). The default value is GiB."
   }
 
-  ################################ Measure Parameters ##########################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   parameter: aggregate_function {
     type: unquoted
@@ -635,16 +704,13 @@ view: object_attributes {
       value: "total_storage_size"
     }
 
-    allowed_value: {
-      label: "Average Storage Size"
-      value: "average_storage_size"
-    }
-
-    default_value: "total_storage_size"
-    description: "This parameter allows users to specify the aggregated function for the 'Selected Measure' field. The default measure for this parameter is Total Storage Size."
+    default_value: "total_objects"
+    description: "This parameter allows users to specify the aggregated function for the 'Selected Measure' field. The default measure for this parameter is Total Objects."
   }
 
-  #################################### Set ####################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Sets -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   set: detail {
     fields: [

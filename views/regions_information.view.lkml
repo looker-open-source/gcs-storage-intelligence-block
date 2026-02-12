@@ -1,273 +1,150 @@
-#####################################################################
+# -------------------------------------------------------------------------
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
+# Modified Date: Feb 12, 2026
 # Purpose: Contains information about the Google Cloud Storage Regions catalog.
-#####################################################################
+# --------------------------------------------------------------------------
 view: regions_information {
   derived_table: {
-    sql: WITH
-        regions_information AS (
-              WITH location_set AS (SELECT 'africa-south1' AS location, 'Africa' AS geographic_area, 'Region' AS location_type, 'South Africa' AS countries, 'Gauteng' AS state, 'Johannesburg' AS city, -26.206619 AS latitude, 28.031437 AS longitude
-            UNION ALL
-            SELECT 'asia', 'Asia', 'Multi-Region', 'Taiwan, Japan, South Korea, Singapore', 'Taiwan Province, Kanto, Kansai, Seoul Capital, West Region', 'Changhua County, Tokyo, Osaka, Seoul, Jurong West', 27.407598, 124.302272
-            UNION ALL
-            SELECT 'asia-east1', 'Asia', 'Region', 'Taiwan', 'Taiwan Province', 'Changhua County', 24.04955, 120.516007
-            UNION ALL
-            SELECT 'asia-east1, asia-southeast1', 'Asia', 'Dual-Region', 'Taiwan, Singapore', 'Taiwan Province, West Region', 'Changhua County, Jurong West', 12.827841, 111.729625
-            UNION ALL
-            SELECT 'asia-east2', 'Asia', 'Region', 'China', 'Hong Kong', 'Hong Kong', 22.324061, 114.171655
-            UNION ALL
-            SELECT 'asia-northeast1', 'Asia', 'Region', 'Japan', 'Kanto', 'Tokyo', 35.673817, 139.65123
-            UNION ALL
-            SELECT 'asia-northeast2', 'Asia', 'Region', 'Japan', 'Kansai', 'Osaka', 34.693925, 135.500077
-            UNION ALL
-            SELECT 'asia-northeast3', 'Asia', 'Region', 'South Korea', 'Seoul Capital', 'Seoul', 37.552242, 126.994724
-            UNION ALL
-            SELECT 'asia-south1', 'India', 'Region', 'India', 'Maharashtra', 'Mumbai', 19.07439, 72.878422
-            UNION ALL
-            SELECT 'asia-south1, asia-south2', 'India', 'Dual-Region', 'India', 'Maharashtra, Delhi', 'New Delhi', 23.90885, 74.909678
-            UNION ALL
-            SELECT 'asia-south2', 'India', 'Region', 'India', 'Delhi', 'New Delhi', 28.714557, 77.098665
-            UNION ALL
-            SELECT 'asia-southeast1', 'Asia', 'Region', 'Singapore', 'West Region', 'Jurong West', 1.340198, 103.709014
-            UNION ALL
-            SELECT 'asia-southeast2', 'Indonesia', 'Region', 'Indonesia', 'Java', 'Jakarta', -6.187399, 106.822633
-            UNION ALL
-            SELECT 'asia1', 'Asia', 'Dual-Region', 'Japan', 'Kanto, Kansai', 'Tokyo, Osaka', 35.201581, 137.563135
-            UNION ALL
-            SELECT 'australia-southeast1', 'Australia', 'Region', 'Australia', 'New South Wales', 'Sidney', -33.864912, 151.207943
-            UNION ALL
-            SELECT 'australia-southeast1, australia-southeast2', 'Australia', 'Dual-Region', 'Australia', 'New South Wales, Victoria', 'Sidney, Melbourne', -35.871433, 148.163385
-            UNION ALL
-            SELECT 'australia-southeast2', 'Australia', 'Region', 'Australia', 'Victoria', 'Melbourne', -37.797206, 144.963901
-            UNION ALL
-            SELECT 'eu', 'Europe', 'Multi-Region', 'Poland, Finland, Spain, Belgium, Germany, Netherlands, Italy, France', 'Masovian Voivodeship, Kymenlaakso, Community of Madrid, Wallonia, Hesse, Groningen, Lombardy, Ile-de-France', 'Warsaw, Hamina, Madrid, Saint-Ghislain, Frankfurt am Main, Eemshaven, Milan, Paris', 50.552525, 8.497373
-            UNION ALL
-            SELECT 'eur4', 'Europe', 'Dual-Region', 'Finland, Netherlands', 'Kymenlaakso, Groningen', 'Hamina, Eemshaven', 57.415689, 16.025184
-            UNION ALL
-            SELECT 'eur5', 'Europe', 'Dual-Region', 'Belgium, UK', 'Wallonia, Greater London', 'Saint-Ghislain, London', 51.007176, 1.867803
-            UNION ALL
-            SELECT 'eur7', 'Europe', 'Dual-Region', 'UK, Germany', 'Greater London, Hesse', 'London, Frankfurt am Main', 50.894615, 4.344756
-            UNION ALL
-            SELECT 'eur8', 'Europe', 'Dual-Region', 'Germany, Switzerland', 'Hesse, Canton of Zurich', 'Frankfurt am Main, Zurich', 48.7453, 8.610991
-            UNION ALL
-            SELECT 'europe-central2', 'Europe', 'Region', 'Poland', 'Masovian Voivodeship', 'Warsaw', 52.238354, 21.009223
-            UNION ALL
-            SELECT 'europe-central2, europe-north1', 'Europe', 'Dual-Region', 'Poland, Finland', 'Masovian Voivodeship, Kymenlaakso', 'Warsaw, Hamina', 56.443665, 23.760607
-            UNION ALL
-            SELECT 'europe-central2, europe-southwest1', 'Europe', 'Dual-Region', 'Poland, Spain', 'Masovian Voivodeship, Community of Madrid', 'Warsaw, Madrid', 46.993183, 7.290628
-            UNION ALL
-            SELECT 'europe-central2, europe-west1', 'Europe',  'Dual-Region', 'Poland, Belgium', 'Masovian Voivodeship, Wallonia', 'Warsaw, Saint-Ghislain', 51.670086, 12.246141
-            UNION ALL
-            SELECT 'europe-central2, europe-west3', 'Europe', 'Dual-Region', 'Poland, Germany', 'Masovian Voivodeship, Hesse', 'Warsaw, Frankfurt am Main', 51.338001, 14.703662
-            UNION ALL
-            SELECT 'europe-central2, europe-west4', 'Europe', 'Dual-Region', 'Poland, Netherlands', 'Masovian Voivodeship, Groningen', 'Warsaw, Eemshaven', 53.049773, 14.02046
-            UNION ALL
-            SELECT 'europe-central2, europe-west8', 'Europe', 'Dual-Region', 'Poland, Italy', 'Masovian Voivodeship, Lombardy', 'Warsaw, Milan', 49.004511, 14.693853
-            UNION ALL
-            SELECT 'europe-central2, europe-west9', 'Europe', 'Dual-Region', 'Poland, France', 'Masovian Voivodeship, Ile-de-France', 'Warsaw, Paris', 50.922267, 11.342654
-            UNION ALL
-            SELECT 'europe-north1', 'Europe', 'Region', 'Finland', 'Kymenlaakso', 'Hamina', 60.573043, 27.190688
-            UNION ALL
-            SELECT 'europe-north1, europe-southwest1', 'Europe', 'Dual-Region', 'Finland, Spain', 'Kymenlaakso, Community of Madrid', 'Hamina, Madrid', 51.479744, 8.333168
-            UNION ALL
-            SELECT 'europe-north1, europe-west1', 'Europe', 'Dual-Region', 'Finland, Belgium', 'Kymenlaakso, Wallonia', 'Hamina, Saint-Ghislain', 56.070808, 13.978923
-            UNION ALL
-            SELECT 'europe-north1, europe-west3', 'Europe', 'Dual-Region', 'Finland, Germany', 'Kymenlaakso, Hesse', 'Hamina, Frankfurt am Main', 55.687379, 16.701199
-            UNION ALL
-            SELECT 'europe-north1, europe-west8', 'Europe', 'Dual-Region', 'Finland, Italy', 'Kymenlaakso, Lombardy', 'Hamina, Milan', 53.351265, 16.588117
-            UNION ALL
-            SELECT 'europe-north1, europe-west9', 'Europe', 'Dual-Region', 'Finland, France', 'Kymenlaakso, Ile-de-France', 'Hamina, Paris', 55.339813, 12.942202
-            UNION ALL
-            SELECT 'europe-southwest1', 'Europe', 'Region', 'Spain', 'Community of Madrid', 'Madrid', 40.423203, -3.707017
-            UNION ALL
-            SELECT 'europe-southwest1, europe-west1', 'Europe', 'Dual-Region', 'Spain, Belgium', 'Community of Madrid, Wallonia', 'Madrid, Saint-Ghislain', 45.508623, -0.281364
-            UNION ALL
-            SELECT 'europe-southwest1, europe-west3', 'Europe', 'Dual-Region', 'Spain, Germany', 'Community of Madrid, Hesse', 'Madrid, Frankfurt am Main', 45.434948, 1.955968
-            UNION ALL
-            SELECT 'europe-southwest1, europe-west4', 'Europe', 'Dual-Region', 'Spain, Netherlands', 'Community of Madrid, Groningen', 'Madrid, Eemshaven', 47.050201, 0.918886
-            UNION ALL
-            SELECT 'europe-southwest1, europe-west8', 'Europe', 'Dual-Region', 'Spain, Italy', 'Community of Madrid, Lombardy', 'Madrid, Milan', 43.127066, 2.471997
-            UNION ALL
-            SELECT 'europe-southwest1, europe-west9', 'Europe', 'Dual-Region', 'Spain, France', 'Community of Madrid, Ile-de-France', 'Madrid, Paris', 44.681187, -0.898924
-            UNION ALL
-            SELECT 'europe-west1', 'Europe', 'Region', 'Belgium', 'Wallonia', 'Saint-Ghislain', 50.471449, 3.817129
-            UNION ALL
-            SELECT 'europe-west1, europe-west3', 'Europe', 'Dual-Region', 'Belgium, Germany', 'Wallonia, Hesse', 'Saint-Ghislain, Frankfurt am Main', 50.317925, 6.259341
-            UNION ALL
-            SELECT 'europe-west1, europe-west4', 'Europe', 'Dual-Region', 'Belgium, Netherlands', 'Wallonia, Groningen', 'Saint-Ghislain, Eemshaven', 51.964664, 5.276023
-            UNION ALL
-            SELECT 'europe-west1, europe-west8', 'Europe', 'Dual-Region', 'Belgium, Italy', 'Wallonia, Lombardy', 'Saint-Ghislain, Milan', 48.001489, 6.629576
-            UNION ALL
-            SELECT 'europe-west1, europe-west9', 'Europe', 'Dual-Region', 'Belgium, France', 'Wallonia, Ile-de-France', 'Saint-Ghislain, Paris', 49.66779, 3.071821
-            UNION ALL
-            SELECT 'europe-west10', 'Europe', 'Region', 'Germany', 'Berlin', 'Berlin', 52.523101, 13.401341
-            UNION ALL
-            SELECT 'europe-west12', 'Europe', 'Region', 'Italy', 'Piedmont', 'Turin', 45.211965, 7.379327
-            UNION ALL
-            SELECT 'europe-west2', 'Europe', 'Region', 'UK', 'Greater London', 'London', 51.509726, -0.125643
-            UNION ALL
-            SELECT 'europe-west3', 'Europe', 'Region', 'Germany', 'Hesse', 'Frankfurt am Main', 50.11361, 8.683244
-            UNION ALL
-            SELECT 'europe-west3, europe-west4', 'Europe', 'Dual-Region', 'Germany, Netherlands', 'Hesse, Groningen', 'Frankfurt am Main, Eemshaven', 51.779731, 7.793091
-            UNION ALL
-            SELECT 'europe-west3, europe-west8', 'Europe', 'Dual-Region', 'Germany, Italy', 'Hesse, Lombardy', 'Frankfurt am Main, Milan', 47.791677, 8.943693
-            UNION ALL
-            SELECT 'europe-west3, europe-west9', 'Europe', 'Dual-Region', 'Germany, France', 'Hesse, Ile-de-France', 'Frankfurt am Main, Paris', 49.529773, 5.476431
-            UNION ALL
-            SELECT 'europe-west4', 'Europe', 'Region', 'Netherlands', 'Groningen', 'Eemshaven', 53.438615, 6.834814
-            UNION ALL
-            SELECT 'europe-west4, europe-west8', 'Europe', 'Dual-Region', 'Netherlands, Italy', 'Groningen, Lombardy', 'Eemshaven, Milan', 49.459807, 8.103901
-            UNION ALL
-            SELECT 'europe-west4, europe-west9', 'Europe', 'Dual-Region', 'Netherlands, France', 'Groningen, Ile-de-France', 'Eemshaven, Paris', 51.170439, 4.481469
-            UNION ALL
-            SELECT 'europe-west6', 'Europe', 'Region', 'Switzerland', 'Canton of Zurich', 'Zurich', 47.376947, 8.542569
-            UNION ALL
-            SELECT 'europe-west8', 'Europe', 'Region', 'Italy', 'Lombardy', 'Milan', 45.469205, 9.181849
-            UNION ALL
-            SELECT 'europe-west8, europe-west9', 'Europe', 'Dual-Region', 'Italy, France', 'Lombardy, Ile-de-France', 'Milan, Paris', 47.215085, 5.875479
-            UNION ALL
-            SELECT 'europe-west9', 'Europe', 'Region', 'France', 'Ile-de-France', 'Milan', 48.859503, 2.350808
-            UNION ALL
-            SELECT 'me-central1', 'Middle East', 'Region', 'Qatar', 'Doha', 'Doha', 25.295093, 51.531892
-            UNION ALL
-            SELECT 'me-central2', 'Middle East', 'Region', 'Saudi Arabia', 'Eastern Province', 'Dammam', 26.421517, 50.087281
-            UNION ALL
-            SELECT 'me-west1', 'Middle East', 'Region', 'Israel', 'Tel Aviv', 'Tel Aviv', 32.088196, 34.780762
-            UNION ALL
-            SELECT 'nam4', 'North America', 'Dual-Region', 'United States', 'Iowa, South Carolina', 'Council Bluffs, Moncks Corner', 37.495021, -87.509075
-            UNION ALL
-            SELECT 'northamerica-northeast1', 'North America', 'Region', 'Canada', 'Quebec', 'Montreal', 45.498936, -73.564944
-            UNION ALL
-            SELECT 'northamerica-northeast1, northamerica-northeast2', 'North America', 'Dual-Region', 'Canada', 'Quebec,Ontario', 'Montreal, Toronto', 44.613403, -76.519054
-            UNION ALL
-            SELECT 'northamerica-northeast2', 'North America', 'Region', 'Canada', 'Ontario', 'Toronto', 43.65407, -79.380818
-            UNION ALL
-            SELECT 'southamerica-east1', 'South America', 'Region', 'Brazil', 'Sao Paulo', 'Osasco', -23.532524, -46.788355
-            UNION ALL
-            SELECT 'southamerica-west1', 'South America', 'Region', 'Chile', 'Santiago Province', 'Santiago', -33.440271, -70.671093
-            UNION ALL
-            SELECT 'us', 'North America', 'Multi-Region', 'United States', 'Iowa, South Carolina, Virginia, Ohio, Texas, Oregon, California, Utah, Nevada', 'Council Bluffs, Moncks Corner, Ashburn, Columbus, Dallas, The Dalles, Los Angeles, Salt Lake City, Las Vegas', 39.226851, -99.750223
-            UNION ALL
-            SELECT 'us-central1', 'North America', 'Region', 'United States', 'Iowa', 'Council Bluffs', 41.264954, -95.860417
-            UNION ALL
-            SELECT 'us-central1, us-east4', 'North America', 'Dual-Region', 'United States', 'Iowa, Virginia', 'Council Bluffs, Ashburn', 40.520283, -86.522509
-            UNION ALL
-            SELECT 'us-central1, us-east5', 'North America', 'Dual-Region', 'United States', 'Iowa, Ohio', 'Council Bluffs, Columbus', 40.793702, -89.367268
-            UNION ALL
-            SELECT 'us-central1, us-south1', 'North America', 'Dual-Region', 'United States', 'Iowa, Dallas', 'Council Bluffs, Dallas', 37.031975, -96.356595
-            UNION ALL
-            SELECT 'us-central1, us-west1', 'North America', 'Dual-Region', 'United States', 'Iowa, Oregon', 'Council Bluffs, The Dalles', 44.137471, -108.060859
-            UNION ALL
-            SELECT 'us-central1, us-west2', 'North America', 'Dual-Region', 'United States', 'Iowa, California', 'Council Bluffs, Los Angeles', 38.201122, -107.605979
-            UNION ALL
-            SELECT 'us-central1, us-west3', 'North America', 'Dual-Region', 'United States', 'Iowa, Utah', 'Council Bluffs, Salt Lake City', 41.295649, -103.90781
-            UNION ALL
-            SELECT 'us-central1, us-west4', 'North America', 'Dual-Region', 'United States', 'Iowa, Nevada', 'Council Bluffs, Las Vegas', 39.121295, -105.844031
-            UNION ALL
-            SELECT 'us-east1', 'North America', 'Region', 'United States', 'South Carolina', 'Moncks Corner', 33.196352, -80.012519
-            UNION ALL
-            SELECT 'us-east1, us-east4', 'North America', 'Dual-Region', 'United States', 'South Carolina, Virginia', 'Moncks Corner, Ashburn', 36.127768, -78.797054
-            UNION ALL
-            SELECT 'us-east1, us-east5', 'North America', 'Dual-Region', 'United States', 'South Carolina, Ohio', 'Moncks Corner, Columbus', 36.589948, -81.440579
-            UNION ALL
-            SELECT 'us-east1, us-south1', 'North America', 'Dual-Region', 'United States', 'South Carolina, Texas', 'Moncks Corner, Dallas', 33.279208, -88.425525
-            UNION ALL
-            SELECT 'us-east1, us-west1', 'North America', 'Dual-Region', 'United States', 'South Carolina, Oregon', 'Moncks Corner, The Dalles', 41.248379, -98.677918
-            UNION ALL
-            SELECT 'us-east1, us-west2', 'North America', 'Dual-Region', 'United States', 'South Carolina, California', 'Moncks Corner, Los Angeles', 35.149434, -99.030803
-            UNION ALL
-            SELECT 'us-east1, us-west3', 'North America', 'Dual-Region', 'United States', 'South Carolina, Utah', 'Moncks Corner, Salt Lake City', 38.064993, -95.137921
-            UNION ALL
-            SELECT 'us-east1, us-west4', 'North America', 'Dual-Region', 'United States', 'South Carolina, Nevada', 'Moncks Corner, Las Vegas', 35.979049, -97.246718
-            UNION ALL
-            SELECT 'us-east4', 'North America', 'Region', 'United States', 'Virginia', 'Ashburn', 39.045953, -77.487424
-            UNION ALL
-            SELECT 'us-east4, us-south1', 'North America', 'Dual-Region', 'United States', 'Virginia, Texas', 'Ashburn, Dallas', 36.310235, -87.529362
-            UNION ALL
-            SELECT 'us-east4, us-west1', 'North America', 'Dual-Region', 'United States', 'Virginia, Oregon', 'Ashburn, The Dalles', 44.449481, -98.137685
-            UNION ALL
-            SELECT 'us-east4, us-west2', 'North America', 'Dual-Region', 'United States', 'Virginia, California', 'Ashburn, Los Angeles', 38.345123, -98.55482
-            UNION ALL
-            SELECT 'us-east4, us-west3', 'North America', 'Dual-Region', 'United States', 'Virginia, Utah', 'Ashburn, Salt Lake City', 41.202492, -94.46785
-            UNION ALL
-            SELECT 'us-east4, us-west4', 'North America', 'Dual-Region', 'United States', 'Virginia, Nevada', 'Ashburn, Las Vegas', 39.146327, -96.687428
-            UNION ALL
-            SELECT 'us-east5', 'North America', 'Region', 'United States', 'Ohio', 'Columbus', 39.964944, -82.99977
-            UNION ALL
-            SELECT 'us-east7', 'North America', 'Region', 'United States', 'Alabama', NULL, NULL, NULL
-            UNION ALL
-            SELECT 'us-south1', 'North America', 'Region', 'United States', 'Texas', 'Dallas', 32.797148, -96.800281
-            UNION ALL
-            SELECT 'us-south1, us-west1', 'North America', 'Dual-Region', 'United States', 'Texas, Oregon', 'Dallas, The Dalles', 39.83593, -107.859488
-            UNION ALL
-            SELECT 'us-south1, us-west2', 'North America', 'Dual-Region', 'United States', 'Texas, California', 'Dallas, Los Angeles', 33.900635, -107.445958
-            UNION ALL
-            SELECT 'us-south1, us-west3', 'North America', 'Dual-Region', 'United States', 'Texas, Utah', 'Dallas, Salt Lake City', 37.021621, -103.951912
-            UNION ALL
-            SELECT 'us-south1, us-west4', 'North America', 'Dual-Region', 'United States', 'Texas, Nevada', 'Dallas, Las Vegas', 34.83426, -105.780008
-            UNION ALL
-            SELECT 'us-west1', 'North America', 'Region', 'United States', 'Oregon', 'The Dalles', 45.602508, -121.184333
-            UNION ALL
-            SELECT 'us-west1, us-west2', 'North America', 'Dual-Region', 'United States', 'Oregon, California', 'The Dalles, Los Angeles', 39.846614, -119.594169
-            UNION ALL
-            SELECT 'us-west1, us-west3', 'North America', 'Dual-Region', 'United States', 'Oregon, Utah', 'The Dalles, Salt Lake City', 43.279517, -116.354951
-            UNION ALL
-            SELECT 'us-west1, us-west4', 'North America', 'Dual-Region', 'United States', 'Oregon, Nevada', 'The Dalles, Las Vegas', 40.931855, -117.943759
-            UNION ALL
-            SELECT 'us-west2', 'North America', 'Region', 'United States', 'California', 'Los Angeles', 34.072382, -118.25112
-            UNION ALL
-            SELECT 'us-west2, us-west3', 'North America', 'Dual-Region', 'United States', 'California, Utah', 'Los Angeles, Salt Lake City', 37.463026, -115.215179
-            UNION ALL
-            SELECT 'us-west2, us-west4', 'North America', 'Dual-Region', 'United States', 'California, Nevada', 'Los Angeles, Las Vegas', 35.137433, -116.713346
-            UNION ALL
-            SELECT 'us-west3', 'North America', 'Region', 'United States', 'Utah', 'Salt Lake City', 40.768691, -111.894407
-            UNION ALL
-            SELECT 'us-west3, us-west4', 'North America', 'Dual-Region', 'United States', 'Utah, Nevada', 'Salt Lake City, Las Vegas', 38.48677, -113.566379
-            UNION ALL
-            SELECT 'us-west4', 'North America', 'Region', 'United States', 'Nevada', 'Las Vegas', 36.182547, -115.13519
-            UNION ALL
-            SELECT 'us-west8', 'North America', 'Region', 'United States', 'Arizona', 'Phoenix', 33.450430, -112.075676), geographic_area_location AS (
-            SELECT 'Africa' as geographic_area, '-26.206619, 28.031437' as geographic_area_coordinates
-            UNION ALL
-            SELECT 'Asia', '26.22887736583804, 122.92055542594133'
-            UNION ALL
-            SELECT 'Australia', '-35.87143312617882, 148.16338509205735'
-            UNION ALL
-            SELECT 'Europe', '50.419437352900566, 8.148756653935328'
-            UNION ALL
-            SELECT 'India', '23.908849931246557, 74.90967780978364'
-            UNION ALL
-            SELECT 'Indonesia', '-6.187399000000001, 106.822633'
-            UNION ALL
-            SELECT 'Middle East', '28.1383073720678, 45.697549748255476'
-            UNION ALL
-            SELECT 'North America', '39.49067855459679, -99.26613885745078'
-            UNION ALL
-            SELECT 'South America', '-29.01378617077172, -58.159799449834644')
-          SELECT
-            ls.location,
-            ls.geographic_area,
-            gal.geographic_area_coordinates,
-            ls.location_type,
-            ls.countries,
-            ls.latitude,
-            ls.longitude,
-            CONCAT(CAST(ls.latitude AS STRING), ', ', CAST(ls.longitude AS STRING)) AS location_coordinates
-          FROM
-            location_set AS ls
-         JOIN
-            geographic_area_location as gal
-          ON ls.geographic_area = gal.geographic_area)
-
-      SELECT
-        *
-      FROM
-        regions_information ;;
+    sql:
+      WITH regions_data AS (
+        SELECT 'africa-south1' AS location, 'Region' AS location_type, 'South Africa' AS countries, 'Africa' AS geographic_area, '-26.206619, 28.031437' AS geographic_area_coordinates, -26.206619 AS latitude, 28.031437 AS longitude, '-26.206619, 28.031437' AS location_coordinates
+        UNION ALL SELECT 'asia', 'Multi-Region', 'Japan, Singapore, South Korea, Taiwan', 'Asia Pacific', '26.228877, 122.920555', 24.6345, 124.3211, '24.6345, 124.3211'
+        UNION ALL SELECT 'asia-east1', 'Region', 'Taiwan', 'Asia Pacific', '26.228877, 122.920555', 24.04955, 120.516007, '24.04955, 120.516007'
+        UNION ALL SELECT 'asia-east1, asia-southeast1', 'Dual-Region', 'Taiwan, Singapore', 'Asia Pacific', '26.228877, 122.920555', 12.827841, 111.729625, '12.827841, 111.729625'
+        UNION ALL SELECT 'asia-east2', 'Region', 'China', 'Asia Pacific', '26.228877, 122.920555', 22.324061, 114.171655, '22.324061, 114.171655'
+        UNION ALL SELECT 'asia-northeast1', 'Region', 'Japan', 'Asia Pacific', '26.228877, 122.920555', 35.673817, 139.65123, '35.673817, 139.65123'
+        UNION ALL SELECT 'asia-northeast2', 'Region', 'Japan', 'Asia Pacific', '26.228877, 122.920555', 34.693925, 135.500077, '34.693925, 135.500077'
+        UNION ALL SELECT 'asia-northeast3', 'Region', 'South Korea', 'Asia Pacific', '26.228877, 122.920555', 37.552242, 126.994724, '37.552242, 126.994724'
+        UNION ALL SELECT 'asia-southeast1', 'Region', 'Singapore', 'Asia Pacific', '26.228877, 122.920555', 1.340198, 103.709014, '1.340198, 103.709014'
+        UNION ALL SELECT 'asia1', 'Dual-Region', 'Japan', 'Asia Pacific', '26.228877, 122.920555', 35.201581, 137.563135, '35.201581, 137.563135'
+        UNION ALL SELECT 'au', 'Multi-Region', 'Australia', 'Asia Pacific', '26.228877, 122.920555', -25.2744, 133.7751, '-25.2744, 133.7751'
+        UNION ALL SELECT 'australia-southeast1, australia-southeast2', 'Dual-Region', 'Australia', 'Australia', '-35.871433, 148.163385', -35.871433, 148.163385, '-35.871433, 148.163385'
+        UNION ALL SELECT 'australia-southeast1', 'Region', 'Australia', 'Australia', '-35.871433, 148.163385', -33.864912, 151.207943, '-33.864912, 151.207943'
+        UNION ALL SELECT 'australia-southeast2', 'Region', 'Australia', 'Australia', '-35.871433, 148.163385', -37.797206, 144.963901, '-37.797206, 144.963901'
+        UNION ALL SELECT 'eu', 'Multi-Region', 'Belgium, Finland, France, Germany, Italy, Netherlands, Poland, Spain, Sweden', 'Europe', '50.419437, 8.148756', 50.552525, 8.497373, '50.552525, 8.497373'
+        UNION ALL SELECT 'de', 'Multi-Region', 'Germany', 'Europe', '50.419437, 8.148756', 51.1657, 10.4515, '51.1657, 10.4515'
+        UNION ALL SELECT 'it', 'Multi-Region', 'Italy', 'Europe', '50.419437, 8.148756', 41.8719, 12.5674, '41.8719, 12.5674'
+        UNION ALL SELECT 'eur4', 'Dual-Region', 'Finland, Netherlands', 'Europe', '50.419437, 8.148756', 57.415689, 16.025184, '57.415689, 16.025184'
+        UNION ALL SELECT 'eur5', 'Dual-Region', 'Belgium, United Kingdom', 'Europe', '50.419437, 8.148756', 51.007176, 1.867803, '51.007176, 1.867803'
+        UNION ALL SELECT 'eur7', 'Dual-Region', 'United Kingdom, Germany', 'Europe', '50.419437, 8.148756', 50.894615, 4.344756, '50.894615, 4.344756'
+        UNION ALL SELECT 'eur8', 'Dual-Region', 'Germany, Switzerland', 'Europe', '50.419437, 8.148756', 48.7453, 8.610991, '48.7453, 8.610991'
+        UNION ALL SELECT 'europe-central2', 'Region', 'Poland', 'Europe', '50.419437, 8.148756', 52.238354, 21.009223, '52.238354, 21.009223'
+        UNION ALL SELECT 'europe-central2, europe-north1', 'Dual-Region', 'Poland, Finland', 'Europe', '50.419437, 8.148756', 56.443665, 23.760607, '56.443665, 23.760607'
+        UNION ALL SELECT 'europe-central2, europe-southwest1', 'Dual-Region', 'Poland, Spain', 'Europe', '50.419437, 8.148756', 46.993183, 7.290628, '46.993183, 7.290628'
+        UNION ALL SELECT 'europe-central2, europe-west1', 'Dual-Region', 'Poland, Belgium', 'Europe', '50.419437, 8.148756', 51.670086, 12.246141, '51.670086, 12.246141'
+        UNION ALL SELECT 'europe-central2, europe-west3', 'Dual-Region', 'Poland, Germany', 'Europe', '50.419437, 8.148756', 51.338001, 14.703662, '51.338001, 14.703662'
+        UNION ALL SELECT 'europe-central2, europe-west4', 'Dual-Region', 'Poland, Netherlands', 'Europe', '50.419437, 8.148756', 53.049773, 14.02046, '53.049773, 14.02046'
+        UNION ALL SELECT 'europe-central2, europe-west8', 'Dual-Region', 'Poland, Italy', 'Europe', '50.419437, 8.148756', 49.004511, 14.693853, '49.004511, 14.693853'
+        UNION ALL SELECT 'europe-central2, europe-west9', 'Dual-Region', 'Poland, France', 'Europe', '50.419437, 8.148756', 50.922267, 11.342654, '50.922267, 11.342654'
+        UNION ALL SELECT 'europe-north1', 'Region', 'Finland', 'Europe', '50.419437, 8.148756', 60.573043, 27.190688, '60.573043, 27.190688'
+        UNION ALL SELECT 'europe-north1, europe-southwest1', 'Dual-Region', 'Finland, Spain', 'Europe', '50.419437, 8.148756', 51.479744, 8.333168, '51.479744, 8.333168'
+        UNION ALL SELECT 'europe-north1, europe-west1', 'Dual-Region', 'Finland, Belgium', 'Europe', '50.419437, 8.148756', 56.070808, 13.978923, '56.070808, 13.978923'
+        UNION ALL SELECT 'europe-north1, europe-west3', 'Dual-Region', 'Finland, Germany', 'Europe', '50.419437, 8.148756', 55.687379, 16.701199, '55.687379, 16.701199'
+        UNION ALL SELECT 'europe-north1, europe-west8', 'Dual-Region', 'Finland, Italy', 'Europe', '50.419437, 8.148756', 53.351265, 16.588117, '53.351265, 16.588117'
+        UNION ALL SELECT 'europe-north1, europe-west9', 'Dual-Region', 'Finland, France', 'Europe', '50.419437, 8.148756', 55.339813, 12.942202, '55.339813, 12.942202'
+        UNION ALL SELECT 'europe-north2', 'Region', 'Sweden', 'Europe', '50.419437, 8.148756', 59.3293, 18.0686, '59.3293, 18.0686'
+        UNION ALL SELECT 'europe-southwest1', 'Region', 'Spain', 'Europe', '50.419437, 8.148756', 40.423203, -3.707017, '40.423203, -3.707017'
+        UNION ALL SELECT 'europe-southwest1, europe-west1', 'Dual-Region', 'Spain, Belgium', 'Europe', '50.419437, 8.148756', 45.508623, -0.281364, '45.508623, -0.281364'
+        UNION ALL SELECT 'europe-southwest1, europe-west3', 'Dual-Region', 'Spain, Germany', 'Europe', '50.419437, 8.148756', 45.434948, 1.955968, '45.434948, 1.955968'
+        UNION ALL SELECT 'europe-southwest1, europe-west4', 'Dual-Region', 'Spain, Netherlands', 'Europe', '50.419437, 8.148756', 47.050201, 0.918886, '47.050201, 0.918886'
+        UNION ALL SELECT 'europe-southwest1, europe-west8', 'Dual-Region', 'Spain, Italy', 'Europe', '50.419437, 8.148756', 43.127066, 2.471997, '43.127066, 2.471997'
+        UNION ALL SELECT 'europe-southwest1, europe-west9', 'Dual-Region', 'Spain, France', 'Europe', '50.419437, 8.148756', 44.681187, -0.898924, '44.681187, -0.898924'
+        UNION ALL SELECT 'europe-west1', 'Region', 'Belgium', 'Europe', '50.419437, 8.148756', 50.471449, 3.817129, '50.471449, 3.817129'
+        UNION ALL SELECT 'europe-west1, europe-west3', 'Dual-Region', 'Belgium, Germany', 'Europe', '50.419437, 8.148756', 50.317925, 6.259341, '50.317925, 6.259341'
+        UNION ALL SELECT 'europe-west1, europe-west4', 'Dual-Region', 'Belgium, Netherlands', 'Europe', '50.419437, 8.148756', 51.964664, 5.276023, '51.964664, 5.276023'
+        UNION ALL SELECT 'europe-west1, europe-west8', 'Dual-Region', 'Belgium, Italy', 'Europe', '50.419437, 8.148756', 48.001489, 6.629576, '48.001489, 6.629576'
+        UNION ALL SELECT 'europe-west1, europe-west9', 'Dual-Region', 'Belgium, France', 'Europe', '50.419437, 8.148756', 49.66779, 3.071821, '49.66779, 3.071821'
+        UNION ALL SELECT 'europe-west10', 'Region', 'Germany', 'Europe', '50.419437, 8.148756', 52.523101, 13.401341, '52.523101, 13.401341'
+        UNION ALL SELECT 'europe-west10, europe-west3', 'Dual-Region', 'Germany', 'Europe', '50.419437, 8.148756', 51.1657, 10.4515, '51.1657, 10.4515'
+        UNION ALL SELECT 'europe-west12', 'Region', 'Italy', 'Europe', '50.419437, 8.148756', 45.211965, 7.379327, '45.211965, 7.379327'
+        UNION ALL SELECT 'europe-west12, europe-west8', 'Dual-Region', 'Italy', 'Europe', '50.419437, 8.148756', 45.211965, 7.379327, '45.211965, 7.379327'
+        UNION ALL SELECT 'europe-west2', 'Region', 'United Kingdom', 'Europe', '50.419437, 8.148756', 51.509726, -0.125643, '51.509726, -0.125643'
+        UNION ALL SELECT 'europe-west3', 'Region', 'Germany', 'Europe', '50.419437, 8.148756', 50.11361, 8.683244, '50.11361, 8.683244'
+        UNION ALL SELECT 'europe-west3, europe-west4', 'Dual-Region', 'Germany, Netherlands', 'Europe', '50.419437, 8.148756', 51.779731, 7.793091, '51.779731, 7.793091'
+        UNION ALL SELECT 'europe-west3, europe-west8', 'Dual-Region', 'Germany, Italy', 'Europe', '50.419437, 8.148756', 47.791677, 8.943693, '47.791677, 8.943693'
+        UNION ALL SELECT 'europe-west3, europe-west9', 'Dual-Region', 'Germany, France', 'Europe', '50.419437, 8.148756', 49.529773, 5.476431, '49.529773, 5.476431'
+        UNION ALL SELECT 'europe-west4', 'Region', 'Netherlands', 'Europe', '50.419437, 8.148756', 53.438615, 6.834814, '53.438615, 6.834814'
+        UNION ALL SELECT 'europe-west4, europe-west8', 'Dual-Region', 'Netherlands, Italy', 'Europe', '50.419437, 8.148756', 49.459807, 8.103901, '49.459807, 8.103901'
+        UNION ALL SELECT 'europe-west4, europe-west9', 'Dual-Region', 'Netherlands, France', 'Europe', '50.419437, 8.148756', 51.170439, 4.481469, '51.170439, 4.481469'
+        UNION ALL SELECT 'europe-west6', 'Region', 'Switzerland', 'Europe', '50.419437, 8.148756', 47.376947, 8.542569, '47.376947, 8.542569'
+        UNION ALL SELECT 'europe-west8', 'Region', 'Italy', 'Europe', '50.419437, 8.148756', 45.469205, 9.181849, '45.469205, 9.181849'
+        UNION ALL SELECT 'europe-west8, europe-west9', 'Dual-Region', 'Italy, France', 'Europe', '50.419437, 8.148756', 47.215085, 5.875479, '47.215085, 5.875479'
+        UNION ALL SELECT 'europe-west9', 'Region', 'France', 'Europe', '50.419437, 8.148756', 48.859503, 2.350808, '48.859503, 2.350808'
+        UNION ALL SELECT 'in', 'Dual-Region', 'India', 'Asia Pacific', '23.908849, 74.909677', 23.90885, 74.909678, '23.90885, 74.909678'
+        UNION ALL SELECT 'asia-south1', 'Region', 'India', 'Asia Pacific', '23.908849, 74.909677', 19.07439, 72.878422, '19.07439, 72.878422'
+        UNION ALL SELECT 'asia-south2', 'Region', 'India', 'Asia Pacific', '23.908849, 74.909677', 28.714557, 77.098665, '28.714557, 77.098665'
+        UNION ALL SELECT 'asia-south1, asia-south2', 'Dual-Region', 'India', 'Asia Pacific', '23.908849, 74.909677', 23.90885, 74.909678, '23.90885, 74.909678'
+        UNION ALL SELECT 'asia-southeast2', 'Region', 'Indonesia', 'Asia Pacific', '-6.187399, 106.822633', -6.187399, 106.822633, '-6.187399, 106.822633'
+        UNION ALL SELECT 'me-central1', 'Region', 'Qatar', 'Middle East', '28.138307, 45.697549', 25.295093, 51.531892, '25.295093, 51.531892'
+        UNION ALL SELECT 'me-central2', 'Region', 'Saudi Arabia', 'Middle East', '28.138307, 45.697549', 26.421517, 50.087281, '26.421517, 50.087281'
+        UNION ALL SELECT 'me-west1', 'Region', 'Israel', 'Middle East', '28.138307, 45.697549', 32.088196, 34.780762, '32.088196, 34.780762'
+        UNION ALL SELECT 'ca', 'Multi-Region', 'Canada', 'North America', '39.490678, -99.266138', 56.1304, -106.3468, '56.1304, -106.3468'
+        UNION ALL SELECT 'northamerica-northeast1, northamerica-northeast2', 'Dual-Region', 'Canada', 'North America', '39.490678, -99.266138', 44.613403, -76.519054, '44.613403, -76.519054'
+        UNION ALL SELECT 'nam4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 37.495021, -87.509075, '37.495021, -87.509075'
+        UNION ALL SELECT 'northamerica-northeast1', 'Region', 'Canada', 'North America', '39.490678, -99.266138', 45.498936, -73.564944, '45.498936, -73.564944'
+        UNION ALL SELECT 'northamerica-northeast2', 'Region', 'Canada', 'North America', '39.490678, -99.266138', 43.65407, -79.380818, '43.65407, -79.380818'
+        UNION ALL SELECT 'us', 'Multi-Region', 'United States', 'North America', '39.490678, -99.266138', 39.226851, -99.750223, '39.226851, -99.750223'
+        UNION ALL SELECT 'us-central1', 'Region', 'United States', 'North America', '39.490678, -99.266138', 41.264954, -95.860417, '41.264954, -95.860417'
+        UNION ALL SELECT 'us-central1, us-east4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 40.520283, -86.522509, '40.520283, -86.522509'
+        UNION ALL SELECT 'us-central1, us-east5', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 40.793702, -89.367268, '40.793702, -89.367268'
+        UNION ALL SELECT 'us-central1, us-south1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 37.031975, -96.356595, '37.031975, -96.356595'
+        UNION ALL SELECT 'us-central1, us-west1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 44.137471, -108.060859, '44.137471, -108.060859'
+        UNION ALL SELECT 'us-central1, us-west2', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 38.201122, -107.605979, '38.201122, -107.605979'
+        UNION ALL SELECT 'us-central1, us-west3', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 41.295649, -103.90781, '41.295649, -103.90781'
+        UNION ALL SELECT 'us-central1, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 39.121295, -105.844031, '39.121295, -105.844031'
+        UNION ALL SELECT 'us-east1', 'Region', 'United States', 'North America', '39.490678, -99.266138', 33.196352, -80.012519, '33.196352, -80.012519'
+        UNION ALL SELECT 'us-east1, us-east4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 36.127768, -78.797054, '36.127768, -78.797054'
+        UNION ALL SELECT 'us-east1, us-east5', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 36.589948, -81.440579, '36.589948, -81.440579'
+        UNION ALL SELECT 'us-east1, us-south1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 33.279208, -88.425525, '33.279208, -88.425525'
+        UNION ALL SELECT 'us-east1, us-west1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 41.248379, -98.677918, '41.248379, -98.677918'
+        UNION ALL SELECT 'us-east1, us-west2', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 35.149434, -99.030803, '35.149434, -99.030803'
+        UNION ALL SELECT 'us-east1, us-west3', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 38.064993, -95.137921, '38.064993, -95.137921'
+        UNION ALL SELECT 'us-east1, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 35.979049, -97.246718, '35.979049, -97.246718'
+        UNION ALL SELECT 'us-east4', 'Region', 'United States', 'North America', '39.490678, -99.266138', 39.045953, -77.487424, '39.045953, -77.487424'
+        UNION ALL SELECT 'us-east4, us-south1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 36.310235, -87.529362, '36.310235, -87.529362'
+        UNION ALL SELECT 'us-east4, us-west1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 44.449481, -98.137685, '44.449481, -98.137685'
+        UNION ALL SELECT 'us-east4, us-west2', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 38.345123, -98.55482, '38.345123, -98.55482'
+        UNION ALL SELECT 'us-east4, us-west3', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 41.202492, -94.46785, '41.202492, -94.46785'
+        UNION ALL SELECT 'us-east4, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 39.146327, -96.687428, '39.146327, -96.687428'
+        UNION ALL SELECT 'us-east4, us-west8', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 36.248, -94.77, '36.248, -94.77'
+        UNION ALL SELECT 'us-east5', 'Region', 'United States', 'North America', '39.490678, -99.266138', 39.964944, -82.99977, '39.964944, -82.99977'
+        UNION ALL SELECT 'us-south1', 'Region', 'United States', 'North America', '39.490678, -99.266138', 32.797148, -96.800281, '32.797148, -96.800281'
+        UNION ALL SELECT 'us-south1, us-west1', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 39.83593, -107.859488, '39.83593, -107.859488'
+        UNION ALL SELECT 'us-south1, us-west2', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 33.900635, -107.445958, '33.900635, -107.445958'
+        UNION ALL SELECT 'us-south1, us-west3', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 37.021621, -103.951912, '37.021621, -103.951912'
+        UNION ALL SELECT 'us-south1, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 34.83426, -105.780008, '34.83426, -105.780008'
+        UNION ALL SELECT 'us-west1', 'Region', 'United States', 'North America', '39.490678, -99.266138', 45.602508, -121.184333, '45.602508, -121.184333'
+        UNION ALL SELECT 'us-west1, us-west2', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 39.846614, -119.594169, '39.846614, -119.594169'
+        UNION ALL SELECT 'us-west1, us-west3', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 43.279517, -116.354951, '43.279517, -116.354951'
+        UNION ALL SELECT 'us-west1, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 40.931855, -117.943759, '40.931855, -117.943759'
+        UNION ALL SELECT 'us-west2', 'Region', 'United States', 'North America', '39.490678, -99.266138', 34.072382, -118.25112, '34.072382, -118.25112'
+        UNION ALL SELECT 'us-west2, us-west3', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 37.463026, -115.215179, '37.463026, -115.215179'
+        UNION ALL SELECT 'us-west2, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 35.137433, -116.713346, '35.137433, -116.713346'
+        UNION ALL SELECT 'us-west3', 'Region', 'United States', 'North America', '39.490678, -99.266138', 40.768691, -111.894407, '40.768691, -111.894407'
+        UNION ALL SELECT 'us-west3, us-west4', 'Dual-Region', 'United States', 'North America', '39.490678, -99.266138', 38.48677, -113.566379, '38.48677, -113.566379'
+        UNION ALL SELECT 'us-west4', 'Region', 'United States', 'North America', '39.490678, -99.266138', 36.182547, -115.13519, '36.182547, -115.13519'
+        UNION ALL SELECT 'us-west8', 'Region', 'United States', 'North America', '39.490678, -99.266138', 33.45043, -112.075676, '33.45043, -112.075676'
+        UNION ALL SELECT 'southamerica-east1', 'Region', 'Brazil', 'South America', '-29.013786, -58.159799', -23.532524, -46.788355, '-23.532524, -46.788355'
+        UNION ALL SELECT 'southamerica-west1', 'Region', 'Chile', 'South America', '-29.013786, -58.159799', -33.440271, -70.671093, '-33.440271, -70.671093'
+        UNION ALL SELECT 'us-central2', 'Region', 'United States', 'North America', '39.490678, -99.266138', 37.0902, -95.7129, '37.0902, -95.7129'
+        UNION ALL SELECT 'northamerica-south1', 'Region', 'Mexico', 'North America', '39.490678, -99.266138', 19.4326, -99.1332, '19.4326, -99.1332'
+        UNION ALL SELECT 'us-east7', 'Region', 'United States', 'North America', '39.490678, -99.266138', 33.83, -81.16, '33.83, -81.16'
+        UNION ALL SELECT 'us-central1-a', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 41.264954, -95.860417, '41.264954, -95.860417'
+        UNION ALL SELECT 'us-central1-b', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 41.264954, -95.860417, '41.264954, -95.860417'
+        UNION ALL SELECT 'us-central1-c', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 41.264954, -95.860417, '41.264954, -95.860417'
+        UNION ALL SELECT 'us-central1-f', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 41.264954, -95.860417, '41.264954, -95.860417'
+        UNION ALL SELECT 'us-east4-a', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 39.045953, -77.487424, '39.045953, -77.487424'
+        UNION ALL SELECT 'us-east4-b', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 39.045953, -77.487424, '39.045953, -77.487424'
+        UNION ALL SELECT 'us-east4-c', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 39.045953, -77.487424, '39.045953, -77.487424'
+      )
+      SELECT * FROM regions_data ;;
   }
 
-################################### Primary Key #################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Primary Key -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: location {
     primary_key: yes
@@ -276,7 +153,9 @@ view: regions_information {
     description: "This field represents the region or multi-region name within Google Cloud Storage (GCS). It is designated as the primary key for the Regions Information View."
   }
 
-################################## Dimensions ##################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Dimensions -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   dimension: coordinates {
     type: location
@@ -287,11 +166,11 @@ view: regions_information {
   }
 
   dimension: countries_union {
-    hidden: yes
+    label: "Countries"
     type: string
     sql:
       CASE
-        WHEN ${geographic_area} = 'Europe' AND NOT (${countries} LIKE ('%UK%') OR ${countries} LIKE ('%Switzerland%')) THEN 'European Union'
+        WHEN ${geographic_area} = 'Europe' AND NOT (${countries} LIKE ('%United Kingdom%') OR ${countries} LIKE ('%Switzerland%')) THEN 'European Union'
         WHEN ${countries} = 'United States' THEN 'United States'
         ELSE ${countries}
       END;;
@@ -299,6 +178,7 @@ view: regions_information {
   }
 
   dimension: countries {
+    hidden: yes
     type: string
     sql: ${TABLE}.countries ;;
     map_layer_name: single_countries
@@ -387,10 +267,9 @@ view: regions_information {
     description: "This field facilitates the selection of individual countries from the list presented in the 'Map Selection' parameter."
   }
 
-  ################################## Dimension Group ##################################
-
-
-  ##################################### Measures ######################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   measure: count {
     type: count
@@ -398,10 +277,19 @@ view: regions_information {
     description: "A measure that counts the total number of regions within the Google Cloud Storage (GCS) catalog."
   }
 
-###################################### Parameters ###################################
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Parameters -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   parameter: country_options {
     type: string
+    description: "Predefined values representing all single countries within the Google Cloud Storage (GCS) Regions catalog."
+    default_value: "select"
+
+    allowed_value: {
+      label: "Select a Country"
+      value: "select"
+    }
 
     allowed_value: {
       label: "Australia"
@@ -474,6 +362,11 @@ view: regions_information {
     }
 
     allowed_value: {
+      label: "Mexico"
+      value: "Mexico"
+    }
+
+    allowed_value: {
       label: "Netherlands"
       value: "Netherlands"
     }
@@ -514,27 +407,29 @@ view: regions_information {
     }
 
     allowed_value: {
+      label: "Sweden"
+      value: "Sweden"
+    }
+
+    allowed_value: {
+      label: "Switzerland"
+      value: "Switzerland"
+    }
+
+    allowed_value: {
       label: "Taiwan"
       value: "Taiwan"
     }
 
     allowed_value: {
-      label: "UK"
-      value: "UK"
+      label: "United Kingdom"
+      value: "United Kingdom"
     }
 
     allowed_value: {
       label: "United States"
       value: "United States"
     }
-
-    allowed_value: {
-      label: "Select a Country"
-      value: "select"
-    }
-
-    default_value: "select"
-    description: "Predefined values representing all single countries within the Google Cloud Storage (GCS) Regions catalog."
   }
 
   parameter: map_selection {
@@ -552,6 +447,10 @@ view: regions_information {
 
     default_value: "region_map"
   }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Sets -------------------------------
+  # --------------------------------------------------------------------------------------------------------
 
   set: detail {
     fields: [
