@@ -3,7 +3,7 @@
   title: GCS Storage Intelligence - General Analysis
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: ylNHrFF8W1X3WWAxgKOoDv
+  preferred_slug: xipdgnkWBY6KDrZrC36Hue
   theme_name: ''
   layout: newspaper
   tabs:
@@ -64,7 +64,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -307,7 +306,7 @@
       4 - Storage Size Unit: bucket_attributes.size_unit
       2 - Bucket Name: bucket_attributes.bucket_name
       5 - Metric Selection: bucket_attributes.aggregate_function
-    row: 20
+    row: 22
     col: 0
     width: 8
     height: 5
@@ -380,7 +379,7 @@
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
       5 - Metric Selection: object_attributes.aggregate_function
-    row: 20
+    row: 22
     col: 8
     width: 8
     height: 5
@@ -458,7 +457,7 @@
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
       5 - Metric Selection: object_attributes.aggregate_function
-    row: 20
+    row: 22
     col: 16
     width: 8
     height: 5
@@ -471,7 +470,7 @@
         Content-Type is a metadata assigned to objects in GCS. It helps identify the object's format, which allows applications to render the object properly:  <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/metadata#content-type"><span style="font-style: italic;" target="_blank">Content-Type</span></a>
       </div>
-    row: 25
+    row: 27
     col: 16
     width: 8
     height: 3
@@ -484,7 +483,7 @@
         The location value specifies the geographic region where your Google Cloud Storage (GCS) bucket is stored: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black;" href="https://cloud.google.com/compute/docs/regions-zones#available" target="_blank"><span style="font-style: italic;">Regions and zones</span></a>
       </div>
-    row: 25
+    row: 27
     col: 0
     width: 8
     height: 3
@@ -497,7 +496,7 @@
         Storage Class metadata is an element that determines the storage tier for your objects, influencing factors such as cost, performance, and durability: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/storage-classes/#classes"><span style="font-style: italic;" target="_blank">Storage Class</span></a>
       </div>
-    row: 25
+    row: 27
     col: 8
     width: 8
     height: 3
@@ -608,7 +607,7 @@
       3 - Location: bucket_attributes_history.location
       4 - Storage Size Unit: bucket_attributes_history.size_unit
       2 - Bucket Name: bucket_attributes_history.bucket_name
-    row: 33
+    row: 35
     col: 0
     width: 24
     height: 12
@@ -671,7 +670,7 @@
       3 - Location: object_attributes.location
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
-    row: 50
+    row: 52
     col: 0
     width: 24
     height: 8
@@ -684,7 +683,7 @@
         Geographic Area is determined by the bucket's location, as specified in the official documentation for Single-Region locations. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
       bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/locations#location-r"><span style="font-style: italic;" target="_blank">Regions</span></a>
       </div>
-    row: 58
+    row: 60
     col: 0
     width: 24
     height: 3
@@ -760,7 +759,7 @@
       1 - Project Name: project_attributes.project_name
       3 - Location: bucket_attributes.location
       2 - Bucket Name: bucket_attributes.bucket_name
-    row: 63
+    row: 65
     col: 0
     width: 24
     height: 12
@@ -859,7 +858,7 @@
       3 - Location: bucket_attributes.location
       4 - Storage Size Unit: bucket_attributes.size_unit
       2 - Bucket Name: bucket_attributes.bucket_name
-    row: 77
+    row: 79
     col: 0
     width: 24
     height: 6
@@ -935,7 +934,7 @@
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
       5 - Metric Selection: object_attributes.aggregate_function
-    row: 83
+    row: 85
     col: 0
     width: 12
     height: 9
@@ -1018,7 +1017,7 @@
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
       5 - Metric Selection: object_attributes.aggregate_function
-    row: 83
+    row: 85
     col: 12
     width: 12
     height: 9
@@ -1100,7 +1099,7 @@
       3 - Location: object_attributes.location
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
-    row: 95
+    row: 97
     col: 0
     width: 12
     height: 7
@@ -1183,7 +1182,7 @@
       3 - Location: object_attributes.location
       4 - Storage Size Unit: object_attributes.size_unit
       2 - Bucket Name: object_attributes.bucket_name
-    row: 95
+    row: 97
     col: 12
     width: 12
     height: 7
@@ -1269,7 +1268,7 @@
       4 - Storage Size Unit: bucket_attributes.size_unit
       2 - Bucket Name: bucket_attributes.bucket_name
       5 - Metric Selection: bucket_attributes.aggregate_function
-    row: 104
+    row: 106
     col: 0
     width: 24
     height: 9
@@ -1288,7 +1287,7 @@
       _blank\"> Object Versioning </a> \n    <a style=\"padding: 5px 15px; text-decoration:\
       \ none; color: #434343;\" href=\"https://cloud.google.com/storage/docs/soft-delete\"\
       \ target=\"_blank\"> Soft Delete </a>\n</div>"
-    row: 92
+    row: 94
     col: 0
     width: 12
     height: 3
@@ -1297,15 +1296,15 @@
     type: text
     title_text: ''
     body_text: ''
-    row: 94
+    row: 96
     col: 12
     width: 12
     height: 1
     tab_name: ''
   - type: button
-    name: button_183
+    name: button_353
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::cost_management"}'
-    row: 115
+    row: 117
     col: 21
     width: 3
     height: 2
@@ -1313,7 +1312,6 @@
   - name: " (8)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
@@ -1371,14 +1369,13 @@
   - name: " (9)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Storage\
-      \ Overview</span>\n</div>"
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Storage Overview</span>\n</div>"
     row: 10
     col: 0
     width: 24
@@ -1387,7 +1384,6 @@
   - name: " (10)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1406,7 +1402,7 @@
       \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
       \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
       \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 18
+    row: 15
     col: 20
     width: 4
     height: 2
@@ -1414,7 +1410,6 @@
   - name: " (11)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 13
     col: 20
@@ -1424,9 +1419,8 @@
   - name: " (12)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
-    row: 18
+    row: 20
     col: 0
     width: 19
     height: 2
@@ -1434,7 +1428,6 @@
   - name: " (13)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1457,7 +1450,7 @@
       \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
       \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
       \ center;\n  \">5</div>\n\n</div>"
-    row: 28
+    row: 30
     col: 19
     width: 5
     height: 2
@@ -1465,15 +1458,14 @@
   - name: " (14)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Distribution\
-      \ Analysis</span>\n</div>"
-    row: 15
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Distribution Analysis</span>\n</div>"
+    row: 17
     col: 0
     width: 24
     height: 3
@@ -1481,7 +1473,6 @@
   - name: " (15)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1500,7 +1491,7 @@
       \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
       \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
       \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 45
+    row: 47
     col: 19
     width: 5
     height: 2
@@ -1508,15 +1499,14 @@
   - name: " (16)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Storage\
-      \ Over Time</span>\n</div>"
-    row: 30
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Storage Over Time</span>\n</div>"
+    row: 32
     col: 0
     width: 24
     height: 3
@@ -1524,7 +1514,6 @@
   - name: " (17)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1543,7 +1532,7 @@
       \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
       \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
       \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 61
+    row: 63
     col: 19
     width: 5
     height: 2
@@ -1551,15 +1540,14 @@
   - name: " (18)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Storage\
-      \ Landscape</span>\n</div>"
-    row: 47
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Storage Landscape</span>\n</div>"
+    row: 49
     col: 0
     width: 24
     height: 3
@@ -1567,7 +1555,6 @@
   - name: " (19)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1583,7 +1570,7 @@
       \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
       \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
       \ center;\n  \">3</div>\n\n</div>"
-    row: 75
+    row: 77
     col: 20
     width: 4
     height: 2
@@ -1591,7 +1578,6 @@
   - name: " (20)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1614,7 +1600,7 @@
       \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
       \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
       \ center;\n  \">5</div>\n\n</div>"
-    row: 92
+    row: 94
     col: 19
     width: 5
     height: 2
@@ -1622,7 +1608,6 @@
   - name: " (21)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1648,7 +1633,7 @@
       \ #f09d00; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
       \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
       \ center; \n    justify-content: center;\n  \">7</div>\n\n</div>"
-    row: 102
+    row: 104
     col: 19
     width: 5
     height: 2
@@ -1656,7 +1641,6 @@
   - name: " (22)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1672,7 +1656,7 @@
       \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
       \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
       \ center;\n  \">3</div>\n\n</div>"
-    row: 113
+    row: 115
     col: 20
     width: 4
     height: 2

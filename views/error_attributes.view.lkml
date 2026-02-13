@@ -7,7 +7,7 @@
 # -------------------------------------------------------------------------
 view: error_attributes {
 
-  sql_table_name: `@{BIGQUERY_DATASET}.error_attributes_view` ;;
+  sql_table_name: `@{PROJECT_ID}.@{BIGQUERY_DATASET}.error_attributes_view` ;;
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Primary Key -------------------------------

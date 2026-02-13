@@ -8,7 +8,7 @@
 
 view: events {
 
-  sql_table_name: `@{BIGQUERY_DATASET}.events_view` ;;
+  sql_table_name: `@{PROJECT_ID}.@{BIGQUERY_DATASET}.events_view` ;;
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Primary Key -------------------------------
@@ -158,8 +158,8 @@ view: events {
     group_label: "General Display Time"
     label: "Date and Hour"
     type: date_time
-    sql: ${general_display_raw} ;;
-    value_format: "yyyy-mm-dd hh"
+    sql: TIMESTAMP_TRUNC(${general_display_raw}, HOUR) ;;
+    html: {{ value | date: "%Y-%m-%d %H:00" }} ;;
     description: "An auxiliary field to group two timestamp fields: manifest.SnapshotTime and activityJournal.windowStartTime. This field applies only to events with codes 1 and 2."
   }
 
