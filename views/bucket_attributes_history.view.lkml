@@ -12,6 +12,7 @@ view: bucket_attributes_history {
       SELECT
         snapshotTime,
         name,
+        timeCreated,
         location,
         project,
         storageClass,
@@ -21,7 +22,7 @@ view: bucket_attributes_history {
       FROM
         `@{PROJECT_ID}.@{BIGQUERY_DATASET}.bucket_attributes_view`
       GROUP BY
-        1,2,3,4,5,6,7,8;;
+        1,2,3,4,5,6,7,8,9;;
   }
 
   # --------------------------------------------------------------------------------------------------------

@@ -8,7 +8,7 @@
 
 view: project_activity {
 
-  sql_table_name: `@{BIGQUERY_DATASET}.project_activity_view` ;;
+  sql_table_name: `@{PROJECT_ID}.@{BIGQUERY_DATASET}.project_activity_view` ;;
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Primary Key -------------------------------

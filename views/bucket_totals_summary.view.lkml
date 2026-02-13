@@ -16,7 +16,7 @@ view: bucket_totals_summary {
         SUM(CAST(responseBytes AS FLOAT64)) AS total_egress_bytes,
         SUM(CAST(requestBytes AS FLOAT64)) AS total_ingress_bytes
       FROM
-        `@{BIGQUERY_DATASET}.bucket_region_activity_view`
+        `@{PROJECT_ID}.@{BIGQUERY_DATASET}.bucket_region_activity_view`
       WHERE
         {% condition bucket_region_activity.snapshot_start_date %} snapshotStartTime {% endcondition %}
         AND {% condition bucket_region_activity.snapshot_end_date %} snapshotEndTime {% endcondition %}
@@ -55,7 +55,7 @@ view: bucket_totals_summary {
       {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
         ${TABLE}.total_egress_bytes / 1024
       {% else %}
-        ${TABLE}.total_egress_bytes / POW(1024, 3)
+        ${TABLE}.total_egress_bytes
       {% endif %}
     ;;
     html: <span>{{ total_egress_bytes_aid._value }}</span>;;
@@ -77,7 +77,7 @@ view: bucket_totals_summary {
       {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
         ${TABLE}.total_ingress_bytes / 1024
       {% else %}
-        ${TABLE}.total_ingress_bytes / POW(1024, 3)
+        ${TABLE}.total_ingress_bytes
       {% endif %}
     ;;
     html: <span>{{ total_ingress_bytes_aid._value }}</span>;;
