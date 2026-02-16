@@ -21,12 +21,12 @@ view: project_attributes {
   # ---------------------------- Primary Key -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  dimension: primary_key {
-    hidden: yes
+  dimension: project {
     primary_key: yes
+    label: "Project Number"
     type: string
-    sql: GENERATE_UUID();;
-    description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each project, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
+    sql: CAST(${TABLE}.number AS STRING) ;;
+    description: "The Google Cloud project number associated with the project ID"
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -44,13 +44,6 @@ view: project_attributes {
     type: string
     sql: ${TABLE}.id ;;
     description: "The Project ID is a unique, immutable identifier for your GCP project. It is a globally unique string, often derived from the project name."
-  }
-
-  dimension: project {
-    label: "Project Number"
-    type: string
-    sql: CAST(${TABLE}.number AS STRING) ;;
-    description: "The Google Cloud project number associated with the project ID"
   }
 
 }
