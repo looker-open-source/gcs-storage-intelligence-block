@@ -55,7 +55,7 @@ view: bucket_totals_summary {
       {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
         ${TABLE}.total_egress_bytes / 1024
       {% else %}
-        ${TABLE}.total_egress_bytes / POW(1024, 3)
+        ${TABLE}.total_egress_bytes
       {% endif %}
     ;;
     html: <span>{{ total_egress_bytes_aid._value }}</span>;;
@@ -77,7 +77,7 @@ view: bucket_totals_summary {
       {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
         ${TABLE}.total_ingress_bytes / 1024
       {% else %}
-        ${TABLE}.total_ingress_bytes / POW(1024, 3)
+        ${TABLE}.total_ingress_bytes
       {% endif %}
     ;;
     html: <span>{{ total_ingress_bytes_aid._value }}</span>;;
