@@ -516,7 +516,7 @@ view: object_events {
       {% elsif size_unit._parameter_value == "GiB" %}
         CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
       {% elsif size_unit._parameter_value == "MiB" %}
-        CAST(${TABLE}.responseBytes FLOAT64) / (POW(1024, 2))
+        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
       {% elsif size_unit._parameter_value == "KiB" %}
         CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
       {% else %}
@@ -1016,7 +1016,8 @@ view: object_events {
     }
 
     allowed_value: {
-      label: "13" value: "13"
+      label: "13"
+      value: "13"
     }
 
     allowed_value: {
