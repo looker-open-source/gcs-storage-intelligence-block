@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # Purpose: Contains information about the Object Events View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -473,12 +473,10 @@ view: object_events {
   }
 
   measure: total_client_errors {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 400 AND ${response_status} < 500 THEN 1
-        ELSE 0
-      END ;;
+    type: count
+    filters: [
+      response_status: ">= 400 AND < 500"
+    ]
     description: "Count of requests with a 4xx response status"
     value_format_name: dynamic_thousands
   }
@@ -518,7 +516,7 @@ view: object_events {
       {% elsif size_unit._parameter_value == "GiB" %}
         CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
       {% elsif size_unit._parameter_value == "MiB" %}
-        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+        CAST(${TABLE}.responseBytes FLOAT64) / (POW(1024, 2))
       {% elsif size_unit._parameter_value == "KiB" %}
         CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
       {% else %}
@@ -552,12 +550,10 @@ view: object_events {
 
   measure: total_delete_requests {
     label: "Total DELETE requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'DELETE' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "DELETE"
+    ]
     description: "The total number of requests made to permanently remove objects from storage. This counts all DELETE attempts, including those that may have failed due to permissions or errors."
   }
 
@@ -585,46 +581,38 @@ view: object_events {
   }
 
   measure: total_errors {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 400 THEN 1
-        ELSE 0
-      END ;;
+    type: count
+    filters: [
+      response_status: ">= 400"
+    ]
     description: "The total number of failed requests. This includes both Client errors (4xx, such as 'Not Found' or 'Unauthorized') and Server errors (5xx, such as 'Internal Server Error')."
     value_format_name: dynamic_thousands
   }
 
   measure: total_patch_requests {
     label: "Total PATCH requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'PATCH' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "PATCH"
+    ]
     description: "The total number of requests made to partially update object metadata. Unlike PUT, which replaces an object, PATCH is typically used for targeted modifications to existing resources."
   }
 
   measure: total_post_requests {
     label: "Total POST requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'POST' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "POST"
+    ]
     description: "The total number of requests used to create new resources (objects)."
   }
 
   measure: total_put_requests {
     label: "Total PUT requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'PUT' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "PUT"
+    ]
     description: "The total number of requests made to upload or replace an entire object. This is the standard method used for uploading files and updating existing objects by overwriting them entirely."
   }
 
@@ -637,12 +625,10 @@ view: object_events {
   }
 
   measure: total_server_errors {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 500 THEN 1
-        ELSE 0
-      END ;;
+    type: count
+    filters: [
+      response_status: ">= 500"
+    ]
     description: "The total number of requests that failed due to server-side issues (HTTP 500-599). High values indicate system instability, such as 'Internal Server Error' (500) or 'Service Unavailable' (503), and typically require immediate investigation."
     value_format_name: dynamic_thousands
   }
@@ -669,24 +655,20 @@ view: object_events {
   }
 
   measure: total_success_requests {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 200 AND ${response_status} < 300 THEN 1
-        ELSE 0
-      END ;;
+    type: count
+    filters: [
+      response_status: ">= 200 AND < 300"
+    ]
     description: "The total number of requests that were successfully received, understood, and accepted by the server (HTTP 200-299). This is the primary indicator of healthy system traffic."
     value_format_name: dynamic_thousands
   }
 
   measure: total_too_many_requests_errors {
     label: "Total 429 (Too Many Requests Errors)"
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} = 429 THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      response_status: "429"
+    ]
     description: "The total number of requests rejected due to rate limiting (HTTP 429). This occurs when a client has sent too many requests in a given amount of time, exceeding the defined quota for the bucket or project."
   }
 
@@ -1034,8 +1016,7 @@ view: object_events {
     }
 
     allowed_value: {
-      label: "13"
-      value: "13"
+      label: "13" value: "13"
     }
 
     allowed_value: {
