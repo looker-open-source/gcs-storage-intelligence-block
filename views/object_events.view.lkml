@@ -18,8 +18,8 @@ view: object_events {
     hidden: yes
     primary_key: yes
     type: string
-    sql: GENERATE_UUID();;
-    description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each bucket log, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
+    sql: CONCAT(${TABLE}.requestId, '_', CAST(${TABLE}.requestCompletionTimestamp AS STRING)) ;;
+    description: "A hidden, stable primary key sourced from the GCS Request ID and Completion Timestamp. This ensures Symmetric Aggregates function correctly by providing a unique and consistent identifier for each event."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -672,9 +672,9 @@ view: object_events {
     description: "The total number of requests rejected due to rate limiting (HTTP 429). This occurs when a client has sent too many requests in a given amount of time, exceeding the defined quota for the bucket or project."
   }
 
-  # --------------------------------------------------------------------------------------------------------
+  # -------------------------------------------------------------------------
   # ---------------------------- Aid Measures -------------------------------
-  # --------------------------------------------------------------------------------------------------------
+  # -------------------------------------------------------------------------
 
   measure: total_created_storage_size_aid {
     hidden: yes
@@ -767,9 +767,9 @@ view: object_events {
     description: "This hidden measure supports the 'Total Storage Size' measure by aggregating and formatting the size in the optimal unit. The result is presented via an html parameter."
   }
 
-  # --------------------------------------------------------------------------------------------------------
+  # -----------------------------------------------------------------------
   # ---------------------------- Parameters -------------------------------
-  # --------------------------------------------------------------------------------------------------------
+  # -----------------------------------------------------------------------
 
   parameter: size_unit {
     type: unquoted
