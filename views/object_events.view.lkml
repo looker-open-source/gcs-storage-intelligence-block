@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # Purpose: Contains information about the Object Events View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -18,8 +18,13 @@ view: object_events {
     hidden: yes
     primary_key: yes
     type: string
-    sql: GENERATE_UUID();;
-    description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each bucket log, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
+    sql:
+      CONCAT(
+        CAST(${TABLE}.requestCompletionTime AS STRING), '_',
+        ${TABLE}.requestId, '_',
+        ${TABLE}.bucketName
+      );;
+    description: "Primary key representing a unique log entry. A concatenation of the completion timestamp, the specific request ID, and the target bucket name."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -121,6 +126,7 @@ view: object_events {
     label: "Request Processing Time (ms)"
     type: number
     sql: ${TABLE}.requestProcessingTimeMicros / 1000 ;;
+    description: "The total duration (in milliseconds) taken to process the request. Calculated by converting microseconds from the raw source data."
   }
 
   dimension: request_referrer {
@@ -425,6 +431,7 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   measure: average_latency_ms {
+    group_label: "Request Latency"
     label: "Average Latency (ms)"
     type: average
     sql: ${request_processing_time} ;;
@@ -433,6 +440,7 @@ view: object_events {
   }
 
   measure: ninety_five_percentile_request_time {
+    group_label: "Request Latency"
     label: "95th Percentile - Request Time"
     type: percentile
     percentile: 95
@@ -442,6 +450,7 @@ view: object_events {
   }
 
   measure: selected_measure {
+    group_label: "Dynamic Metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0"
@@ -473,17 +482,17 @@ view: object_events {
   }
 
   measure: total_client_errors {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 400 AND ${response_status} < 500 THEN 1
-        ELSE 0
-      END ;;
+    group_label: "Request Status"
+    type: count
+    filters: [
+      response_status: ">= 400 AND < 500"
+    ]
     description: "Count of requests with a 4xx response status"
     value_format_name: dynamic_thousands
   }
 
   measure: total_created_storage_size {
+    group_label: "Operations"
     label: "Total Created Storage Size"
     type: sum
     value_format: "#,##0.00"
@@ -507,6 +516,7 @@ view: object_events {
   }
 
   measure: total_data_egress {
+    group_label: "Data Transfer"
     label: "Total Data Egress"
     type: sum
     value_format: "#,##0.00"
@@ -529,6 +539,7 @@ view: object_events {
   }
 
   measure: total_data_ingress {
+    group_label: "Data Transfer"
     label: "Total Data Ingress"
     type: sum
     value_format: "#,##0.00"
@@ -551,17 +562,17 @@ view: object_events {
   }
 
   measure: total_delete_requests {
+    group_label: "Operations"
     label: "Total DELETE requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'DELETE' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "DELETE"
+    ]
     description: "The total number of requests made to permanently remove objects from storage. This counts all DELETE attempts, including those that may have failed due to permissions or errors."
   }
 
   measure: total_deleted_storage_size {
+    group_label: "Operations"
     label: "Total Deleted Storage Size"
     type: sum
     value_format: "#,##0.00"
@@ -585,50 +596,47 @@ view: object_events {
   }
 
   measure: total_errors {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 400 THEN 1
-        ELSE 0
-      END ;;
+    group_label: "Request Status"
+    type: count
+    filters: [
+      response_status: ">= 400"
+    ]
     description: "The total number of failed requests. This includes both Client errors (4xx, such as 'Not Found' or 'Unauthorized') and Server errors (5xx, such as 'Internal Server Error')."
     value_format_name: dynamic_thousands
   }
 
   measure: total_patch_requests {
+    group_label: "Operations"
     label: "Total PATCH requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'PATCH' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "PATCH"
+    ]
     description: "The total number of requests made to partially update object metadata. Unlike PUT, which replaces an object, PATCH is typically used for targeted modifications to existing resources."
   }
 
   measure: total_post_requests {
+    group_label: "Operations"
     label: "Total POST requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'POST' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "POST"
+    ]
     description: "The total number of requests used to create new resources (objects)."
   }
 
   measure: total_put_requests {
+    group_label: "Operations"
     label: "Total PUT requests"
-    type: sum
-    sql:
-      CASE
-        WHEN ${request_http_method} = 'PUT' THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      request_http_method: "PUT"
+    ]
     description: "The total number of requests made to upload or replace an entire object. This is the standard method used for uploading files and updating existing objects by overwriting them entirely."
   }
 
   measure: total_requests {
+    group_label: "Traffic Overview"
     label: "Total Requests"
     type: count_distinct
     sql: ${request_id}  ;;
@@ -637,17 +645,17 @@ view: object_events {
   }
 
   measure: total_server_errors {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 500 THEN 1
-        ELSE 0
-      END ;;
+    group_label: "Request Status"
+    type: count
+    filters: [
+      response_status: ">= 500"
+    ]
     description: "The total number of requests that failed due to server-side issues (HTTP 500-599). High values indicate system instability, such as 'Internal Server Error' (500) or 'Service Unavailable' (503), and typically require immediate investigation."
     value_format_name: dynamic_thousands
   }
 
   measure: total_storage_size {
+    group_label: "Metadata"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -669,24 +677,22 @@ view: object_events {
   }
 
   measure: total_success_requests {
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} >= 200 AND ${response_status} < 300 THEN 1
-        ELSE 0
-      END ;;
+    group_label: "Request Status"
+    type: count
+    filters: [
+      response_status: ">= 200 AND < 300"
+    ]
     description: "The total number of requests that were successfully received, understood, and accepted by the server (HTTP 200-299). This is the primary indicator of healthy system traffic."
     value_format_name: dynamic_thousands
   }
 
   measure: total_too_many_requests_errors {
+    group_label: "Request Status"
     label: "Total 429 (Too Many Requests Errors)"
-    type: sum
-    sql:
-      CASE
-        WHEN ${response_status} = 429 THEN 1
-        ELSE 0
-      END;;
+    type: count
+    filters: [
+      response_status: "429"
+    ]
     description: "The total number of requests rejected due to rate limiting (HTTP 429). This occurs when a client has sent too many requests in a given amount of time, exceeding the defined quota for the bucket or project."
   }
 
@@ -695,6 +701,7 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_created_storage_size_aid {
+    group_label: "Operations"
     hidden: yes
     type: string
     sql:
@@ -749,6 +756,7 @@ view: object_events {
   }
 
   measure: total_deleted_storage_size_aid {
+    group_label: "Operations"
     hidden: yes
     type: string
     sql:
@@ -767,6 +775,7 @@ view: object_events {
         THEN CONCAT(ROUND(SUM(CASE WHEN ${TABLE}.requestHttpMethod = 'DELETE' THEN ${TABLE}.size ELSE 0 END) / 1024, 2), " KiB")
       ELSE CONCAT(SUM(CASE WHEN ${TABLE}.requestHttpMethod = 'DELETE' THEN ${TABLE}.size ELSE 0 END), " B")
     END ;;
+    description: "Internal helper that aggregates and formats the total size of deleted objects into a human-readable string (KiB to EiB). Filters for 'DELETE' HTTP methods and is used for front-end HTML display."
   }
 
   measure: total_storage_size_aid {
@@ -783,6 +792,758 @@ view: object_events {
         ELSE CONCAT(SUM(${TABLE}.size), " B")
       END;;
     description: "This hidden measure supports the 'Total Storage Size' measure by aggregating and formatting the size in the optimal unit. The result is presented via an html parameter."
+  }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Period over Period (PoP) Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  measure: average_latency_ms_current {
+    group_label: "Request Latency"
+    label: "Average Latency (ms) - Current Period"
+    type: average
+    sql:
+      CASE
+        WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+        THEN ${request_processing_time}
+        ELSE NULL
+      END ;;
+    value_format_name: dynamic_thousands
+    description: "The average server processing time (ms) specifically within the selected analysis period."
+  }
+
+  measure: average_latency_ms_pop_change {
+    group_label: "Request Latency"
+    label: "Average Latency (ms) - PoP Change"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${average_latency_ms_current} - ${average_latency_ms_previous}),
+          ${average_latency_ms_previous}
+        )
+      {% else %}
+        0
+      {% endif %} ;;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+        {{ rendered_value }}
+      {% else %}
+        <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "The percentage change in average latency compared to the previous period."
+  }
+
+
+  measure: average_latency_ms_previous {
+    group_label: "Request Latency"
+    label: "Average Latency (ms) - Previous Period"
+    type: average
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN ${request_completion_raw} >=
+             TIMESTAMP_SUB({% date_start analysis_date_filter %},
+             INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND ${request_completion_raw} < {% date_start analysis_date_filter %}
+        THEN ${request_processing_time}
+        ELSE NULL
+      END
+    {% else %}
+      NULL
+    {% endif %} ;;
+    value_format_name: dynamic_thousands
+    description: "The average server processing time (ms) during the timeframe immediately preceding the selected analysis period."
+  }
+
+  measure: ninety_five_percentile_request_time_current {
+    group_label: "Request Latency"
+    label: "95Th Percentile - Request Time (Current Period)"
+    type: percentile
+    percentile: 95
+    sql:
+      CASE
+        WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+        THEN ${request_processing_time}
+        ELSE NULL
+      END;;
+    value_format_name: dynamic_thousands
+    description: "95th percentile request time the selected analysis period. The unit is in Milliseconds."
+  }
+
+  measure: ninety_five_percentile_request_time_pop_change {
+    group_label: "Request Latency"
+    label: "95th Percentile - Request Time (PoP Change)"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${ninety_five_percentile_request_time_current} - ${ninety_five_percentile_request_time_previous}),
+          ${ninety_five_percentile_request_time_previous}
+        )
+      {% else %}
+        0
+      {% endif %};;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+        {{ rendered_value }}
+      {% else %}
+        <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "Percentage change in the 95th percentile request time vs the previous period."
+  }
+
+  measure: ninety_five_percentile_request_time_previous {
+    group_label: "Request Latency"
+    label: "95th Percentile - Request Time (Previous Period)"
+    type: percentile
+    percentile: 95
+    sql:
+      CASE
+        WHEN ${request_completion_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+          ${request_completion_raw} < {% date_start analysis_date_filter %}
+        THEN ${request_processing_time}
+        ELSE NULL
+      END;;
+    value_format_name: dynamic_thousands
+    description: "95th percentile request time for the period immediately preceding the selection."
+  }
+
+  measure: total_client_errors_current {
+    group_label: "Request Status"
+    label: "Total Client Errors (Current Period)"
+    type: sum
+    sql:
+    CASE
+      WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+      AND ${response_status} >= 400 AND ${response_status} < 500
+      THEN 1
+      ELSE 0
+    END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of client-side failed requests (HTTP 4xx) specifically within the selected analysis period."
+  }
+
+  measure: total_client_errors_pop_change {
+    group_label: "Request Status"
+    label: "Total Client Errors (PoP Change)"
+    type: number
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      SAFE_DIVIDE(
+        (${total_client_errors_current} - ${total_client_errors_previous}),
+        ${total_client_errors_previous}
+      )
+    {% else %}
+      0
+    {% endif %} ;;
+    value_format_name: percent_2
+    html:
+    {% if analysis_date_filter._is_filtered %}
+      {{ rendered_value }}
+    {% else %}
+      <div style="display: none;"></div>
+    {% endif %} ;;
+    description: "The percentage change in client errors (4xx) compared to the previous period."
+  }
+
+  measure: total_client_errors_previous {
+    group_label: "Request Status"
+    label: "Total Client Errors (Previous Period)"
+    type: sum
+    sql:
+    CASE
+      WHEN ${request_completion_raw} >=
+           TIMESTAMP_SUB({% date_start analysis_date_filter %},
+           INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+      AND ${request_completion_raw} < {% date_start analysis_date_filter %}
+      AND ${response_status} >= 400 AND ${response_status} < 500
+      THEN 1
+      ELSE 0
+    END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of client-side failed requests (HTTP 4xx) during the timeframe immediately preceding the selected analysis period."
+  }
+
+  measure: total_data_egress_current {
+    group_label: "Data Transfer"
+    label: "Total Data Egress (Current Period)"
+    type: sum
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE WHEN
+          {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+        THEN
+          {% if size_unit._parameter_value == "PiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+          {% elsif size_unit._parameter_value == "TiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+          {% elsif size_unit._parameter_value == "GiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+          {% elsif size_unit._parameter_value == "MiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+          {% elsif size_unit._parameter_value == "KiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
+          {% else %}
+            CAST(${TABLE}.responseBytes AS FLOAT64)
+          {% endif %}
+        ELSE 0
+        END
+      {% else %}
+        {% if size_unit._parameter_value == "PiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+        {% elsif size_unit._parameter_value == "TiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+        {% elsif size_unit._parameter_value == "GiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+        {% elsif size_unit._parameter_value == "MiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+        {% elsif size_unit._parameter_value == "KiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
+        {% else %}
+          CAST(${TABLE}.responseBytes AS FLOAT64)
+        {% endif %}
+      {% endif %};;
+    html: <span>{{ total_data_egress_aid_current._value }}</span> ;;
+    value_format_name: dynamic_thousands
+    description: "The total volume of data transferred out of Google Cloud Storage (GCS) specifically within the selected analysis period. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_egress_pop_change {
+    group_label: "Data Transfer"
+    label: "Total Data Egress (PoP Change)"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${total_data_egress_current} - ${total_data_egress_previous}),
+          ${total_data_egress_previous}
+        )
+      {% else %}
+        0
+      {% endif %} ;;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+         {{ rendered_value }}
+      {% else %}
+         <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "The percentage change in data egress volume compared to the previous period. A positive value indicates that more data is being transferred out of GCS than in the prior timeframe."
+  }
+
+  measure: total_data_egress_previous {
+    group_label: "Data Transfer"
+    label: "Total Data Egress (Previous Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE WHEN
+        ${request_completion_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+        ${request_completion_raw} < {% date_start analysis_date_filter %}
+      THEN
+        {% if size_unit._parameter_value == "PiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+        {% elsif size_unit._parameter_value == "TiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+        {% elsif size_unit._parameter_value == "GiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+        {% elsif size_unit._parameter_value == "MiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+        {% elsif size_unit._parameter_value == "KiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
+        {% else %}
+          CAST(${TABLE}.responseBytes AS FLOAT64)
+        {% endif %}
+      ELSE 0
+      END
+    {% else %}
+      NULL
+    {% endif %} ;;
+    html: <span>{{ total_data_egress_aid_previous._value }}</span> ;;
+    description: "The total volume of data transferred out of Google Cloud Storage (GCS) during the timeframe immediately preceding the selected analysis period. This serves as the historical baseline for comparing current data egress trends. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_ingress_current {
+    group_label: "Data Transfer"
+    label: "Total Data Ingress (Current Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE WHEN
+        {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+      THEN
+        {% if size_unit._parameter_value == "PiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+        {% elsif size_unit._parameter_value == "TiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+        {% elsif size_unit._parameter_value == "GiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+        {% elsif size_unit._parameter_value == "MiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 2))
+        {% elsif size_unit._parameter_value == "KiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (1024)
+        {% else %}
+          CAST(${TABLE}.requestBytes AS FLOAT64)
+        {% endif %}
+      ELSE 0
+      END
+    {% else %}
+      {% if size_unit._parameter_value == "PiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+      {% elsif size_unit._parameter_value == "TiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+      {% elsif size_unit._parameter_value == "GiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+      {% elsif size_unit._parameter_value == "MiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 2))
+      {% elsif size_unit._parameter_value == "KiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (1024)
+      {% else %}
+        CAST(${TABLE}.requestBytes AS FLOAT64)
+      {% endif %}
+    {% endif %} ;;
+
+    html: <span>{{ total_data_ingress_aid_current._value }}</span> ;;
+    description: "The total volume of data uploaded or transferred into Google Cloud Storage (GCS) specifically within the selected analysis period. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_ingress_pop_change {
+    group_label: "Data Transfer"
+    label: "Total Data Ingress (PoP Change)"
+    type: number
+    sql:
+          {% if analysis_date_filter._is_filtered %}
+            SAFE_DIVIDE(
+              (${total_data_ingress_current} - ${total_data_ingress_previous}),
+              ${total_data_ingress_previous}
+            )
+          {% else %}
+            0
+          {% endif %} ;;
+    value_format_name: percent_2
+    html:
+          {% if analysis_date_filter._is_filtered %}
+             {{ rendered_value }}
+          {% else %}
+             <div style="display: none;"></div>
+          {% endif %} ;;
+    description: "The percentage change in data ingress volume compared to the previous period. A positive value indicates that more data is being uploaded or transferred into GCS than in the prior timeframe."
+  }
+
+  measure: total_data_ingress_previous {
+    group_label: "Data Transfer"
+    label: "Total Data Ingress (Previous Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+        {% if analysis_date_filter._is_filtered %}
+          CASE WHEN
+            ${request_completion_raw} >=
+              TIMESTAMP_SUB({% date_start analysis_date_filter %},
+              INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+            AND
+            ${request_completion_raw} < {% date_start analysis_date_filter %}
+          THEN
+            {% if size_unit._parameter_value == "PiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+            {% elsif size_unit._parameter_value == "TiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+            {% elsif size_unit._parameter_value == "GiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+            {% elsif size_unit._parameter_value == "MiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 2))
+            {% elsif size_unit._parameter_value == "KiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (1024)
+            {% else %}
+              CAST(${TABLE}.requestBytes AS FLOAT64)
+            {% endif %}
+          ELSE 0
+          END
+        {% else %}
+          NULL
+        {% endif %} ;;
+
+    html: <span>{{ total_data_ingress_aid_previous._value }}</span> ;;
+    description: "The total volume of data uploaded or transferred into Google Cloud Storage (GCS) during the timeframe immediately preceding the selected analysis period. This serves as the historical baseline for comparing current data ingress trends. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_errors_current {
+    group_label: "Request Status"
+    label: "Total Errors (Current Period)"
+    type: sum
+    sql:
+    CASE
+      WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+      AND ${response_status} >= 400
+      THEN 1
+      ELSE 0
+    END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of failed requests (HTTP 400+) specifically within the selected analysis period."
+  }
+
+  measure: total_errors_pop_change {
+    group_label: "Request Status"
+    label: "Total Errors (PoP Change)"
+    type: number
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      SAFE_DIVIDE(
+        (${total_errors_current} - ${total_errors_previous}),
+        ${total_errors_previous}
+      )
+    {% else %}
+      0
+    {% endif %} ;;
+    value_format_name: percent_2
+    html:
+    {% if analysis_date_filter._is_filtered %}
+      {{ rendered_value }}
+    {% else %}
+      <div style="display: none;"></div>
+    {% endif %} ;;
+    description: "The percentage change in total errors compared to the previous period."
+  }
+
+  measure: total_errors_previous {
+    group_label: "Request Status"
+    label: "Total Errors (Previous Period)"
+    type: sum
+    sql:
+    CASE
+      WHEN ${request_completion_raw} >=
+           TIMESTAMP_SUB({% date_start analysis_date_filter %},
+           INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+      AND ${request_completion_raw} < {% date_start analysis_date_filter %}
+      AND ${response_status} >= 400
+      THEN 1
+      ELSE 0
+    END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of failed requests (HTTP 400+) during the timeframe immediately preceding the selected analysis period."
+  }
+
+  measure: total_requests_current {
+    group_label: "Traffic Overview"
+    label: "Total Requests (Current Period)"
+    type: count_distinct
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+          THEN ${request_id}
+        END
+      {% else %}
+        ${request_id}
+      {% endif %};;
+    value_format_name: dynamic_thousands
+    description: "The total number of unique operations processed by Google Cloud Storage specifically within the selected analysis period. This uses a distinct count of Request IDs to ensure accurate traffic volume reporting."
+  }
+
+  measure: total_requests_pop_change {
+    group_label: "Traffic Overview"
+    label: "Total Requests (PoP Change)"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${total_requests_current} - ${total_requests_previous}),
+          ${total_requests_previous}
+        )
+      {% else %}
+        0
+      {% endif %};;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+        {{ rendered_value }}
+      {% else %}
+        <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "The percentage change in the total volume of requests compared to the previous period. A positive value indicates an overall increase in traffic to the monitored resources relative to the prior timeframe."
+  }
+
+  measure: total_requests_previous {
+    group_label: "Traffic Overview"
+    label: "Total Requests (Previous Period)"
+    type: count_distinct
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN ${request_completion_raw} >=
+            TIMESTAMP_SUB({% date_start analysis_date_filter %},
+            INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+          AND
+            ${request_completion_raw} < {% date_start analysis_date_filter %}
+          THEN ${request_id}
+        END
+      {% else %}
+        NULL
+      {% endif %};;
+    value_format_name: dynamic_thousands
+    description: "The total number of unique operations processed by Google Cloud Storage specifically during the timeframe immediately preceding the selected analysis period. This uses a distinct count of Request IDs to ensure accurate traffic volume reporting."
+  }
+
+  measure: total_server_errors_current {
+    group_label: "Request Status"
+    label: "Total Server Errors (Current Period)"
+    type: sum
+    sql:
+      CASE
+        WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+        AND ${response_status} >= 500
+        THEN 1
+        ELSE 0
+      END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of server-side failed requests (HTTP 500+) specifically within the selected analysis period."
+  }
+
+  measure: total_server_errors_pop_change {
+    group_label: "Request Status"
+    label: "Total Server Errors (PoP Change)"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${total_server_errors_current} - ${total_server_errors_previous}),
+          ${total_server_errors_previous}
+        )
+      {% else %}
+        0
+      {% endif %} ;;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+        {{ rendered_value }}
+      {% else %}
+        <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "The percentage change in server errors (5xx) compared to the previous period."
+  }
+
+  measure: total_server_errors_previous {
+    group_label: "Request Status"
+    label: "Total Server Errors (Previous Period)"
+    type: sum
+    sql:
+      CASE
+        WHEN ${request_completion_raw} >=
+             TIMESTAMP_SUB({% date_start analysis_date_filter %},
+             INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND ${request_completion_raw} < {% date_start analysis_date_filter %}
+        AND ${response_status} >= 500
+        THEN 1
+        ELSE 0
+      END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of server-side failed requests (HTTP 500+) during the timeframe immediately preceding the selected analysis period."
+  }
+
+  measure: total_success_requests_current {
+    group_label: "Request Status"
+    label: "Total Success Requests (Current Period)"
+    type: sum
+    sql:
+      CASE
+        WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %}
+        AND ${response_status} >= 200 AND ${response_status} < 300
+        THEN 1
+        ELSE 0
+      END;;
+    value_format_name: dynamic_thousands
+    description: "The total number of successful requests (HTTP 200-299) specifically within the selected analysis period."
+  }
+
+  measure: total_success_requests_pop_change {
+    group_label: "Request Status"
+    label: "Total Success Requests (PoP Change)"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${total_success_requests_current} - ${total_success_requests_previous}),
+          ${total_success_requests_previous}
+        )
+      {% else %}
+        0
+      {% endif %};;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+        {{ rendered_value }}
+      {% else %}
+        <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "The percentage change in successful requests compared to the previous period."
+  }
+
+  measure: total_success_requests_previous {
+    group_label: "Request Status"
+    label: "Total Success Requests (Previous Period)"
+    type: sum
+    sql:
+      CASE
+        WHEN ${request_completion_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+          ${request_completion_raw} < {% date_start analysis_date_filter %}
+        AND ${response_status} >= 200 AND ${response_status} < 300
+        THEN 1
+        ELSE 0
+      END ;;
+    value_format_name: dynamic_thousands
+    description: "The total number of successful requests (HTTP 200-299) during the timeframe immediately preceding the selected analysis period."
+  }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Aid Period over Period (PoP) Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  measure: total_data_egress_aid_current {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= 1024
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END), 0), " B")
+        END
+      {% else %}
+        CASE
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 6) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 5) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 4) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 3) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 2) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= 1024 THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)), 0), " B")
+        END
+      {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Egress value specifically for the selected analysis period into a human-readable string with the appropriate unit (e.g., '1.5 GiB'). Used for HTML display in period-over-period comparisons."
+  }
+
+  measure: total_data_egress_aid_previous {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= 1024
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END), 0), " B")
+        END
+      {% else %}
+        NULL
+      {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Egress value specifically for the timeframe immediately preceding the selected analysis period. It converts the value into a human-readable string with the appropriate unit (e.g., '1.2 GiB') for HTML display."
+  }
+
+  measure: total_data_ingress_aid_current {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= 1024
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${request_completion_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END), 0), " B")
+        END
+      {% else %}
+        CASE
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 6) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 5) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 4) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 3) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 2) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= 1024 THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)), 0), " B")
+        END
+      {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Ingress value specifically for the selected analysis period into a human-readable string with the appropriate unit (e.g., '2.5 GiB'). Used for HTML display in period-over-period comparisons."
+  }
+
+  measure: total_data_ingress_aid_previous {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+        WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+        WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+        WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+        WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+        WHEN SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= 1024
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+        ELSE CONCAT(ROUND(SUM(CASE WHEN ${request_completion_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${request_completion_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END), 0), " B")
+      END
+    {% else %}
+      NULL
+    {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Ingress value specifically for the timeframe immediately preceding the selected analysis period. It converts the value into a human-readable string with the appropriate unit (e.g., '1.2 GiB') for HTML display."
+  }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ------------------------------- Filters  -------------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  filter: analysis_date_filter {
+    type: date
+    label: "Snapshot Start Range"
+    description: "Select the date range for analysis. The 'Previous Period' measure will automatically calculate based on this duration."
   }
 
   # --------------------------------------------------------------------------------------------------------

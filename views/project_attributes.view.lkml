@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # Purpose: Contains information about the Project Attributes View Table inside the Storage Intelligence linked Dataset.
 # -------------------------------------------------------------------------
 
@@ -21,12 +21,12 @@ view: project_attributes {
   # ---------------------------- Primary Key -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  dimension: primary_key {
-    hidden: yes
+  dimension: project {
+    label: "Project Number"
     primary_key: yes
     type: string
-    sql: GENERATE_UUID();;
-    description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each project, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
+    sql: CAST(${TABLE}.number AS STRING) ;;
+    description: "The Google Cloud project number associated with the project ID"
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -44,13 +44,6 @@ view: project_attributes {
     type: string
     sql: ${TABLE}.id ;;
     description: "The Project ID is a unique, immutable identifier for your GCP project. It is a globally unique string, often derived from the project name."
-  }
-
-  dimension: project {
-    label: "Project Number"
-    type: string
-    sql: CAST(${TABLE}.number AS STRING) ;;
-    description: "The Google Cloud project number associated with the project ID"
   }
 
 }

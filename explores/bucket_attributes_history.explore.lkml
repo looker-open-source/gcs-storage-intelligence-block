@@ -2,12 +2,13 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: November 15, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 
 explore: bucket_attributes_history {
+  persist_with: storage_intelligence_metadata_datagroup
   description: "Historic bucket-level metadata joined with project attributes. This view preserves the state of bucket settings over time for longitudinal analysis."
 
   join: project_attributes {
