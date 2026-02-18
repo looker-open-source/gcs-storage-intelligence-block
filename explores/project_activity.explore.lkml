@@ -2,12 +2,13 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 
 explore: project_activity {
+  persist_with: storage_intelligence_activity_datagroup
   description: "Aggregated project activity metrics enriched with project metadata. Includes all possible error and status dimensions for standardized performance and compliance tracking."
 
   join: project_attributes {

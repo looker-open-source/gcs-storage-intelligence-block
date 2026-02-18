@@ -2,12 +2,13 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 
 explore: object_attributes {
+  persist_with: storage_intelligence_metadata_datagroup
   description: "Detailed inventory of storage objects. Ideal for auditing object distribution across storage classes, verifying regional placement, and performing deep-dives into bucket contents at the project level."
 
   join: regions_information {

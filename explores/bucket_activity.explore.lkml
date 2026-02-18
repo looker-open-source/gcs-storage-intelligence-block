@@ -2,12 +2,13 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # -------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 
 explore: bucket_activity {
+  persist_with: storage_intelligence_activity_datagroup
   description: "Comprehensive view of storage bucket performance, including project metadata, top error prefixes (429s), and traffic volume (bytes/operations). Use this to analyze usage patterns and troubleshoot client errors across projects."
 
   join: project_attributes {

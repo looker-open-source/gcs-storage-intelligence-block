@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # Purpose: Main model inside the gcs_storage_intelligence_block project.
 # --------------------------------------------------------------------------
 connection: "@{CONNECTION_NAME}"
@@ -19,6 +19,3 @@ include: "/attributes/map_layers/*.lkml"
 include: "/attributes/value_formats/*.lkml"
 # dashboards
 include: "/dashboards/*.dashboard.lookml"
-
-
-persist_with: gcs_storage_intelligence_default_datagroup

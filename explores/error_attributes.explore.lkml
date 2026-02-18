@@ -2,12 +2,13 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Feb 17, 2026
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 
 explore: error_attributes  {
+  persist_with: storage_intelligence_metadata_datagroup
   description: "Diagnostic view for identifying and resolving errors encountered during the setup of GCP Storage Intelligence datasets. Includes regional metadata to pinpoint location-specific deployment failures."
 
   join: regions_information {

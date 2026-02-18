@@ -263,7 +263,7 @@ view: regions_information {
         ELSE
           NULL
       END;;
-    map_layer_name: single_countries
+    map_layer_name: countries
     description: "This field facilitates the selection of individual countries from the list presented in the 'Map Selection' parameter."
   }
 

@@ -3,7 +3,7 @@
   title: GCS Storage Intelligence - Object Events
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: UmK2s6F4jNnJpyVxlwExt8
+  preferred_slug: ROyzRVzdNgSQlRQ6oDhwEF
   theme_name: ''
   layout: newspaper
   tabs:
@@ -13,7 +13,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -59,7 +58,7 @@
     height: 4
     tab_name: ''
   - type: button
-    name: button_274
+    name: button_371
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::bucket_region_activity"}'
     row: 145
     col: 21
@@ -71,29 +70,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_requests]
+    fields: [object_events.total_requests_current, object_events.total_requests_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: 'Total # of requests'
     smart_single_value_size: false
     defaults_version: 1
+    hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 14
     col: 2
     width: 4
@@ -104,30 +107,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.ninety_five_percentile_request_time]
+    fields: [object_events.ninety_five_percentile_request_time_current, object_events.ninety_five_percentile_request_time_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: 95th Percentile processing time [ms]
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
+    single_value_title: P95 Latency [ms]
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 14
     col: 6
     width: 4
@@ -138,24 +144,26 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_data_egress]
+    fields: [object_events.total_data_egress_current, object_events.total_data_egress_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: Total data egress
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -163,6 +171,7 @@
       7 - Storage Class: object_events.storage_class
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 14
     col: 10
     width: 4
@@ -173,24 +182,26 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_data_ingress]
+    fields: [object_events.total_data_ingress_current, object_events.total_data_ingress_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: Total data ingress
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -198,6 +209,7 @@
       7 - Storage Class: object_events.storage_class
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 14
     col: 14
     width: 4
@@ -208,30 +220,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_success_requests]
+    fields: [object_events.total_success_requests_current, object_events.total_success_requests_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: 'Total # of success requests'
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
+    single_value_title: Success requests
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 14
     col: 18
     width: 4
@@ -242,30 +257,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_errors]
+    fields: [object_events.total_errors_current, object_events.total_errors_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: Total errors
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 16
     col: 4
     width: 4
@@ -276,30 +294,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_client_errors]
+    fields: [object_events.total_client_errors_current, object_events.total_client_errors_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: Total client errors
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 16
     col: 8
     width: 4
@@ -310,30 +331,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.total_server_errors]
+    fields: [object_events.total_server_errors_current, object_events.total_server_errors_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: Total server errors
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 16
     col: 12
     width: 4
@@ -344,30 +368,33 @@
     model: gcs_storage_intelligence
     explore: object_events
     type: single_value
-    fields: [object_events.average_latency_ms]
+    fields: [object_events.average_latency_ms_current, object_events.average_latency_ms_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Average latency (ms)
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
+    single_value_title: Avg latency (ms)
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.analysis_date_filter
     row: 16
     col: 16
     width: 4
@@ -412,13 +439,13 @@
     defaults_version: 1
     hidden_series: []
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 69
     col: 0
     width: 24
@@ -486,7 +513,6 @@
     totals_color: "#808080"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -496,6 +522,7 @@
       9 - Selected Metric: object_events.aggregate_function
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 23
     col: 0
     width: 24
@@ -546,7 +573,6 @@
       object_events.selected_measure: "#9FA8DA"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -556,6 +582,7 @@
       9 - Selected Metric: object_events.aggregate_function
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 95
     col: 0
     width: 12
@@ -606,7 +633,6 @@
       object_events.selected_measure: "#F06292"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -616,6 +642,7 @@
       12 - Comparison Selected Metric: object_events.aggregate_function
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 95
     col: 12
     width: 12
@@ -700,7 +727,6 @@
     hide_totals: false
     hide_row_totals: false
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -710,6 +736,7 @@
       9 - Selected Metric: object_events.aggregate_function
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 33
     col: 0
     width: 24
@@ -761,7 +788,6 @@
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -769,6 +795,7 @@
       7 - Storage Class: object_events.storage_class
       9 - Selected Metric: object_events.aggregate_function
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 80
     col: 0
     width: 24
@@ -828,7 +855,6 @@
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -836,6 +862,7 @@
       7 - Storage Class: object_events.storage_class
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 54
     col: 0
     width: 24
@@ -900,7 +927,6 @@
     totals_color: "#808080"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -908,6 +934,7 @@
       7 - Storage Class: object_events.storage_class
       14 - Object Name: object_events.object_name
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 109
     col: 0
     width: 24
@@ -982,13 +1009,13 @@
     totals_color: "#808080"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 119
     col: 0
     width: 24
@@ -1066,13 +1093,13 @@
     totals_color: "#808080"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 129
     col: 0
     width: 24
@@ -1141,7 +1168,6 @@
     totals_color: "#808080"
     defaults_version: 1
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
@@ -1149,6 +1175,7 @@
       7 - Storage Class: object_events.storage_class
       8 - Size Unit: object_events.size_unit
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 45
     col: 0
     width: 24
@@ -1200,20 +1227,20 @@
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      1 - Request Completion Time: object_events.request_completion_time
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: object_events.bucket_name
       5 - Response Status: object_events.response_status
       6 - Location: object_events.location
       7 - Storage Class: object_events.storage_class
       4 - HTTP Method: object_events.request_http_method
+      1 - Request Completion Time: object_events.request_completion_time
     row: 135
     col: 0
     width: 24
     height: 8
     tab_name: ''
   - type: button
-    name: button_296
+    name: button_393
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::project_activity"}'
     row: 145
     col: 0
@@ -1223,14 +1250,13 @@
   - name: " (2)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n       padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Key Performance\
-      \ Indicators (KPIs)</span>\n</div>"
+      \    display: flex; \n    align-items: center; \n       padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Key Performance Indicators (KPIs)</span>\n</div>"
     row: 11
     col: 0
     width: 24
@@ -1239,7 +1265,6 @@
   - name: " (3)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
@@ -1333,7 +1358,6 @@
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1367,21 +1391,20 @@
       \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
       \ center; \n    justify-content: center;\n  \">8</div>\n\n</div>"
     row: 18
-    col: 18
-    width: 6
+    col: 17
+    width: 7
     height: 2
     tab_name: ''
   - name: " (5)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Activity\
-      \ Breakdown</span>\n</div>"
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Activity Breakdown</span>\n</div>"
     row: 20
     col: 0
     width: 24
@@ -1390,14 +1413,13 @@
   - name: " "
     type: text
     title_text: " "
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Activity\
-      \ & Performance Trends</span>\n</div>"
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Activity & Performance Trends</span>\n</div>"
     row: 66
     col: 0
     width: 24
@@ -1406,7 +1428,6 @@
   - name: " (6)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1454,7 +1475,6 @@
   - name: " (7)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1502,7 +1522,6 @@
   - name: " (8)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1543,7 +1562,6 @@
   - name: " (9)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1559,7 +1577,6 @@
   - name: " (10)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1600,7 +1617,6 @@
   - name: " (11)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1638,7 +1654,6 @@
   - name: " (12)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1654,7 +1669,6 @@
   - name: " (13)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1692,7 +1706,6 @@
   - name: " (14)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1740,7 +1753,6 @@
   - name: " (15)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1789,7 +1801,6 @@
   - name: " (16)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1830,7 +1841,6 @@
   - name: " (17)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1868,7 +1878,6 @@
   - name: " (18)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1906,7 +1915,6 @@
   - name: " (19)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 143
     col: 0
@@ -1916,7 +1924,6 @@
   - name: " (20)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
