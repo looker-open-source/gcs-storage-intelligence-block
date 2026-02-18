@@ -20,7 +20,7 @@ view: object_events {
     type: string
     sql:
       CONCAT(
-        CAST(${TABLE}.requestCompletionTime AS STRING), '_',
+        CAST(${TABLE}.requestCompletionTimestamp AS STRING), '_',
         ${TABLE}.requestId, '_',
         ${TABLE}.bucketName
       );;
