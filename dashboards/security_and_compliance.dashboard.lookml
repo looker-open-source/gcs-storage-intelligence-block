@@ -3,7 +3,7 @@
   title: GCS Storage Intelligence - Security & Compliance
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: bQfrUXv0NsAXaTmUw5M50s
+  preferred_slug: sOhnu8RbzSYbmALfZMuvCd
   theme_name: ''
   layout: newspaper
   tabs:
@@ -13,7 +13,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -58,7 +57,7 @@
     height: 4
     tab_name: ''
   - type: button
-    name: button_225
+    name: button_480
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::error_and_events"}'
     row: 74
     col: 21
@@ -91,7 +90,7 @@
     color_application:
       collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
       palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
-    single_value_title: Buckets without Uniform Access
+    single_value_title: Buckets without Uniform Bucket Level Access
     smart_single_value_size: false
     hidden_pivots: {}
     show_view_names: false
@@ -103,6 +102,13 @@
     limit_displayed_rows: false
     defaults_version: 1
     y_axes: []
+    note_state: collapsed
+    note_display: hover
+    note_text: Highlights buckets lacking Uniform Bucket-Level Access to help you
+      monitor compliance and prevent unintended data exposure from object-level permissions.
+    aria_description: A scorecard titled "Buckets without Uniform Bucket Level Access."
+      It displays a single number representing the total count of Cloud Storage buckets
+      in your environment that currently allow object-level access controls.
     listen:
       2 - Bucket Name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
@@ -151,6 +157,14 @@
     limit_displayed_rows: false
     defaults_version: 1
     y_axes: []
+    note_state: collapsed
+    note_display: hover
+    note_text: Highlights buckets vulnerable to immediate, irreversible data loss.
+      Monitoring this metric helps ensure your data is protected against accidental
+      or malicious deletions.
+    aria_description: A scorecard titled "Buckets without Soft-Delete policy." It
+      displays a single dynamic number representing the total count of Cloud Storage
+      buckets in your environment that currently lack soft-delete protection.
     listen:
       2 - Bucket Name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
@@ -201,6 +215,13 @@
     defaults_version: 1
     y_axes: []
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Highlights the number of objects safeguarded by holds. Monitoring this
+      metric helps ensure your critical data remains immutable for as long as required.
+    aria_description: A scorecard titled "Objects Under Hold." It displays a single
+      dynamic number representing the total count of Cloud Storage objects in your
+      environment that currently have an active hold preventing their deletion.
     listen:
       2 - Bucket Name: object_attributes.bucket_name
       3 - Location: object_attributes.location
@@ -282,6 +303,15 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Highlights where your bucket data is physically located. Monitoring
+      this information helps ensure you are meeting regional data sovereignty and
+      compliance requirements.
+    aria_description: 'A table titled "Bucket and countries information." The table
+      contains three columns: Bucket Name, Countries, and Total Objects. It lists
+      individual Cloud Storage buckets, the geographic countries associated with them,
+      and the total count of objects stored within each bucket.'
     listen:
       10 - Countries: regions_information.countries_union
       2 - Bucket Name: bucket_attributes.bucket_name
@@ -298,8 +328,8 @@
     width: 24
     height: 7
     tab_name: ''
-  - title: Objects and storage size breakdown by geographic area
-    name: Objects and storage size breakdown by geographic area
+  - title: Objects and storage size breakdown by location
+    name: Objects and storage size breakdown by location
     model: gcs_storage_intelligence
     explore: bucket_attributes
     type: looker_google_map
@@ -338,6 +368,14 @@
     reverse_map_value_colors: false
     defaults_version: 0
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Visualizes the physical locations of your objects and storage volume
+      across the globe, helping you monitor regional compliance and data sovereignty.
+    aria_description: A map visualization titled "Objects and storage size breakdown
+      by location." It displays a world map with markers indicating the geographic
+      regions where your Cloud Storage data is located. A legend indicates a gradient
+      representing the varying volume of objects and storage size in each region.
     listen:
       10 - Countries: regions_information.countries_union
       2 - Bucket Name: bucket_attributes.bucket_name
@@ -433,6 +471,14 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks objects with upcoming retention expirations, helping you manage
+      data compliance lifecycles and prepare for policy changes.
+    aria_description: 'A table titled "Top 100 objects with retention expiration time."
+      The table contains three columns: Object Name, Retention Expiration Date, and
+      Days until expiration. It lists specific Cloud Storage objects and provides
+      a countdown to when their data retention policies will expire.'
     listen:
       2 - Bucket Name: object_attributes.bucket_name
       3 - Location: object_attributes.location
@@ -507,6 +553,15 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the distribution of noncurrent and soft-deleted objects. Monitoring
+      these statuses helps you manage data recovery windows and audit storage lifecycles.
+    aria_description: 'A table titled "Distribution by Soft Deleted or Non Current
+      Objects." The table contains four columns: Object Status, Object Name, Hard
+      Delete Date, and Total Objects. It lists individual Cloud Storage objects, categorizing
+      them as either soft-deleted or noncurrent versions, and provides their scheduled
+      hard deletion dates along with the total count of those objects.'
     listen:
       2 - Bucket Name: object_attributes.bucket_name
       3 - Location: object_attributes.location
@@ -585,6 +640,15 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the buckets utilizing soft-delete protection and their respective
+      object volumes, helping you audit your data recovery posture and ensure critical
+      data is recoverable.
+    aria_description: 'A table titled "Buckets with Soft-Deleted policy enabled."
+      The table contains two columns: Bucket Name and Total Objects. It lists individual
+      Cloud Storage buckets that currently have soft-delete protection active and
+      displays the corresponding total count of objects stored within each bucket.'
     listen:
       2 - Bucket Name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
@@ -660,6 +724,16 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the remaining retention period for your soft-deleted objects.
+      Monitoring this countdown helps ensure you have adequate time to recover accidentally
+      deleted data before irreversible loss.
+    aria_description: 'A table titled "Soft-Deleted objects remaining retention."
+      The table contains four columns: Object Name, Hard Delete Time, Days until hard
+      deletion, and Object Size. It lists individual soft-deleted Cloud Storage objects,
+      providing a countdown to their permanent deletion dates alongside their respective
+      storage sizes.'
     listen:
       4 - Storage Class: object_attributes.storage_class
       13 - Days until hard deletion: object_attributes.days_until_hard_deletion
@@ -670,7 +744,7 @@
     height: 7
     tab_name: ''
   - type: button
-    name: button_236
+    name: button_491
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::cost_management"}'
     row: 74
     col: 0
@@ -680,7 +754,6 @@
   - name: " (3)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
@@ -769,14 +842,13 @@
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
       \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
       \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
       \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Key Security Indicators </span>\n</div>"
+      \ 24px; font-weight: 400;\">Key Security Indicators</span>\n</div>"
     row: 11
     col: 0
     width: 24
@@ -785,7 +857,6 @@
   - name: " (5)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -812,7 +883,6 @@
   - name: " (6)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -860,7 +930,6 @@
   - name: " (7)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -908,7 +977,6 @@
   - name: " (8)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -939,7 +1007,6 @@
   - name: " (9)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -977,7 +1044,6 @@
   - name: " (10)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 72
     col: 0
@@ -987,7 +1053,6 @@
   - name: " (11)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -1021,7 +1086,6 @@
   - name: " (12)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\

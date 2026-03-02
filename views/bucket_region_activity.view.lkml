@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Mar 2, 2026
 # Purpose: Contains information about the Bucket Region Activity View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 view: bucket_region_activity {
@@ -173,6 +173,7 @@ view: bucket_region_activity {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_buckets {
+    group_label: "Inventory Overview"
     label: "Total Buckets"
     type: count_distinct
     sql: ${bucket_name} ;;
@@ -181,6 +182,7 @@ view: bucket_region_activity {
   }
 
   measure: total_requested_locations {
+    group_label: "Inventory Overview"
     label: "Total Requested Locations"
     type: count_distinct
     sql: ${request_location} ;;
@@ -297,6 +299,478 @@ view: bucket_region_activity {
     description: "Helper measure that calculates total ingress volume and formats it into the most appropriate human-readable unit (e.g., '5.2 GiB'). Used to populate the HTML for the 'Total Data Ingress' measure."
   }
 
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Period over Period (PoP) Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  measure: total_buckets_current {
+    group_label: "Inventory Overview"
+    label: "Total Buckets (Current Period)"
+    type: count_distinct
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %}
+        THEN ${bucket_name}
+      END
+    {% else %}
+      ${bucket_name}
+    {% endif %} ;;
+    value_format_name: dynamic_thousands
+    description: "The count of unique buckets with active traffic specifically within the selected analysis period."
+  }
+
+  measure: total_buckets_pop_change {
+    group_label: "Inventory Overview"
+    label: "Total Buckets (PoP Change)"
+    type: number
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      SAFE_DIVIDE(
+        (${total_buckets_current} - ${total_buckets_previous}),
+        ${total_buckets_previous}
+      )
+    {% else %}
+      0
+    {% endif %};;
+    value_format_name: percent_2
+    html:
+    {% if analysis_date_filter._is_filtered %}
+      {{ rendered_value }}
+    {% else %}
+      <div style="display: none;"></div>
+    {% endif %} ;;
+    description: "The percentage change in the number of active buckets compared to the previous period."
+  }
+
+  measure: total_buckets_previous {
+    group_label: "Inventory Overview"
+    label: "Total Buckets (Previous Period)"
+    type: count_distinct
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN ${snapshot_start_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+          ${snapshot_start_raw} < {% date_start analysis_date_filter %}
+        THEN ${bucket_name}
+      END
+    {% else %}
+      NULL
+    {% endif %};;
+    value_format_name: dynamic_thousands
+    description: "The count of unique buckets with active traffic during the timeframe immediately preceding the selected analysis period."
+  }
+
+  measure: total_requested_locations_current {
+    group_label: "Inventory Overview"
+    label: "Total Requested Locations (Current Period)"
+    type: count_distinct
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %}
+        THEN ${request_location}
+      END
+    {% else %}
+      ${request_location}
+    {% endif %} ;;
+    value_format_name: dynamic_thousands
+    description: "The number of unique regions or zones active specifically within the selected analysis period."
+  }
+
+  measure: total_requested_locations_pop_change {
+    group_label: "Inventory Overview"
+    label: "Total Requested Locations (PoP Change)"
+    type: number
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      SAFE_DIVIDE(
+        (${total_requested_locations_current} - ${total_requested_locations_previous}),
+        ${total_requested_locations_previous}
+      )
+    {% else %}
+      0
+    {% endif %};;
+    value_format_name: percent_2
+    html:
+    {% if analysis_date_filter._is_filtered %}
+      {{ rendered_value }}
+    {% else %}
+      <div style="display: none;"></div>
+    {% endif %} ;;
+    description: "The percentage change in the number of unique requested locations compared to the previous period."
+  }
+
+
+  measure: total_requested_locations_previous {
+    group_label: "Inventory Overview"
+    label: "Total Requested Locations (Previous Period)"
+    type: count_distinct
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN ${snapshot_start_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+          ${snapshot_start_raw} < {% date_start analysis_date_filter %}
+        THEN ${request_location}
+      END
+    {% else %}
+      NULL
+    {% endif %};;
+    value_format_name: dynamic_thousands
+    description: "The number of unique regions or zones active during the timeframe immediately preceding the selected analysis period."
+  }
+
+  measure: total_data_egress_current {
+    group_label: "Data Transfer"
+    label: "Total Data Egress (Current Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE WHEN
+          {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %}
+        THEN
+          {% if throughput_size_unit._parameter_value == "PiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+          {% elsif throughput_size_unit._parameter_value == "TiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+          {% elsif throughput_size_unit._parameter_value == "GiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+          {% elsif throughput_size_unit._parameter_value == "MiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+          {% elsif throughput_size_unit._parameter_value == "KiB" %}
+            CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
+          {% else %}
+            CAST(${TABLE}.responseBytes AS FLOAT64)
+          {% endif %}
+        ELSE 0
+        END
+      {% else %}
+        {% if throughput_size_unit._parameter_value == "PiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+        {% elsif throughput_size_unit._parameter_value == "TiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+        {% elsif throughput_size_unit._parameter_value == "GiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+        {% elsif throughput_size_unit._parameter_value == "MiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+        {% elsif throughput_size_unit._parameter_value == "KiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
+        {% else %}
+          CAST(${TABLE}.responseBytes AS FLOAT64)
+        {% endif %}
+      {% endif %} ;;
+    html: <span>{{ total_data_egress_aid_current._value }}</span> ;;
+    description: "The total volume of data transferred out of Google Cloud Storage (GCS) specifically within the selected analysis period. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_egress_pop_change {
+    group_label: "Data Transfer"
+    label: "Total Data Egress (PoP Change)"
+    type: number
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        SAFE_DIVIDE(
+          (${total_data_egress_current} - ${total_data_egress_previous}),
+          ${total_data_egress_previous}
+        )
+      {% else %}
+        0
+      {% endif %} ;;
+    value_format_name: percent_2
+    html:
+      {% if analysis_date_filter._is_filtered %}
+         {{ rendered_value }}
+      {% else %}
+         <div style="display: none;"></div>
+      {% endif %} ;;
+    description: "The percentage change in data egress volume compared to the previous period. A positive value indicates that more data is being transferred out of GCS than in the prior timeframe."
+  }
+
+  measure: total_data_egress_previous {
+    group_label: "Data Transfer"
+    label: "Total Data Egress (Previous Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE WHEN
+        ${snapshot_start_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+        ${snapshot_start_raw} < {% date_start analysis_date_filter %}
+      THEN
+        {% if throughput_size_unit._parameter_value == "PiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+        {% elsif throughput_size_unit._parameter_value == "TiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+        {% elsif throughput_size_unit._parameter_value == "GiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+        {% elsif throughput_size_unit._parameter_value == "MiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 2))
+        {% elsif throughput_size_unit._parameter_value == "KiB" %}
+          CAST(${TABLE}.responseBytes AS FLOAT64) / (1024)
+        {% else %}
+          CAST(${TABLE}.responseBytes AS FLOAT64)
+        {% endif %}
+      ELSE 0
+      END
+    {% else %}
+      NULL
+    {% endif %} ;;
+    html: <span>{{ total_data_egress_aid_previous._value }}</span> ;;
+    description: "The total volume of data transferred out of Google Cloud Storage (GCS) during the timeframe immediately preceding the selected analysis period. This serves as the historical baseline for comparing current data egress trends. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_ingress_current {
+    group_label: "Data Transfer"
+    label: "Total Data Ingress (Current Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE WHEN
+        {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %}
+      THEN
+        {% if throughput_size_unit._parameter_value == "PiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+        {% elsif throughput_size_unit._parameter_value == "TiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+        {% elsif throughput_size_unit._parameter_value == "GiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+        {% elsif throughput_size_unit._parameter_value == "MiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 2))
+        {% elsif throughput_size_unit._parameter_value == "KiB" %}
+          CAST(${TABLE}.requestBytes AS FLOAT64) / (1024)
+        {% else %}
+          CAST(${TABLE}.requestBytes AS FLOAT64)
+        {% endif %}
+      ELSE 0
+      END
+    {% else %}
+      {% if throughput_size_unit._parameter_value == "PiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+      {% elsif throughput_size_unit._parameter_value == "TiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+      {% elsif throughput_size_unit._parameter_value == "GiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+      {% elsif throughput_size_unit._parameter_value == "MiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 2))
+      {% elsif throughput_size_unit._parameter_value == "KiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (1024)
+      {% else %}
+        CAST(${TABLE}.requestBytes AS FLOAT64)
+      {% endif %}
+    {% endif %} ;;
+
+    html: <span>{{ total_data_ingress_aid_current._value }}</span> ;;
+    description: "The total volume of data uploaded or transferred into Google Cloud Storage (GCS) specifically within the selected analysis period. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_ingress_pop_change {
+    group_label: "Data Transfer"
+    label: "Total Data Ingress (PoP Change)"
+    type: number
+    sql:
+          {% if analysis_date_filter._is_filtered %}
+            SAFE_DIVIDE(
+              (${total_data_ingress_current} - ${total_data_ingress_previous}),
+              ${total_data_ingress_previous}
+            )
+          {% else %}
+            0
+          {% endif %} ;;
+    value_format_name: percent_2
+    html:
+          {% if analysis_date_filter._is_filtered %}
+             {{ rendered_value }}
+          {% else %}
+             <div style="display: none;"></div>
+          {% endif %} ;;
+    description: "The percentage change in data ingress volume compared to the previous period. A positive value indicates that more data is being uploaded or transferred into GCS than in the prior timeframe."
+  }
+
+  measure: total_data_ingress_previous {
+    group_label: "Data Transfer"
+    label: "Total Data Ingress (Previous Period)"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+        {% if analysis_date_filter._is_filtered %}
+          CASE WHEN
+            ${snapshot_start_raw} >=
+              TIMESTAMP_SUB({% date_start analysis_date_filter %},
+              INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+            AND
+            ${snapshot_start_raw} < {% date_start analysis_date_filter %}
+          THEN
+            {% if throughput_size_unit._parameter_value == "PiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+            {% elsif throughput_size_unit._parameter_value == "TiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+            {% elsif throughput_size_unit._parameter_value == "GiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+            {% elsif throughput_size_unit._parameter_value == "MiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 2))
+            {% elsif throughput_size_unit._parameter_value == "KiB" %}
+              CAST(${TABLE}.requestBytes AS FLOAT64) / (1024)
+            {% else %}
+              CAST(${TABLE}.requestBytes AS FLOAT64)
+            {% endif %}
+          ELSE 0
+          END
+        {% else %}
+          NULL
+        {% endif %} ;;
+
+    html: <span>{{ total_data_ingress_aid_previous._value }}</span> ;;
+    description: "The total volume of data uploaded or transferred into Google Cloud Storage (GCS) during the timeframe immediately preceding the selected analysis period. This serves as the historical baseline for comparing current data ingress trends. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
+  }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Aid Period over Period (PoP) Measures -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  measure: total_data_egress_aid_current {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= 1024
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END), 0), " B")
+        END
+      {% else %}
+        CASE
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 6) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 5) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 4) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 3) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= POW(1024, 2) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) >= 1024 THEN CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CAST(${TABLE}.responseBytes AS FLOAT64)), 0), " B")
+        END
+      {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Egress value specifically for the selected analysis period into a human-readable string with the appropriate unit (e.g., '1.5 GiB'). Used for HTML display in period-over-period comparisons."
+  }
+
+  measure: total_data_egress_aid_previous {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) >= 1024
+            THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.responseBytes AS FLOAT64) ELSE 0 END), 0), " B")
+        END
+      {% else %}
+        NULL
+      {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Egress value specifically for the timeframe immediately preceding the selected analysis period. It converts the value into a human-readable string with the appropriate unit (e.g., '1.2 GiB') for HTML display."
+  }
+
+  measure: total_data_ingress_aid_current {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+      {% if analysis_date_filter._is_filtered %}
+        CASE
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= 1024
+            THEN CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CASE WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END), 0), " B")
+        END
+      {% else %}
+        CASE
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 6) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 6), 2), " EiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 5) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 5), 2), " PiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 4) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 4), 2), " TiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 3) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 3), 1), " GiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= POW(1024, 2) THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / POW(1024, 2), 0), " MiB")
+          WHEN SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) >= 1024 THEN CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)) / 1024, 0), " KiB")
+          ELSE CONCAT(ROUND(SUM(CAST(${TABLE}.requestBytes AS FLOAT64)), 0), " B")
+        END
+      {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Ingress value specifically for the selected analysis period into a human-readable string with the appropriate unit (e.g., '2.5 GiB'). Used for HTML display in period-over-period comparisons."
+  }
+
+  measure: total_data_ingress_aid_previous {
+    group_label: "Data Transfer"
+    hidden: yes
+    type: string
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 6)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 6), 2), " EiB")
+        WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 5)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 5), 2), " PiB")
+        WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 4)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 4), 2), " TiB")
+        WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 3)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 3), 1), " GiB")
+        WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= POW(1024, 2)
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / POW(1024, 2), 0), " MiB")
+        WHEN SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) >= 1024
+          THEN CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END) / 1024, 0), " KiB")
+        ELSE CONCAT(ROUND(SUM(CASE WHEN ${snapshot_start_raw} >= TIMESTAMP_SUB({% date_start analysis_date_filter %}, INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND) AND ${snapshot_start_raw} < {% date_start analysis_date_filter %} THEN CAST(${TABLE}.requestBytes AS FLOAT64) ELSE 0 END), 0), " B")
+      END
+    {% else %}
+      NULL
+    {% endif %} ;;
+    description: "A hidden helper measure that formats the Total Data Ingress value specifically for the timeframe immediately preceding the selected analysis period. It converts the value into a human-readable string with the appropriate unit (e.g., '1.2 GiB') for HTML display."
+  }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ------------------------------- Filters  -------------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  filter: analysis_date_filter {
+    type: date
+    label: "Snapshot Start Range"
+    description: "Select the date range for analysis. The 'Previous Period' measure will automatically calculate based on this duration."
+  }
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Parameters -------------------------------
@@ -356,7 +830,7 @@ view: bucket_region_activity {
     }
 
     default_value: "total_data_egress"
-    description: "This paramater allows users to specify the desired measure for the selected measure metric. The default value, 'Total Data Egress'."
+    description: "This parameter allows users to specify the desired measure for the selected measure metric. The default value, 'Total Data Egress'."
   }
 
 

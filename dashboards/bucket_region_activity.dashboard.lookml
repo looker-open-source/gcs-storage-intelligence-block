@@ -3,7 +3,7 @@
   title: GCS Storage Intelligence - Bucket Region Activity
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: n6JyvVclLHtsF3bIZmgCdB
+  preferred_slug: 03XYfpAg6gzvI7yv3hFKas
   theme_name: ''
   layout: newspaper
   tabs:
@@ -13,7 +13,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -63,27 +62,31 @@
     model: gcs_storage_intelligence
     explore: bucket_region_activity
     type: single_value
-    fields: [bucket_region_activity.total_buckets]
+    fields: [bucket_region_activity.total_buckets_current, bucket_region_activity.total_buckets_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: 'Total # of buckets'
     smart_single_value_size: false
     defaults_version: 1
+    hidden_pivots: {}
     listen:
       2 - Project Name: project_attributes.project_name
-      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
+      1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
     row: 10
     col: 2
     width: 5
@@ -94,15 +97,15 @@
     model: gcs_storage_intelligence
     explore: bucket_region_activity
     type: single_value
-    fields: [bucket_region_activity.total_requested_locations]
+    fields: [bucket_region_activity.total_requested_locations_current, bucket_region_activity.total_requested_locations_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
@@ -112,10 +115,10 @@
     hidden_pivots: {}
     listen:
       2 - Project Name: project_attributes.project_name
-      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
+      1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
     row: 10
     col: 7
     width: 5
@@ -126,29 +129,32 @@
     model: gcs_storage_intelligence
     explore: bucket_region_activity
     type: single_value
-    fields: [bucket_region_activity.total_data_egress]
+    fields: [bucket_region_activity.total_data_egress_current, bucket_region_activity.total_data_egress_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     single_value_title: Total data egress
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     listen:
       2 - Project Name: project_attributes.project_name
-      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
+      1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
     row: 10
     col: 12
     width: 5
@@ -159,15 +165,15 @@
     model: gcs_storage_intelligence
     explore: bucket_region_activity
     type: single_value
-    fields: [bucket_region_activity.total_data_ingress]
+    fields: [bucket_region_activity.total_data_ingress_current, bucket_region_activity.total_data_ingress_pop_change]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
     show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
+    show_comparison: true
+    comparison_type: change
     comparison_reverse_colors: false
-    show_comparison_label: true
+    show_comparison_label: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
@@ -177,11 +183,11 @@
     hidden_pivots: {}
     listen:
       2 - Project Name: project_attributes.project_name
-      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
+      1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
     row: 10
     col: 17
     width: 5
@@ -247,12 +253,12 @@
     hidden_pivots: {}
     listen:
       2 - Project Name: project_attributes.project_name
-      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
       7 - Selected Metric: bucket_region_activity.aggregate_function
+      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
     row: 14
     col: 0
     width: 24
@@ -338,19 +344,19 @@
     hidden_pivots: {}
     listen:
       2 - Project Name: project_attributes.project_name
-      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
       7 - Selected Metric: bucket_region_activity.aggregate_function
+      1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
     row: 31
     col: 0
     width: 24
     height: 9
     tab_name: ''
   - type: button
-    name: button_324
+    name: button_421
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::object_events"}'
     row: 42
     col: 0
@@ -360,7 +366,6 @@
   - name: " (2)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
@@ -419,7 +424,6 @@
   - name: " (3)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -453,7 +457,6 @@
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -491,7 +494,6 @@
   - name: " (5)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -529,7 +531,6 @@
   - name: " (6)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 40
     col: 0

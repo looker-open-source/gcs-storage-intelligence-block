@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Mar 2, 2026
 # Purpose: Contains information about the Error Attributes View Table inside the Storage Intelligence linked Dataset.
 # -------------------------------------------------------------------------
 view: error_attributes {
@@ -26,6 +26,7 @@ view: error_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_error_record__bucket_name {
+    label: "Bucket Name"
     type: string
     sql: ${TABLE}.bucketErrorRecord.bucketName ;;
     group_label: "Bucket Error Record"
@@ -34,6 +35,7 @@ view: error_attributes {
   }
 
   dimension: bucket_error_record__service_account {
+    label: "Service Account"
     type: string
     sql: ${TABLE}.bucketErrorRecord.serviceAccount ;;
     group_label: "Bucket Error Record"
@@ -54,6 +56,7 @@ view: error_attributes {
   }
 
   dimension: project_error_record__organization_name {
+    label: "Organization"
     type: string
     sql: ${TABLE}.projectErrorRecord.organizationName ;;
     group_label: "Project Error Record"
@@ -62,8 +65,9 @@ view: error_attributes {
   }
 
   dimension: project_error_record__project_number {
+    label: "Project Number"
     type: number
-    sql: ${TABLE}.projectErrorRecord.projectNumber ;;
+    sql: CAST(COALESCE(${TABLE}.projectErrorRecord.projectNumber, 0) AS STRING) ;;
     group_label: "Project Error Record"
     group_item_label: "Project Number"
     description: "The Google Cloud Project number associated with the GCS error."
@@ -99,14 +103,14 @@ view: error_attributes {
     label: "Error message"
     type: string
     sql:
-      CASE
-        WHEN ${error_code} = 1 THEN 'Source project projectErrorRecord.projectNumber does not belong to the organization projectErrorRecord.organizationName.'
-        WHEN ${error_code} = 2 THEN 'Permission denied for ingesting objects for bucket bucketErrorRecord.bucketName.'
-        WHEN ${error_code} = 3 THEN 'Destination project projectErrorRecord.projectNumber not in organization projectErrorRecord.organizationName.'
-        WHEN ${error_code} = 4 THEN 'Source project projectErrorRecord.projectNumber does not have Storage Intelligence configured.'
-        WHEN ${error_code} = 5 THEN 'Bucket bucketErrorRecord.bucketName does not have Storage Intelligence configured.'
-        WHEN ${error_code} = 6 THEN 'ACTIVITY_BUCKET_ACCESS_AUTHORIZATION_ERROR for bucket bucketErrorRecord.bucketName.'
-      END;;
+    CASE
+      WHEN ${error_code} = 1 THEN 'Source project ' || COALESCE(${project_error_record__project_number}, 'Project #') || ' does not belong to the organization ' || COALESCE(${project_error_record__organization_name}, 'Organization Name') || '.'
+      WHEN ${error_code} = 2 THEN 'Permission denied for ingesting objects for bucket ' || COALESCE(${bucket_error_record__bucket_name}, 'Bucket Name') || '.'
+      WHEN ${error_code} = 3 THEN 'Destination project ' || COALESCE(${project_error_record__project_number}, 'Project #') || ' not in organization ' || COALESCE(${project_error_record__organization_name}, 'Organization Name') || '.'
+      WHEN ${error_code} = 4 THEN 'Source project ' || COALESCE(${project_error_record__project_number}, 'Project #') || ' does not have Storage Intelligence configured.'
+      WHEN ${error_code} = 5 THEN 'Bucket ' || COALESCE(${bucket_error_record__bucket_name}, 'Bucket Name') || ' does not have Storage Intelligence configured.'
+      WHEN ${error_code} = 6 THEN 'ACTIVITY_BUCKET_ACCESS_AUTHORIZATION_ERROR for bucket ' || COALESCE(${bucket_error_record__bucket_name}, 'Bucket Name') || '.'
+    END ;;
     description: "The standard description for the error code. Provides a generic explanation of the failure (e.g., 'Bucket authorization error') without specific resource names, making it ideal for grouping and counting errors by type."
   }
 
@@ -122,12 +126,12 @@ view: error_attributes {
     label: "Troubleshooting"
     sql:
       CASE
-        WHEN ${error_code} = 1 THEN 'Add source project projectErrorRecord.projectNumber to organization projectErrorRecord.organizationName.'
-        WHEN ${error_code} = 2 THEN 'Give service account bucketErrorRecord.serviceAccount Identity and Access Management (IAM) permissions to allow ingestion of objects for bucket bucketErrorRecord.bucketName.'
-        WHEN ${error_code} = 3 THEN 'Add destination project projectErrorRecord.projectNumber to organization projectErrorRecord.organizationName.'
-        WHEN ${error_code} = 4 THEN 'Configure Storage Intelligence for the source project projectErrorRecord.projectNumber.'
-        WHEN ${error_code} = 5 THEN 'Configure Storage Intelligence for the bucket bucketErrorRecord.bucketName.'
-        WHEN ${error_code} = 6 THEN 'Grant service account bucketErrorRecord.serviceAccount Identity and Access Management (IAM) permissions to allow ingestion of activity for bucket bucketErrorRecord.bucketName.'
+        WHEN ${error_code} = 1 THEN 'Add source project ' || COALESCE(${project_error_record__project_number}, 'Project #') || ' to organization ' || COALESCE(${project_error_record__organization_name}, 'Organization Name') || '.'
+        WHEN ${error_code} = 2 THEN 'Give service account ' || COALESCE(${bucket_error_record__service_account}, 'Service Account') || ' Identity and Access Management (IAM) permissions to allow ingestion of objects for ' || COALESCE(${bucket_error_record__bucket_name}, 'Bucket Name') || '.'
+        WHEN ${error_code} = 3 THEN 'Add destination project ' || COALESCE(${project_error_record__project_number}, 'Project #') || ' to ' || COALESCE(${project_error_record__organization_name}, 'Organization Name') || '.'
+        WHEN ${error_code} = 4 THEN 'Configure Storage Intelligence for the source project ' || COALESCE(${project_error_record__project_number}, 'Project #') || '.'
+        WHEN ${error_code} = 5 THEN 'Configure Storage Intelligence for the bucket ' || COALESCE(${bucket_error_record__bucket_name}, 'Bucket Name') || '.'
+        WHEN ${error_code} = 6 THEN 'Grant service account ' || COALESCE(${bucket_error_record__service_account}, 'Service Account') || ' Identity and Access Management (IAM) permissions to allow ingestion of activity for bucket ' || COALESCE(${bucket_error_record__bucket_name}, 'Bucket Name') || '.'
       END;;
     description: "The recommended resolution step for the specific error. Follow these instructions (e.g., 'Grant IAM permissions') to resolve configuration or authorization issues."
   }

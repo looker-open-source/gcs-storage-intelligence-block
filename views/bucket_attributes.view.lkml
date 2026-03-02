@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2025
+# Modified Date: Mar 2, 2026
 # Purpose: Contains information about the Bucket Attributes Latest Snapshot View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 

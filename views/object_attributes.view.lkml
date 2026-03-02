@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 11, 2025
+# Modified Date: Mar 2, 2026
 # Purpose: Contains information about the Object Attributes View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 view: object_attributes {
@@ -112,7 +112,11 @@ view: object_attributes {
   dimension: media_link {
     type: string
     sql: ${TABLE}.mediaLink ;;
-    description: "A URL that provides direct download access to the object's data."
+    description: "A clickable URL that provides direct download access to the object's data."
+    link: {
+      label: "Go to link"
+      url: "{{ value }}"
+    }
   }
 
   dimension: metageneration {
@@ -144,6 +148,11 @@ view: object_attributes {
   dimension: self_link {
     type: string
     sql: ${TABLE}.selfLink ;;
+    description: "A clickable URL linking directly to this specific object in the source system."
+    link: {
+      label: "Go to link"
+      url: "{{ value }}"
+    }
   }
 
   dimension: size {
@@ -179,7 +188,7 @@ view: object_attributes {
     label: "Has Temporary Hold Policies"
     type: yesno
     sql: ${TABLE}.temporaryHold ;;
-    description: "A boolean value indicating if the object is currently under an temporary hold."
+    description: "A boolean value indicating if the object is currently under a temporary hold."
 
   }
 
@@ -452,7 +461,7 @@ view: object_attributes {
         ${TABLE}.size
       {% endif %};;
     html: <span>{{ avg_storage_aid._value }}</span> ;;
-    description: "A measure that display the storage size average for all the objects, automatically using the best unit (KiB, MiB, etc.) in Looker. For CSV or Sheets downloads, select your preferred unit with the 'Size Unit' parameter."
+    description: "A measure that displays the storage size average for all the objects, automatically using the best unit (KiB, MiB, etc.) in Looker. For CSV or Sheets downloads, select your preferred unit with the 'Size Unit' parameter."
   }
 
   measure: bucket_count {
@@ -512,7 +521,7 @@ view: object_attributes {
         ${TABLE}.size
       {% endif %};;
     html: <span>{{ sum_storage_aid._value }}</span> ;;
-    description: "A measure that display the storage size sum for all the objects, automatically using the best unit (KiB, MiB, etc.) in Looker. For CSV or Sheets downloads, select your preferred unit with the 'Size Unit' parameter."
+    description: "A measure that displays the storage size sum for all the objects, automatically using the best unit (KiB, MiB, etc.) in Looker. For CSV or Sheets downloads, select your preferred unit with the 'Size Unit' parameter."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -738,7 +747,6 @@ view: object_attributes {
       created_time,
       deleted_time,
       updated_time,
-      storage_class_updated_time,
       retention_expiration_time,
       soft_delete_time,
       hard_delete_time
