@@ -3,7 +3,7 @@
   title: GCS Storage Intelligence - Bucket Activity
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: lRGv8N0MXbNra1v4CVZTLs
+  preferred_slug: kDUZATwDISsbaugqaZQM3f
   theme_name: ''
   layout: newspaper
   tabs:
@@ -1311,6 +1311,15 @@
     totals_color: "#808080"
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: A ranked breakdown of total egress data by object prefix. The chart
+      visualizes the top 10 highest-traffic prefixes, alongside the total egress across
+      all buckets. All data sizes are dynamically formatted to the optimal unit (such
+      as MiB, TiB, or PiB) to ensure clear comprehension.
+    aria_description: A horizontal bar chart titled "Top Prefixes across Buckets -
+      Total Egress Data". It displays the top 10 object prefixes by total outbound
+      data volume. The data sizes automatically scale to the most appropriate unit.
     listen:
       1 - Snapshot Start Date: bucket_activity.snapshot_start_date
       2 - Project Name: project_attributes.project_name
@@ -1401,7 +1410,7 @@
     height: 6
     tab_name: ''
   - type: button
-    name: button_29
+    name: button_452
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#80868B","href":"/dashboards/gcs_storage_intelligence::error_and_events"}'
     row: 168
     col: 0
@@ -1409,7 +1418,7 @@
     height: 2
     tab_name: ''
   - type: button
-    name: button_30
+    name: button_453
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#80868B","href":"/dashboards/gcs_storage_intelligence::project_activity"}'
     row: 168
     col: 21
@@ -1419,7 +1428,6 @@
   - name: " (2)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
@@ -1433,23 +1441,23 @@
       >Filter Applicability Guide</span>\n    \n    <span style=\"font-size: 13px;\
       \ color: #5f6368; margin-left: auto;\">Refer to the numbers on each chart to\
       \ see which filters apply</span>\n  </div>\n\n  <div style=\"\n      display:\
-      \ flex; \n      flex-wrap: wrap; \n           gap: 24px; \n      font-size: 14px; \n      color: #3c4043;\n\
-      \  \">\n\n    <div style=\"display: flex; align-items: center; gap: 16px; width:\
-      \ 260px;\">\n      <span style=\"flex-shrink: 0; background: #e8f0fe; color:\
-      \ #1967d2; font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">1</span>\n\
-      \      <span style=\"font-size: 16px;\">Snapshot Start Date</span>\n    </div>\n\
+      \ flex; \n      flex-wrap: wrap; \n           gap: 24px; \n      font-size:\
+      \ 14px; \n      color: #3c4043;\n  \">\n\n    <div style=\"display: flex; align-items:\
+      \ center; gap: 16px; width: 260px;\">\n      <span style=\"flex-shrink: 0; background:\
+      \ #e8f0fe; color: #1967d2; font-weight: 700; font-size: 16px; height: 40px;\
+      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
+      \ center;\">1</span>\n      <span style=\"font-size: 16px;\">Snapshot Start\
+      \ Date</span>\n    </div>\n\n    <div style=\"display: flex; align-items: center;\
+      \ gap: 16px; width: 260px;\">\n      <span style=\"flex-shrink: 0; background:\
+      \ #fce8e6; color: #c5221f; font-weight: 700; font-size: 16px; height: 40px;\
+      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
+      \ center;\">2</span>\n      <span style=\"font-size: 16px;\">Project Name</span>\n\
+      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
+      \ width: 260px;\">\n      <span style=\"flex-shrink: 0; background: #fef7e0;\
+      \ color: #f09d00; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
+      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
+      >3</span>\n      <span style=\"font-size: 16px;\">Bucket Name</span>\n    </div>\n\
       \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 260px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fce8e6; color: #c5221f;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">2</span>\n\
-      \      <span style=\"font-size: 16px;\">Project Name</span>\n    </div>\n\n\
-      \    <div style=\"display: flex; align-items: center; gap: 16px; width: 260px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fef7e0; color: #f09d00;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">3</span>\n\
-      \      <span style=\"font-size: 16px;\">Bucket Name</span>\n    </div>\n\n \
-      \   <div style=\"display: flex; align-items: center; gap: 16px; width: 260px;\"\
       >\n      <span style=\"flex-shrink: 0; background: #e6f4ea; color: #137333;\
       \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
       \ 50%; display: flex; align-items: center; justify-content: center;\">4</span>\n\
@@ -1483,43 +1491,41 @@
   - name: " (3)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
       \    margin-bottom: 20px;\n    overflow: hidden;\n\">\n\n  <nav style=\"\n \
-      \     font-size: 18px;       font-weight: 500;\n     \
-      \ display: flex; \n      justify-content: center; \n      align-items: center;\n\
-      \      border-bottom: 1px solid #f1f3f4;\n      background-color: #fff;\n  \"\
-      >\n    <a style=\"\n        padding: 18px 24px; \n        text-decoration: none;\
-      \ \n        color: #5f6368; \n        font-weight: 500; \n        border-bottom:\
-      \ 3px solid transparent; \n        transition: background 0.2s;\n    \" href=\"\
-      /dashboards/gcs_storage_intelligence::general_analysis\">General Analysis</a>\n\
-      \    \n    <a style=\"\n        padding: 18px 24px; \n        text-decoration:\
-      \ none; \n        color: #5f6368; \n        font-weight: 500;\n        border-bottom:\
-      \ 3px solid transparent; \n        transition: background 0.2s;\n    \" href=\"\
-      /dashboards/gcs_storage_intelligence::cost_management\">Cost Management</a>\n\
-      \    \n    <a style=\"\n        padding: 18px 24px; \n        text-decoration:\
-      \ none; \n        color: #5f6368; \n        font-weight: 500;\n        border-bottom:\
-      \ 3px solid transparent; \n        transition: background 0.2s;\n    \" href=\"\
-      /dashboards/gcs_storage_intelligence::security_and_compliance\">Security & Compliance</a>\n\
-      \    \n    <a style=\"\n        padding: 18px 24px; \n        text-decoration:\
-      \ none; \n        color: #5f6368; \n        font-weight: 500;\n        border-bottom:\
-      \ 3px solid transparent; \n        transition: background 0.2s;\n    \" href=\"\
-      /dashboards/gcs_storage_intelligence::error_and_events\">Error & Events</a>\n\
-      \  </nav>\n\n  <nav style=\"\n      font-size: 16px; \
-      \      display: flex; \n      justify-content: center; \n      align-items:\
-      \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
-      \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
-      \ text-decoration: none; \n        color: #1967d2; \n        background-color:\
-      \ #e8f0fe; \n        font-weight: 700; \n        border-radius: 24px;\n    \
-      \    letter-spacing: 0.2px;\n    \" href=\"#\">Bucket Activity</a>\n    \n \
-      \   <a style=\"\n        padding: 8px 20px; \n        text-decoration: none;\
-      \ \n        color: #5f6368; \n        font-weight: 500; \n        border-radius:\
-      \ 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::project_activity\"\
-      >Project Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n\
+      \     font-size: 18px;       font-weight: 500;\n      display: flex; \n    \
+      \  justify-content: center; \n      align-items: center;\n      border-bottom:\
+      \ 1px solid #f1f3f4;\n      background-color: #fff;\n  \">\n    <a style=\"\n\
+      \        padding: 18px 24px; \n        text-decoration: none; \n        color:\
+      \ #5f6368; \n        font-weight: 500; \n        border-bottom: 3px solid transparent;\
+      \ \n        transition: background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::general_analysis\"\
+      >General Analysis</a>\n    \n    <a style=\"\n        padding: 18px 24px; \n\
       \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
-      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::object_events\"\
+      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::cost_management\"\
+      >Cost Management</a>\n    \n    <a style=\"\n        padding: 18px 24px; \n\
+      \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::security_and_compliance\"\
+      >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
+      \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::error_and_events\"\
+      >Error & Events</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;   \
+      \    display: flex; \n      justify-content: center; \n      align-items: center;\n\
+      \      gap: 16px; \n      padding: 16px 0;\n      background-color: #fff;\n\
+      \  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n        text-decoration:\
+      \ none; \n        color: #1967d2; \n        background-color: #e8f0fe; \n  \
+      \      font-weight: 700; \n        border-radius: 24px;\n        letter-spacing:\
+      \ 0.2px;\n    \" href=\"#\">Bucket Activity</a>\n    \n    <a style=\"\n   \
+      \     padding: 8px 20px; \n        text-decoration: none; \n        color: #5f6368;\
+      \ \n        font-weight: 500; \n        border-radius: 24px;\n    \" href=\"\
+      /dashboards/gcs_storage_intelligence::project_activity\">Project Activity</a>\n\
+      \    \n    <a style=\"\n        padding: 8px 20px; \n        text-decoration:\
+      \ none; \n        color: #5f6368; \n        font-weight: 500; \n        border-radius:\
+      \ 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::object_events\"\
       >Object Events</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n   \
       \     text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_region_activity\"\
@@ -1532,14 +1538,13 @@
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Key Performance\
-      \ Indicators (KPIs)</span>\n</div>"
+      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
+      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
+      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
+      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
+      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
+      \ 24px; font-weight: 400;\">Key Performance Indicators (KPIs)</span>\n</div>"
     row: 10
     col: 0
     width: 24
@@ -1548,7 +1553,6 @@
   - name: " "
     type: text
     title_text: " "
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1564,7 +1568,6 @@
   - name: " (5)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1595,7 +1598,6 @@
   - name: " (6)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 15
     col: 20
@@ -1605,7 +1607,6 @@
   - name: " (7)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1636,7 +1637,6 @@
   - name: " (8)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1674,7 +1674,6 @@
   - name: " (9)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1712,7 +1711,6 @@
   - name: " (10)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1743,7 +1741,6 @@
   - name: " (11)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 84
     col: 0
@@ -1753,7 +1750,6 @@
   - name: " (12)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1780,7 +1776,6 @@
   - name: " (13)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1796,7 +1791,6 @@
   - name: " (14)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1830,7 +1824,6 @@
   - name: " (15)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1864,7 +1857,6 @@
   - name: " (16)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1880,7 +1872,6 @@
   - name: " (17)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1896,7 +1887,6 @@
   - name: " (18)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1923,7 +1913,6 @@
   - name: " (19)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -1939,7 +1928,6 @@
   - name: " (20)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1966,7 +1954,6 @@
   - name: " (21)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -1997,7 +1984,6 @@
   - name: " (22)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -2024,7 +2010,6 @@
   - name: " (23)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -2055,7 +2040,6 @@
   - name: " (24)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
@@ -2082,7 +2066,6 @@
   - name: " (25)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 166
     col: 0

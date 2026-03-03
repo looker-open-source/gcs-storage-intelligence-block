@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2025
+# Modified Date: Mar 2, 2026
 # Purpose: Contains information about the Bucket Attributes Latest Snapshot View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -55,15 +55,15 @@ view: bucket_attributes {
     hidden: no
     sql:
       {% if size_unit._parameter_value == "PiB" %}
-        ${TABLE}.totalSize / (1125899906842624)
+        ${TABLE}.totalSize / POW(1024, 5)
       {% elsif size_unit._parameter_value == "TiB" %}
-        ${TABLE}.totalSize / (1099511627776)
+        ${TABLE}.totalSize / POW(1024, 4)
       {% elsif size_unit._parameter_value == "GiB" %}
-        ${TABLE}.totalSize / (1073741824)
+        ${TABLE}.totalSize / POW(1024, 3)
       {% elsif size_unit._parameter_value == "MiB" %}
-        ${TABLE}.totalSize / (1048576)
+        ${TABLE}.totalSize / POW(1024, 2)
       {% elsif size_unit._parameter_value == "KiB" %}
-        ${TABLE}.totalSize / (1024)
+        ${TABLE}.totalSize / 1024
       {% else %}
         ${TABLE}.totalSize
       {% endif %};;

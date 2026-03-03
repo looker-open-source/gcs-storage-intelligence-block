@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Mar 2, 2026
 # Purpose: Contains information about the Google Cloud Storage Regions catalog.
 # --------------------------------------------------------------------------
 view: regions_information {
@@ -446,6 +446,8 @@ view: regions_information {
     }
 
     default_value: "region_map"
+
+    description: "A parameter used to select whether to view the map visualization of GCS buckets and objects at the Region or Country level."
   }
 
   # --------------------------------------------------------------------------------------------------------

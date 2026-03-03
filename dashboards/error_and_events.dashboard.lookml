@@ -3,7 +3,7 @@
   title: GCS Storage Intelligence - Error & Events
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: 4gWEvfPmg0qAdNVo1qpPJj
+  preferred_slug: ZVB8FZpW76kTEhHMgZIHKd
   theme_name: ''
   layout: newspaper
   tabs:
@@ -13,7 +13,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -58,9 +57,9 @@
     height: 4
     tab_name: ''
   - type: button
-    name: button_248
+    name: button_503
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::bucket_activity"}'
-    row: 70
+    row: 69
     col: 21
     width: 3
     height: 2
@@ -85,11 +84,19 @@
     single_value_title: Total Ingestion Events
     smart_single_value_size: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the frequency of data ingestion into Storage Intelligence. Monitoring
+      these events helps you ensure your dashboard metrics reflect the most up-to-date
+      bucket data.
+    aria_description: A scorecard titled "Total Ingestion Events." It displays a single
+      dynamic number representing the total count of successful data ingestion events
+      into the Storage Intelligence Metadata and Activity tables.
     listen:
       1 - Event Location: events.general_location
       2 - Event View Name: events.general_view_name
       3 - Code Label: events.code_label
-      4 -Event Time: events.event_time
+      4 - Event Time: events.event_time
     row: 13
     col: 4
     width: 5
@@ -117,11 +124,19 @@
     single_value_title: Global Metadata Injection
     smart_single_value_size: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the frequency of global metadata injection events. Monitoring
+      this ensures your dashboard consistently reflects the most up-to-date state
+      of your storage environment.
+    aria_description: A scorecard titled "Global Metadata Injection." It displays
+      a single dynamic number representing the total count of successful metadata
+      ingestion events into the Storage Intelligence system.
     listen:
       1 - Event Location: events.general_location
       2 - Event View Name: events.general_view_name
       3 - Code Label: events.code_label
-      4 -Event Time: events.event_time
+      4 - Event Time: events.event_time
     row: 13
     col: 9
     width: 5
@@ -150,11 +165,19 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the frequency of global activity injection events. Monitoring
+      this ensures your dashboard accurately reflects the latest usage and access
+      patterns across your storage environment.
+    aria_description: A scorecard titled "Global Activity Injection." It displays
+      a single dynamic number representing the total count of successful activity
+      log ingestion events into the Storage Intelligence system.
     listen:
       1 - Event Location: events.general_location
       2 - Event View Name: events.general_view_name
       3 - Code Label: events.code_label
-      4 -Event Time: events.event_time
+      4 - Event Time: events.event_time
     row: 13
     col: 14
     width: 5
@@ -182,11 +205,15 @@
     smart_single_value_size: true
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the most recent ingestion timestamp. Use this metric to quickly
+      verify the freshness of your Storage Intelligence data.
     listen:
       1 - Event Location: events.general_location
       2 - Event View Name: events.general_view_name
       3 - Code Label: events.code_label
-      4 -Event Time: events.event_time
+      4 - Event Time: events.event_time
     row: 15
     col: 9
     width: 5
@@ -218,11 +245,21 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the detailed log of recent system updates. Monitoring these
+      logs helps you ensure specific metadata and activity tables are actively syncing
+      with your storage environment.
+    aria_description: 'A table titled "Latest events logs." The table contains five
+      columns: General Display Time, Event Time, General Location, Code Label, and
+      View Name. It lists recent data ingestion events, detailing exactly when the
+      update occurred, the associated geographic regions, the type of event, and the
+      specific dataset view that was updated.'
     listen:
       1 - Event Location: events.general_location
       2 - Event View Name: events.general_view_name
       3 - Code Label: events.code_label
-      4 -Event Time: events.event_time
+      4 - Event Time: events.event_time
     row: 18
     col: 0
     width: 24
@@ -271,11 +308,22 @@
     totals_color: "#808080"
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Visualizes the historical flow of system updates over time. Monitoring
+      these trends ensures your Storage Intelligence dashboard is reliably receiving
+      continuous data feeds.
+    aria_description: A line chart titled "Metadata & Activity Events over time."
+      The horizontal x-axis represents the date and hour, and the vertical y-axis
+      represents the event count. The chart features two distinct lines tracking the
+      daily volume of "Total Single Region Activity Events" and "Total Single Region
+      Metadata Events" successfully ingested into the Storage Intelligence system
+      over the selected timeframe.
     listen:
       1 - Event Location: events.general_location
       2 - Event View Name: events.general_view_name
       3 - Code Label: events.code_label
-      4 -Event Time: events.event_time
+      4 - Event Time: events.event_time
     row: 26
     col: 0
     width: 24
@@ -334,6 +382,16 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Shows the percentage distribution of configuration errors by type.
+      Use this chart to identify the most common setup blockers, such as authorization
+      failures or organization boundary issues.
+    aria_description: A pie chart titled "Error code by total appearances." It displays
+      the percentage distribution of different error types encountered while configuring
+      Storage Intelligence. The legend lists common configuration errors—such as bucket
+      authorization issues, missing Storage Intelligence configurations, and project
+      organization mismatches—alongside their respective percentage of total occurrences.
     listen:
       6 - Error Location: error_attributes.source_gcs_location
       5 - Error Type: error_attributes.error_case
@@ -368,6 +426,13 @@
             mirror: false, reverse: false, stepped: false}}, bold: false, italic: false,
         strikethrough: false, fields: !!null ''}]
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Shows the overall count of setup and configuration errors. Use this
+      high-level metric to gauge the general health of your Storage Intelligence deployment.
+    aria_description: A scorecard titled "Total errors." It displays a single dynamic
+      number representing the total cumulative count of errors encountered while configuring
+      the Storage Intelligence feature.
     listen:
       6 - Error Location: error_attributes.source_gcs_location
       5 - Error Type: error_attributes.error_case
@@ -450,6 +515,11 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the daily volume of configuration errors. Use this chart to
+      identify sudden spikes, recurring patterns, or trends in setup failures over
+      time.
     listen:
       6 - Error Location: error_attributes.source_gcs_location
       5 - Error Type: error_attributes.error_case
@@ -459,74 +529,10 @@
     width: 24
     height: 10
     tab_name: ''
-  - title: Latest errors and troubleshooting suggestions
-    name: Latest errors and troubleshooting suggestions
-    model: gcs_storage_intelligence
-    explore: error_attributes
-    type: looker_grid
-    fields: [error_attributes.error_date, error_attributes.error_message, error_attributes.troubleshooting]
-    sorts: [error_attributes.error_date desc]
-    limit: 100
-    column_limit: 50
-    show_view_names: false
-    show_row_numbers: false
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: gray
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: '12'
-    rows_font_size: '12'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    show_sql_query_menu_options: false
-    show_totals: true
-    show_row_totals: true
-    truncate_header: false
-    minimum_column_width: 75
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    listen:
-      6 - Error Location: error_attributes.source_gcs_location
-      5 - Error Type: error_attributes.error_case
-      7 - Error Date: error_attributes.error_date
-    row: 60
-    col: 0
-    width: 24
-    height: 8
-    tab_name: ''
   - type: button
-    name: button_261
+    name: button_516
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::security_and_compliance"}'
-    row: 70
+    row: 69
     col: 0
     width: 3
     height: 2
@@ -534,7 +540,6 @@
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
@@ -593,7 +598,6 @@
   - name: " (5)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 13
     col: 19
@@ -603,7 +607,6 @@
   - name: " (6)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -619,7 +622,6 @@
   - name: " (7)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -646,7 +648,6 @@
   - name: " (8)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -673,7 +674,6 @@
   - name: " (9)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -700,7 +700,6 @@
   - name: " (10)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
       \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
@@ -716,7 +715,6 @@
   - name: " (11)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -740,7 +738,6 @@
   - name: " (12)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -756,7 +753,7 @@
       \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
       \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
       \ center;\n  \">7</div>\n\n</div>"
-    row: 68
+    row: 67
     col: 20
     width: 4
     height: 2
@@ -764,9 +761,8 @@
   - name: " (13)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
-    row: 68
+    row: 67
     col: 0
     width: 20
     height: 2
@@ -774,7 +770,6 @@
   - name: " (14)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
       \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
       \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
@@ -794,6 +789,84 @@
     col: 20
     width: 4
     height: 2
+    tab_name: ''
+  - title: Latest errors and troubleshooting suggestions
+    name: Latest errors and troubleshooting suggestions
+    model: gcs_storage_intelligence
+    explore: error_attributes
+    type: looker_grid
+    fields: [error_attributes.error_date, error_attributes.error_message, error_attributes.troubleshooting]
+    filters:
+      error_attributes.source_gcs_location: ''
+      error_attributes.error_case: ''
+      error_attributes.error_date: ''
+    sorts: [error_attributes.error_date desc]
+    limit: 100
+    column_limit: 50
+    show_view_names: false
+    show_row_numbers: false
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: '12'
+    rows_font_size: '12'
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    show_sql_query_menu_options: false
+    show_totals: true
+    show_row_totals: true
+    truncate_header: false
+    minimum_column_width: 75
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    series_column_widths:
+      error_attributes.error_date: 195
+    note_state: collapsed
+    note_display: hover
+    note_text: Provides specific error messages and actionable solutions for recent
+      setup failures. Use this table to quickly identify and fix configuration blockers.
+    aria_description: 'A table titled "Latest errors and troubleshooting suggestions."
+      The table contains three columns: Error Date, Error message, and Troubleshooting.
+      It lists recent configuration failures, detailing exactly when each error occurred,
+      a specific description of the issue, and actionable steps to resolve the problem.'
+    listen:
+      5 - Error Type: error_attributes.error_case
+      6 - Error Location: error_attributes.source_gcs_location
+      7 - Error Date: error_attributes.error_date
+    row: 60
+    col: 0
+    width: 24
+    height: 7
     tab_name: ''
   filters:
   - name: 1 - Event Location
@@ -835,8 +908,8 @@
     explore: events
     listens_to_filters: []
     field: events.code_label
-  - name: 4 -Event Time
-    title: 4 -Event Time
+  - name: 4 - Event Time
+    title: 4 - Event Time
     type: field_filter
     default_value: ''
     allow_multiple_values: true

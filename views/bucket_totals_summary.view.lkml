@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Mar 2, 2026
 # Purpose: A Dynamic Derived Table that calculates the total ingress/egress per bucket
 #          based on the user's selected timeframe. Used as a source for "Percent of Total"
 #          calculations in the Bucket Region Activity Explore.
@@ -20,6 +20,8 @@ view: bucket_totals_summary {
       WHERE
         {% condition bucket_region_activity.snapshot_start_date %} snapshotStartTime {% endcondition %}
         AND {% condition bucket_region_activity.snapshot_end_date %} snapshotEndTime {% endcondition %}
+        AND {% condition bucket_region_activity.snapshot_start_time %} snapshotStartTime {% endcondition %}
+        AND {% condition bucket_region_activity.snapshot_end_time %} snapshotEndTime {% endcondition %}
       GROUP BY
         1
       ;;
