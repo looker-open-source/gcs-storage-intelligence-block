@@ -178,15 +178,15 @@ view: bucket_activity {
     value_format: "#,##0.00"
     sql:
       {% if throughput_size_unit._parameter_value == "PiB" %}
-        ${TABLE}.totalRequestBytes / ((POW(1024, 5))
+        ${TABLE}.totalRequestBytes / POW(1024, 5)
       {% elsif throughput_size_unit._parameter_value == "TiB" %}
-        ${TABLE}.totalRequestBytes / ((POW(1024, 4))
+        ${TABLE}.totalRequestBytes / POW(1024, 4)
       {% elsif throughput_size_unit._parameter_value == "GiB" %}
-        ${TABLE}.totalRequestBytes / ((POW(1024, 3))
+        ${TABLE}.totalRequestBytes / POW(1024, 3)
       {% elsif throughput_size_unit._parameter_value == "MiB" %}
-        ${TABLE}.totalRequestBytes / ((POW(1024, 2))
+        ${TABLE}.totalRequestBytes / POW(1024, 2)
       {% elsif throughput_size_unit._parameter_value == "KiB" %}
-        ${TABLE}.totalRequestBytes / (1024)
+        ${TABLE}.totalRequestBytes / 1024
       {% else %}
         ${TABLE}.totalRequestBytes
       {% endif %};;
@@ -207,15 +207,15 @@ view: bucket_activity {
     type: number
     sql:
       {% if throughput_size_unit._parameter_value == "PiB" %}
-        ${TABLE}.totalResponseBytes / ((POW(1024, 5))
+        ${TABLE}.totalResponseBytes / POW(1024, 5)
       {% elsif throughput_size_unit._parameter_value == "TiB" %}
-        ${TABLE}.totalResponseBytes / ((POW(1024, 4))
+        ${TABLE}.totalResponseBytes / POW(1024, 4)
       {% elsif throughput_size_unit._parameter_value == "GiB" %}
-        ${TABLE}.totalResponseBytes / ((POW(1024, 3))
+        ${TABLE}.totalResponseBytes / POW(1024, 3)
       {% elsif throughput_size_unit._parameter_value == "MiB" %}
-        ${TABLE}.totalResponseBytes / ((POW(1024, 2))
+        ${TABLE}.totalResponseBytes / POW(1024, 2)
       {% elsif throughput_size_unit._parameter_value == "KiB" %}
-        ${TABLE}.totalResponseBytes / (1024)
+        ${TABLE}.totalResponseBytes / 1024
       {% else %}
         ${TABLE}.totalResponseBytes
       {% endif %};;

@@ -18,8 +18,27 @@ view: events {
     hidden: yes
     primary_key: yes
     type: string
-    sql: GENERATE_UUID();;
-    description: "A hidden, system-generated, universally unique identifier (UUID) stored as a string. This field serves as the primary key for each event, ensuring unique identification across the system. UUIDs are generated using the GENERATE UUID function."
+    sql:
+      TO_HEX(
+        SHA256(
+          CONCAT(
+            CAST(${TABLE}.eventCode AS STRING),
+            CAST(${TABLE}.eventTime AS STRING),
+            COALESCE(${TABLE}.manifest.viewName, 'activity'),
+            COALESCE(
+              ${TABLE}.manifest.location, 
+              ${TABLE}.activityJournal.location, 
+              'global'
+            ),
+            COALESCE(
+            CAST(${TABLE}.manifest.snapshotTime AS STRING),
+            CAST(${TABLE}.activityJournal.windowStartTime AS STRING),
+            'no-snapshot'
+            )
+          )
+        )
+      ) ;;
+    description: "A deterministic MD5 hash used as a primary key, combining event code, time, location, and source view."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -190,7 +209,7 @@ view: events {
     description: "The total count of metadata events specific to a single region."
   }
 
-  measure: total_snaphsots {
+  measure: total_snapshots {
     type: count_distinct
     sql: ${manifest_snapshot_time} ;;
     description: "A measure that counts all the distinct snapshots."

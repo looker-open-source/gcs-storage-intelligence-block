@@ -21,7 +21,7 @@ view: bucket_totals_summary {
         {% condition bucket_region_activity.snapshot_start_date %} snapshotStartTime {% endcondition %}
         AND {% condition bucket_region_activity.snapshot_end_date %} snapshotEndTime {% endcondition %}
         AND {% condition bucket_region_activity.snapshot_start_time %} snapshotStartTime {% endcondition %}
-        AND {% condition bucket_region_activity.snapshot_start_time %} snapshotEndTime {% endcondition %}
+        AND {% condition bucket_region_activity.snapshot_end_time %} snapshotEndTime {% endcondition %}
       GROUP BY
         1
       ;;
