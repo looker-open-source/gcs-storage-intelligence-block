@@ -1,5 +1,7 @@
 # Google Cloud Storage - Storage Intelligence - Looker Dashboard
 
+This is not an officially supported Google product. This project is not eligible for the [Google Open Source Software Vulnerability Rewards Program](https://bughunters.google.com/open-source-security).
+
 <div style="text-align: justify; line-height: 1.5;">
 <p> This Google <b> Cloud Storage - Storage Intelligence </b> LookML code is currently under active development and is subject to modification based on evolving customer requirements. </p>
 
@@ -108,7 +110,6 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 </div>
 
-
 # Bucket Metadata
 
 <div style="text-align: justify; line-height: 1.5;">
@@ -158,8 +159,6 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
     <li><b>tags <small>(Deprecated)</small></b>: User-defined key-value pairs. Use <code>resourceTags</code> instead.</li>
 </ul>
 </div>
-
-
 
 # Error codes
 
@@ -229,7 +228,6 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
         </tr>
     </tbody>
 </table>
-
 
 </div>
 
@@ -574,8 +572,6 @@ This section provides an overview of the necessary steps to connect your Google 
     <li>Visualize the dashboards under the <a href="/dashboards/gcs_storage_intelligence::general_analysis" target="_blank">LookML dashboard folder</a></li>
 </ol>
 </div>
-
-
 
 <div style="text-align: justify; line-height: 1.5;">
 <h1>Coming Soon</h1>
