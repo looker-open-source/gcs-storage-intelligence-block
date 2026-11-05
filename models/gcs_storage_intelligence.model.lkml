@@ -9,7 +9,7 @@ connection: "@{CONNECTION_NAME}"
 
 # views
 include: "/views/*.view.lkml"
-# datagorups
+# datagroups
 include: "/attributes/datagroups/*.lkml"
 # explores
 include: "/explores/*.explore.lkml"

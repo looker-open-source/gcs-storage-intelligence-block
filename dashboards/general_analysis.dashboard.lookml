@@ -2,16 +2,174 @@
 - dashboard: general_analysis
   title: GCS Storage Intelligence - General Analysis
   preferred_viewer: dashboards-next
+  style: modern
   description: ''
   preferred_slug: xipdgnkWBY6KDrZrC36Hue
   theme_name: ''
+  layout_granularity: granular
   layout: newspaper
   tabs:
   - name: ''
     label: ''
   elements:
-  - title: Total Storage Size
-    name: Total Storage Size
+  - name: ''
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
+      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
+      \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
+      \    margin-bottom: 20px;\n    overflow: hidden;\n\">\n\n  <nav style=\"\n \
+      \     font-size: 18px; \n      font-weight: 500;\n      display: flex; \n  \
+      \    justify-content: center; \n      align-items: center;\n      border-bottom:\
+      \ 1px solid #f1f3f4;\n      background-color: #fff;\n  \">\n    <a style=\"\n\
+      \        padding: 10px 24px; \n        text-decoration: none; \n        color:\
+      \ #1967d2; \n        background-color: #e8f0fe; \n        font-weight: 700;\
+      \ \n        border-radius: 24px;\n        letter-spacing: 0.2px;\n        transition:\
+      \ background 0.2s;\n    \" href=\"#\">General Analysis</a>\n    \n    <a style=\"\
+      \n        padding: 18px 24px; \n        text-decoration: none; \n        color:\
+      \ #5f6368; \n        font-weight: 500;\n        border-bottom: 3px solid transparent;\
+      \ \n        transition: background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::cost_management\"\
+      >Cost Management</a>\n    \n    <a style=\"\n        padding: 18px 24px; \n\
+      \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::security_and_compliance\"\
+      >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
+      \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::context_catalog\"\
+      >Context Catalog</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px; \n\
+      \      display: flex; \n      justify-content: center; \n      align-items:\
+      \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
+      \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
+      \ text-decoration: none; \n        color: #5f6368; \n        font-weight: 500;\
+      \ \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
+      >Bucket Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n \
+      \       text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::project_activity\"\
+      >Project Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n\
+      \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::object_events\"\
+      >Object Events</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n   \
+      \     text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_region_activity\"\
+      >Bucket Region Activity</a>\n  </nav>\n\n</div>"
+    row: 0
+    col: 0
+    width: 72
+    height: 8
+    tab_name: ''
+  - name: " (2)"
+    type: text
+    title_text: ''
+    body_text: |-
+      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
+        Content-Type is metadata assigned to objects in GCS. It helps identify the object's format, which allows applications to render the object properly:  <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
+      bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/metadata#content-type"><span style="font-style: italic;" target="_blank">Content-Type</span></a>
+      </div>
+    row: 37
+    col: 47
+    width: 23
+    height: 6
+    tab_name: ''
+  - name: " (3)"
+    type: text
+    title_text: ''
+    body_text: |-
+      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
+        The location value specifies the geographic region where your Google Cloud Storage (GCS) bucket is stored: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
+      bottom: solid 3px black;" href="https://cloud.google.com/compute/docs/regions-zones#available" target="_blank"><span style="font-style: italic;">Regions and zones</span></a>
+      </div>
+    row: 37
+    col: 0
+    width: 23
+    height: 6
+    tab_name: ''
+  - name: " (4)"
+    type: text
+    title_text: ''
+    body_text: |-
+      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
+        Storage Class metadata is an element that determines the storage tier for your objects, influencing factors such as cost, performance, and durability: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
+      bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/storage-classes/#classes"><span style="font-style: italic;" target="_blank">Storage Class</span></a>
+      </div>
+    row: 37
+    col: 24
+    width: 22
+    height: 6
+    tab_name: ''
+  - name: " (5)"
+    type: text
+    title_text: ''
+    body_text: |-
+      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
+        Geographic Area is determined by the bucket's location, as specified in the official documentation for Single-Region locations. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
+      bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/locations#location-r"><span style="font-style: italic;" target="_blank">Regions</span></a>
+      </div>
+    row: 84
+    col: 0
+    width: 72
+    height: 6
+    tab_name: ''
+  - name: " (6)"
+    type: text
+    title_text: ''
+    body_text: "<div style=\"border-radius: 10px; background-color: #f0f0f0; padding:\
+      \ 20px; height: 100%; width: 100%; text-align: justify;\">\n\_ An object's status\
+      \ reflects its current state. It can be live, meaning it's the most recent version\
+      \ or there's no versioning. If a newer version exists, the object becomes noncurrent.\
+      \ Finally, if the object has been soft-deleted, it's temporarily removed but\
+      \ can be restored before permanent deletion. For more information:\_\n    <br>\
+      \ \n    <a style=\"padding: 5px 15px; text-decoration: none; color: #434343;\"\
+      \ href=\"https://cloud.google.com/storage/docs/object-versioning\" target=\"\
+      _blank\"> Object Versioning </a> \n    <a style=\"padding: 5px 15px; text-decoration:\
+      \ none; color: #434343;\" href=\"https://cloud.google.com/storage/docs/soft-delete\"\
+      \ target=\"_blank\"> Soft Delete </a>\n</div>"
+    row: 140
+    col: 3
+    width: 31
+    height: 7
+    tab_name: ''
+  - name: " (7)"
+    type: text
+    title_text: ''
+    body_text: ''
+    row: 140
+    col: 36
+    width: 35
+    height: 11
+    tab_name: ''
+  - type: button
+    name: button_215
+    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::cost_management"}'
+    row: 163
+    col: 63
+    width: 9
+    height: 4
+    tab_name: ''
+  - name: " (8)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Storage overview
+      </div>
+    row: 8
+    col: 0
+    width: 72
+    height: 4
+    tab_name: ''
+  - title: Total storage size
+    name: Total storage size
     model: gcs_storage_intelligence
     explore: bucket_attributes
     type: single_value
@@ -52,63 +210,17 @@
       a large key metric representing the total volume of data stored in the current
       selection, followed by its unit of measurement.
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
-      4 - Storage Size Unit: bucket_attributes.size_unit
-      2 - Bucket Name: bucket_attributes.bucket_name
-    row: 13
-    col: 4
-    width: 4
-    height: 2
+      4 - Storage size unit: bucket_attributes.size_unit
+    row: 12
+    col: 5
+    width: 15
+    height: 5
     tab_name: ''
-  - name: ''
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
-      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
-      \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
-      \    margin-bottom: 20px;\n    overflow: hidden;\n\">\n\n  <nav style=\"\n \
-      \     font-size: 18px; \n      font-weight: 500;\n      display: flex; \n  \
-      \    justify-content: center; \n      align-items: center;\n      border-bottom:\
-      \ 1px solid #f1f3f4;\n      background-color: #fff;\n  \">\n    <a style=\"\n\
-      \        padding: 10px 24px; \n        text-decoration: none; \n        color:\
-      \ #1967d2; \n        background-color: #e8f0fe; \n        font-weight: 700;\
-      \ \n        border-radius: 24px;\n        letter-spacing: 0.2px;\n        transition:\
-      \ background 0.2s;\n    \" href=\"#\">General Analysis</a>\n    \n    <a style=\"\
-      \n        padding: 18px 24px; \n        text-decoration: none; \n        color:\
-      \ #5f6368; \n        font-weight: 500;\n        border-bottom: 3px solid transparent;\
-      \ \n        transition: background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::cost_management\"\
-      >Cost Management</a>\n    \n    <a style=\"\n        padding: 18px 24px; \n\
-      \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
-      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
-      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::security_and_compliance\"\
-      >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
-      \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
-      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
-      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::error_and_events\"\
-      >Error & Events</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px; \n\
-      \      display: flex; \n      justify-content: center; \n      align-items:\
-      \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
-      \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
-      \ text-decoration: none; \n        color: #5f6368; \n        font-weight: 500;\
-      \ \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
-      >Bucket Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n \
-      \       text-decoration: none; \n        color: #5f6368; \n        font-weight:\
-      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::project_activity\"\
-      >Project Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n\
-      \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
-      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::object_events\"\
-      >Object Events</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n   \
-      \     text-decoration: none; \n        color: #5f6368; \n        font-weight:\
-      \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_region_activity\"\
-      >Bucket Region Activity</a>\n  </nav>\n\n</div>"
-    row: 0
-    col: 0
-    width: 24
-    height: 4
-    tab_name: ''
-  - title: Total Buckets
-    name: Total Buckets
+  - title: Total buckets
+    name: Total buckets
     model: gcs_storage_intelligence
     explore: bucket_attributes
     type: single_value
@@ -146,16 +258,16 @@
     aria_description: A summary scorecard labeled "Total buckets." It displays a large
       numeric value indicating the total count of buckets.
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
-      2 - Bucket Name: bucket_attributes.bucket_name
-    row: 13
-    col: 8
-    width: 4
-    height: 2
+    row: 12
+    col: 20
+    width: 15
+    height: 5
     tab_name: ''
-  - title: Total Objects
-    name: Total Objects
+  - title: Total objects
+    name: Total objects
     model: gcs_storage_intelligence
     explore: bucket_attributes
     type: single_value
@@ -193,13 +305,13 @@
     aria_description: A summary scorecard labeled "Total objects." It displays a large
       numeric value indicating the total count of individual storage objects.
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
-      2 - Bucket Name: bucket_attributes.bucket_name
-    row: 13
-    col: 12
-    width: 4
-    height: 2
+    row: 12
+    col: 35
+    width: 15
+    height: 5
     tab_name: ''
   - title: Average storage size
     name: Average storage size
@@ -207,6 +319,11 @@
     explore: object_attributes
     type: single_value
     fields: [object_attributes.average_storage_size]
+    filters:
+      project_attributes.project_name: ''
+      object_attributes.location: ''
+      object_attributes.size_unit: GiB
+      object_attributes.bucket_name: ''
     limit: 500
     column_limit: 50
     custom_color_enabled: true
@@ -242,14 +359,35 @@
       a large numeric value indicating the mean size of the stored objects, followed
       by its unit of measurement.
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-    row: 13
-    col: 16
-    width: 4
-    height: 2
+      4 - Storage size unit: object_attributes.size_unit
+    row: 12
+    col: 50
+    width: 16
+    height: 5
+    tab_name: ''
+  - name: " (9)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Distribution analysis
+      </div>
+    row: 17
+    col: 0
+    width: 72
+    height: 4
     tab_name: ''
   - title: Location distribution
     name: Location distribution
@@ -259,6 +397,7 @@
     fields: [bucket_attributes.selected_measure, bucket_attributes.location]
     filters:
       bucket_attributes.aggregate_function: total^_objects
+      bucket_attributes.size_unit: GiB
     sorts: [bucket_attributes.selected_measure desc 0]
     limit: 15
     column_limit: 50
@@ -300,25 +439,30 @@
       represents the proportional breakdown of storage resources across various geographic
       regions, accompanied by a legend that lists each region and its corresponding
       percentage.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
-      4 - Storage Size Unit: bucket_attributes.size_unit
-      2 - Bucket Name: bucket_attributes.bucket_name
-      5 - Metric Selection: bucket_attributes.aggregate_function
-    row: 22
-    col: 0
-    width: 8
-    height: 5
+      4 - Storage size unit: bucket_attributes.size_unit
+      Distribution analysis - metric selection: bucket_attributes.aggregate_function
+    row: 25
+    col: 1
+    width: 22
+    height: 12
     tab_name: ''
-  - title: Storage Class distribution
-    name: Storage Class distribution
+  - title: Storage class distribution
+    name: Storage class distribution
     model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.storage_class, object_attributes.selected_measure]
     filters:
       object_attributes.aggregate_function: total^_objects
+      project_attributes.project_name: ''
+      object_attributes.location: ''
+      object_attributes.size_unit: GiB
+      object_attributes.bucket_name: ''
     sorts: [object_attributes.selected_measure desc 0]
     limit: 500
     column_limit: 50
@@ -373,25 +517,30 @@
       of your stored objects according to their assigned storage class (e.g., Standard,
       Nearline, Coldline, Archive). This visualization helps you understand the tiering
       profile of your data within the selected scope, which is critical for cost optimization.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-      5 - Metric Selection: object_attributes.aggregate_function
-    row: 22
-    col: 8
-    width: 8
-    height: 5
+      4 - Storage size unit: object_attributes.size_unit
+      Distribution analysis - metric selection: object_attributes.aggregate_function
+    row: 25
+    col: 24
+    width: 22
+    height: 12
     tab_name: ''
-  - title: Content-Type distribution
-    name: Content-Type distribution
+  - title: Content-type distribution
+    name: Content-type distribution
     model: gcs_storage_intelligence
     explore: object_attributes
     type: looker_pie
     fields: [object_attributes.selected_measure, object_attributes.content_type_prefix]
     filters:
       object_attributes.aggregate_function: total^_objects
+      project_attributes.project_name: ''
+      object_attributes.location: ''
+      object_attributes.size_unit: GiB
+      object_attributes.bucket_name: ''
     sorts: [object_attributes.selected_measure desc 0]
     limit: 500
     column_limit: 50
@@ -451,55 +600,55 @@
       represents the proportional breakdown of storage objects categorized by their
       file format. A legend accompanies the chart, listing each content category alongside
       its corresponding percentage.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-      5 - Metric Selection: object_attributes.aggregate_function
-    row: 22
-    col: 16
-    width: 8
-    height: 5
+      4 - Storage size unit: object_attributes.size_unit
+      Distribution analysis - metric selection: object_attributes.aggregate_function
+    row: 25
+    col: 47
+    width: 23
+    height: 12
     tab_name: ''
-  - name: " (2)"
+  - type: filter
+    name: Distribution analysis - metric selection
+    row: 21
+    col: 1
+    width: 12
+    height: 4
+    tab_name: ''
+  - name: " (10)"
     type: text
     title_text: ''
-    body_text: |-
-      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
-        Content-Type is a metadata assigned to objects in GCS. It helps identify the object's format, which allows applications to render the object properly:  <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
-      bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/metadata#content-type"><span style="font-style: italic;" target="_blank">Content-Type</span></a>
-      </div>
-    row: 27
-    col: 16
-    width: 8
-    height: 3
+    subtitle_text: ''
+    body_text: ''
+    row: 21
+    col: 23
+    width: 49
+    height: 4
     tab_name: ''
-  - name: " (3)"
+  - name: " (11)"
     type: text
     title_text: ''
+    subtitle_text: ''
     body_text: |-
-      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
-        The location value specifies the geographic region where your Google Cloud Storage (GCS) bucket is stored: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
-      bottom: solid 3px black;" href="https://cloud.google.com/compute/docs/regions-zones#available" target="_blank"><span style="font-style: italic;">Regions and zones</span></a>
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Storage over time
       </div>
-    row: 27
+    row: 43
     col: 0
-    width: 8
-    height: 3
-    tab_name: ''
-  - name: " (4)"
-    type: text
-    title_text: ''
-    body_text: |-
-      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
-        Storage Class metadata is an element that determines the storage tier for your objects, influencing factors such as cost, performance, and durability: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
-      bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/storage-classes/#classes"><span style="font-style: italic;" target="_blank">Storage Class</span></a>
-      </div>
-    row: 27
-    col: 8
-    width: 8
-    height: 3
+    width: 72
+    height: 4
     tab_name: ''
   - title: Total objects and total storage size over time
     name: Total objects and total storage size over time
@@ -509,10 +658,15 @@
     fields: [bucket_attributes_history.snapshot_date, bucket_attributes_history.total_storage_size,
       bucket_attributes_history.object_sum]
     fill_fields: [bucket_attributes_history.snapshot_date]
+    filters:
+      project_attributes.project_name: ''
+      bucket_attributes_history.location: ''
+      bucket_attributes_history.size_unit: GiB
+      bucket_attributes_history.bucket_name: ''
     sorts: [bucket_attributes_history.snapshot_date desc]
     limit: 500
     column_limit: 50
-    query_timezone: Asia/Calcutta
+    query_timezone: UTC
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -602,15 +756,16 @@
       distinct lines are plotted to represent the total object count and total storage
       size respectively, allowing for a visual comparison of growth over the selected
       period.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes_history.bucket_name
       3 - Location: bucket_attributes_history.location
-      4 - Storage Size Unit: bucket_attributes_history.size_unit
-      2 - Bucket Name: bucket_attributes_history.bucket_name
-    row: 35
+      4 - Storage size unit: bucket_attributes_history.size_unit
+    row: 47
     col: 0
-    width: 24
-    height: 12
+    width: 72
+    height: 18
     tab_name: ''
   - title: Objects and storage size breakdown by geographic area
     name: Objects and storage size breakdown by geographic area
@@ -633,23 +788,34 @@
     series_labels: {}
     show_view_names: true
     map_plot_mode: points
+    elevation_scale: 1000
+    hexagon_radius: 2000
+    heatmap_intensity: 1
+    heatmap_threshold: 0.05
     heatmap_gridlines: true
     heatmap_gridlines_empty: false
     heatmap_opacity: 0.5
     show_region_field: true
     draw_map_labels_above_data: true
-    map_tile_provider: light
+    map_tile_provider: light_no_labels
     map_position: fit_data
     map_pannable: true
     map_zoomable: true
+    map_transit_layer: false
+    map_bicycling_layer: false
+    map_traffic_layer: false
+    map_street_view: false
     map_marker_type: circle
     map_marker_icon_name: default
     map_marker_radius_mode: proportional_value
     map_marker_units: meters
     map_marker_proportional_scale_type: linear
     map_marker_color_mode: fixed
+    map_always_display_coordinates: false
     show_legend: true
-    map_value_colors: ["#e2ecfd", "#689cf4"]
+    map_value_colors: ["#FFFFFF", "#1A73E8"]
+    map_dual_axis: false
+    map_dual_axis_opacity: 0.5
     quantize_map_value_colors: false
     reverse_map_value_colors: false
     defaults_version: 0
@@ -665,28 +831,39 @@
       by geographic area." It highlights specific geographic regions to indicate where
       storage data is physically located. A legend or scale bar is provided to denote
       the intensity or magnitude of the data stored in each highlighted region.
+    color_application:
+      collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
+      palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-    row: 52
+      4 - Storage size unit: object_attributes.size_unit
+    row: 69
     col: 0
-    width: 24
-    height: 8
+    width: 72
+    height: 15
     tab_name: ''
-  - name: " (5)"
+  - name: " (12)"
     type: text
     title_text: ''
+    subtitle_text: ''
     body_text: |-
-      <div style="border-radius: 10px; background-color: #f0f0f0; padding: 20px; height: 100%; width: 100%; text-align: justify;">
-        Geographic Area is determined by the bucket's location, as specified in the official documentation for Single-Region locations. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa: <br> <a style="padding: 5px 15px; text-decoration: none; color: #434343; border-
-      bottom: solid 3px black;" href="https://cloud.google.com/storage/docs/locations#location-r"><span style="font-style: italic;" target="_blank">Regions</span></a>
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Storage landscape
       </div>
-    row: 60
+    row: 65
     col: 0
-    width: 24
-    height: 3
+    width: 72
+    height: 4
     tab_name: ''
   - title: Top regions by number of buckets
     name: Top regions by number of buckets
@@ -694,6 +871,10 @@
     explore: bucket_attributes
     type: looker_column
     fields: [bucket_attributes.bucket_count, bucket_attributes.location]
+    filters:
+      project_attributes.project_name: ''
+      bucket_attributes.location: ''
+      bucket_attributes.bucket_name: ''
     sorts: [bucket_attributes.bucket_count desc 0]
     limit: 20
     column_limit: 50
@@ -755,14 +936,15 @@
       a ranked list of geographic regions on the horizontal axis, with vertical bars
       indicating the total number of buckets in each region, sorted from highest to
       lowest.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
-      2 - Bucket Name: bucket_attributes.bucket_name
-    row: 65
+    row: 90
     col: 0
-    width: 24
-    height: 12
+    width: 72
+    height: 19
     tab_name: ''
   - title: Top projects by storage size and total objects
     name: Top projects by storage size and total objects
@@ -771,6 +953,11 @@
     type: looker_grid
     fields: [project_attributes.project_name, bucket_attributes.total_storage_size,
       bucket_attributes.object_sum]
+    filters:
+      project_attributes.project_name: ''
+      bucket_attributes.location: ''
+      bucket_attributes.size_unit: GiB
+      bucket_attributes.bucket_name: ''
     sorts: [bucket_attributes.total_storage_size desc 0, bucket_attributes.object_sum
         desc]
     limit: 10
@@ -791,6 +978,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -814,6 +1002,19 @@
           custom_colors:
           - "#FFFFFF"
           - "#CE93D8"
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -854,14 +1055,14 @@
       allows for a direct visual comparison of storage footprint versus file count
       across different projects.'
     listen:
-      1 - Project Name: project_attributes.project_name
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: bucket_attributes.bucket_name
       3 - Location: bucket_attributes.location
-      4 - Storage Size Unit: bucket_attributes.size_unit
-      2 - Bucket Name: bucket_attributes.bucket_name
-    row: 79
+      4 - Storage size unit: bucket_attributes.size_unit
+    row: 109
     col: 0
-    width: 24
-    height: 6
+    width: 72
+    height: 14
     tab_name: ''
   - title: Object status
     name: Object status
@@ -871,6 +1072,10 @@
     fields: [object_attributes.object_status, object_attributes.selected_measure]
     filters:
       object_attributes.aggregate_function: total^_objects
+      project_attributes.project_name: ''
+      object_attributes.location: ''
+      object_attributes.size_unit: GiB
+      object_attributes.bucket_name: ''
     sorts: [object_attributes.selected_measure desc 0]
     limit: 30
     column_limit: 50
@@ -928,16 +1133,17 @@
     aria_description: A donut chart titled "Object status." It visually represents
       the proportional distribution of objects across different lifecycle states.
       A legend is provided to identify each status category and its associated percentage.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      Storage landscape - metric selection: object_attributes.aggregate_function
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-      5 - Metric Selection: object_attributes.aggregate_function
-    row: 85
-    col: 0
-    width: 12
-    height: 9
+      4 - Storage size unit: object_attributes.size_unit
+    row: 127
+    col: 3
+    width: 31
+    height: 13
     tab_name: ''
   - title: Content-Type suffix breakdown
     name: Content-Type suffix breakdown
@@ -946,10 +1152,11 @@
     type: looker_pie
     fields: [object_attributes.selected_measure, object_attributes.content_type_suffix]
     filters:
-      object_attributes.aggregate_function: total^_storage^_size
+      object_attributes.aggregate_function: total^_objects
       project_attributes.project_name: ''
       object_attributes.bucket_name: ''
       object_attributes.size_unit: GiB
+      object_attributes.location: ''
     sorts: [object_attributes.selected_measure desc 0]
     limit: 15
     column_limit: 50
@@ -1011,16 +1218,34 @@
       the proportional distribution of objects based on their specific file extensions.
       A detailed legend lists each file suffix (such as OCTET-STREAM or JPEG) alongside
       its percentage contribution to the total.
+    modern2026: true
     listen:
-      1 - Project Name: project_attributes.project_name
+      Storage landscape - metric selection: object_attributes.aggregate_function
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-      5 - Metric Selection: object_attributes.aggregate_function
-    row: 85
-    col: 12
+      4 - Storage size unit: object_attributes.size_unit
+    row: 127
+    col: 34
+    width: 31
+    height: 13
+    tab_name: ''
+  - type: filter
+    name: Storage landscape - metric selection
+    row: 123
+    col: 0
     width: 12
-    height: 9
+    height: 4
+    tab_name: ''
+  - name: " (13)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: ''
+    row: 123
+    col: 12
+    width: 60
+    height: 4
     tab_name: ''
   - title: Object size information
     name: Object size information
@@ -1028,6 +1253,13 @@
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.bucket_name, object_attributes.object_name, object_attributes.size]
+    filters:
+      object_attributes.size: ">=50"
+      object_attributes.object_age: ">0"
+      project_attributes.project_name: ''
+      object_attributes.location: ''
+      object_attributes.size_unit: GiB
+      object_attributes.bucket_name: ''
     sorts: [object_attributes.size desc]
     limit: 500
     column_limit: 50
@@ -1039,7 +1271,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -1047,6 +1279,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -1055,6 +1288,19 @@
     series_cell_visualizations:
       object_attributes.size:
         is_active: false
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     hidden_pivots: {}
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -1087,22 +1333,36 @@
     note_text: The Object size information table provides a granular list of individual
       files that meet specific criteria, such as a minimum file size or object age.
       By default, this list is sorted by Object Size, allowing you to instantly identify
-      and audit the largest individual files that match your filtered parameters
+      and audit the largest individual files that match your filtered parameters.
     aria_description: A detailed data table titled "Object size information." It displays
       columns for "Bucket Name," "Object Name," and "Object Size." The rows are sorted
       by the "Object Size" column in descending order, listing individual files to
       highlight the largest storage consumers first.
     listen:
-      6 - Size: object_attributes.size
-      7 - Object Age (Days): object_attributes.object_age
-      1 - Project Name: project_attributes.project_name
+      Object storage size: object_attributes.size
+      Object age (days): object_attributes.object_age
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-    row: 97
+      4 - Storage size unit: object_attributes.size_unit
+    row: 151
     col: 0
-    width: 12
-    height: 7
+    width: 34
+    height: 12
+    tab_name: ''
+  - type: filter
+    name: Object storage size
+    row: 147
+    col: 0
+    width: 9
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Object age (days)
+    row: 147
+    col: 9
+    width: 9
+    height: 4
     tab_name: ''
   - title: Bucket aggregate based on object filters
     name: Bucket aggregate based on object filters
@@ -1110,6 +1370,13 @@
     explore: object_attributes
     type: looker_grid
     fields: [object_attributes.bucket_name, object_attributes.object_count, object_attributes.total_storage_size]
+    filters:
+      object_attributes.size: ">=50"
+      object_attributes.object_age: ">0"
+      project_attributes.project_name: ''
+      object_attributes.location: ''
+      object_attributes.size_unit: GiB
+      object_attributes.bucket_name: ''
     sorts: [object_attributes.object_count desc 0]
     limit: 500
     column_limit: 50
@@ -1121,7 +1388,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -1129,6 +1396,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -1137,6 +1405,19 @@
     series_cell_visualizations:
       object_attributes.size:
         is_active: false
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     hidden_pivots: {}
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -1176,494 +1457,45 @@
       The rows are typically sorted by the "Total Objects" count in descending order,
       showing which buckets contain the most files matching the active filters.
     listen:
-      6 - Size: object_attributes.size
-      7 - Object Age (Days): object_attributes.object_age
-      1 - Project Name: project_attributes.project_name
+      Object storage size: object_attributes.size
+      Object age (days): object_attributes.object_age
+      1 - Project name: project_attributes.project_name
+      2 - Bucket name: object_attributes.bucket_name
       3 - Location: object_attributes.location
-      4 - Storage Size Unit: object_attributes.size_unit
-      2 - Bucket Name: object_attributes.bucket_name
-    row: 97
-    col: 12
-    width: 12
-    height: 7
-    tab_name: ''
-  - title: Top buckets by total objects
-    name: Top buckets by total objects
-    model: gcs_storage_intelligence
-    explore: bucket_attributes
-    type: looker_bar
-    fields: [bucket_attributes.bucket_name, bucket_attributes.object_sum]
-    filters:
-      project_attributes.project_name: ''
-      bucket_attributes.bucket_name: ''
-      bucket_attributes.location: ''
-    sorts: [bucket_attributes.object_sum desc 0]
-    limit: 20
-    column_limit: 50
-    query_timezone: Asia/Calcutta
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: false
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: circle_outline
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    color_application:
-      collection_id: f0b1d291-b612-4b2e-80d3-f2a5e41eafce
-      custom:
-        id: 28b17f37-0fa5-f74b-f791-f1a19c9250c9
-        label: Custom
-        type: continuous
-        stops:
-        - color: "#9FA8DA"
-          offset: 0
-        - color: "#FFFFFF"
-          offset: 100
-      options:
-        steps: 5
-    x_axis_zoom: true
-    y_axis_zoom: false
-    limit_displayed_rows_values:
-      show_hide: hide
-      first_last: first
-      num_rows: 0
-    hide_legend: false
-    series_colors: {}
-    defaults_version: 1
-    hidden_pivots: {}
-    note_state: collapsed
-    note_display: hover
-    note_text: The Top buckets by total objects chart ranks your storage buckets based
-      on the count of individual files they contain. It displays the buckets with
-      the highest object counts in descending order, helping you quickly identify
-      which specific containers hold the largest volume of files.
-    aria_description: A horizontal bar chart titled "Top buckets by total objects."
-      It lists individual buckets on the vertical axis, with corresponding horizontal
-      bars indicating the total number of objects in each. The chart is sorted by
-      count, allowing for a quick visual comparison of file volume across different
-      buckets.
-    listen:
-      1 - Project Name: project_attributes.project_name
-      3 - Location: bucket_attributes.location
-      4 - Storage Size Unit: bucket_attributes.size_unit
-      2 - Bucket Name: bucket_attributes.bucket_name
-      5 - Metric Selection: bucket_attributes.aggregate_function
-    row: 106
-    col: 0
-    width: 24
-    height: 9
-    tab_name: ''
-  - name: " (6)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"border-radius: 10px; background-color: #f0f0f0; padding:\
-      \ 20px; height: 100%; width: 100%; text-align: justify;\">\n\_ An object's status\
-      \ reflects its current state. It can be live, meaning it's the most recent version\
-      \ or there's no versioning. If a newer version exists, the object becomes noncurrent.\
-      \ Finally, if the object has been soft-deleted, it's temporarily removed but\
-      \ can be restored before permanent deletion. For more information:\_\n    <br>\
-      \ \n    <a style=\"padding: 5px 15px; text-decoration: none; color: #434343;\"\
-      \ href=\"https://cloud.google.com/storage/docs/object-versioning\" target=\"\
-      _blank\"> Object Versioning </a> \n    <a style=\"padding: 5px 15px; text-decoration:\
-      \ none; color: #434343;\" href=\"https://cloud.google.com/storage/docs/soft-delete\"\
-      \ target=\"_blank\"> Soft Delete </a>\n</div>"
-    row: 94
-    col: 0
-    width: 12
-    height: 3
-    tab_name: ''
-  - name: " (7)"
-    type: text
-    title_text: ''
-    body_text: ''
-    row: 96
-    col: 12
-    width: 12
-    height: 1
-    tab_name: ''
-  - type: button
-    name: button_353
-    rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::cost_management"}'
-    row: 117
-    col: 21
-    width: 3
-    height: 2
-    tab_name: ''
-  - name: " (8)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
-      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
-      \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
-      \ 0 1px 3px 1px rgba(60,64,67,0.15);\n    margin-bottom: 20px;\n\">\n\n  <div\
-      \ style=\"\n      display: flex; \n      align-items: center; \n      gap: 32px;\
-      \ \n      margin-bottom: 30px; \n      border-bottom: 1px solid #f1f3f4; \n\
-      \      padding-bottom: 20px;\n  \">\n    <svg style=\"color: #1a73e8; width:\
-      \ 32px; height: 32px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     \
-      \   <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n    </svg>\n\
-      \    \n    <span style=\"font-size: 22px; font-weight: 500; color: #202124;\"\
-      >Filter Applicability Guide</span>\n    \n    <span style=\"font-size: 13px;\
-      \ color: #5f6368; margin-left: auto;\">Refer to the numbers on each chart to\
-      \ see which filters apply</span>\n  </div>\n\n  <div style=\"\n      display:\
-      \ flex; \n      flex-wrap: wrap; \n      gap: 24px; \n      font-size: 14px;\
-      \ \n      color: #3c4043;\n  \">\n\n    <div style=\"display: flex; align-items:\
-      \ center; gap: 16px; width: 260px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #e8f0fe; color: #1967d2; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">1</span>\n      <span style=\"font-size: 16px;\">Project Name</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 260px;\">\n      <span style=\"flex-shrink: 0; background: #fce8e6;\
-      \ color: #c5221f; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >2</span>\n      <span style=\"font-size: 16px;\">Bucket Name</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 260px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fef7e0; color: #f09d00;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">3</span>\n\
-      \      <span style=\"font-size: 16px;\">Location</span>\n    </div>\n\n    <div\
-      \ style=\"display: flex; align-items: center; gap: 16px; width: 260px;\">\n\
-      \      <span style=\"flex-shrink: 0; background: #e6f4ea; color: #137333; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">4</span>\n      <span\
-      \ style=\"font-size: 16px;\">Storage Size Unit</span>\n    </div>\n\n    <div\
-      \ style=\"display: flex; align-items: center; gap: 16px; width: 260px;\">\n\
-      \      <span style=\"flex-shrink: 0; background: #e8f0fe; color: #1967d2; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">5</span>\n      <span\
-      \ style=\"font-size: 16px;\">Metric Selection</span>\n    </div>\n\n    <div\
-      \ style=\"display: flex; align-items: center; gap: 16px; width: 260px;\">\n\
-      \      <span style=\"flex-shrink: 0; background: #fce8e6; color: #c5221f; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">6</span>\n      <span\
-      \ style=\"font-size: 16px;\">Size</span>\n    </div>\n\n    <div style=\"display:\
-      \ flex; align-items: center; gap: 16px; width: 260px;\">\n      <span style=\"\
-      flex-shrink: 0; background: #fef7e0; color: #f09d00; font-weight: 700; font-size:\
-      \ 16px; height: 40px; width: 40px; border-radius: 50%; display: flex; align-items:\
-      \ center; justify-content: center;\">7</span>\n      <span style=\"font-size:\
-      \ 16px;\">Object Age (Days)</span>\n    </div>\n\n  </div>\n</div>"
-    row: 4
-    col: 0
-    width: 24
-    height: 6
-    tab_name: ''
-  - name: " (9)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Storage Overview</span>\n</div>"
-    row: 10
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (10)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 15
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (11)"
-    type: text
-    title_text: ''
-    body_text: ''
-    row: 13
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (12)"
-    type: text
-    title_text: ''
-    body_text: ''
-    row: 20
-    col: 0
-    width: 19
-    height: 2
-    tab_name: ''
-  - name: " (13)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n</div>"
-    row: 30
-    col: 19
-    width: 5
-    height: 2
+      4 - Storage size unit: object_attributes.size_unit
+    row: 151
+    col: 34
+    width: 38
+    height: 12
     tab_name: ''
   - name: " (14)"
     type: text
     title_text: ''
+    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Distribution Analysis</span>\n</div>"
-    row: 17
+      \    border: 3px solid #70757a;\n    border-radius: 12px;\n    padding: 30px\
+      \ 40px;\n    display: flex;\n    justify-content: space-between;\n    align-items:\
+      \ center;\n    background-color: #ffffff;\n\">\n\n  <!-- Left: Info Box -->\n\
+      \  <div style=\"\n      width: 45%; \n      margin-left: 10px;\n  \">\n    \n\
+      \    <!-- Text Box -->\n    <div style=\"\n        background-color: #dbdbdb;\n\
+      \        padding: 20px;\n        border-radius: 8px;\n        color: #000000;\n\
+      \        font-size: 16px;\n        line-height: 1.5;\n    \">\n      Track the\
+      \ Storage Intelligence errors and ingestion process:\n    </div>\n  </div>\n\
+      \n  <!-- Right: Button -->\n  <div style=\"width: 48%;\">\n    <a href=\"/dashboards/gcs_storage_intelligence::dataset_status\"\
+      \ style=\"\n        background-color: #4db652; \n        color: #ffffff; \n\
+      \        text-decoration: none; \n        padding: 20px 20px; \n        border-radius:\
+      \ 50px; \n        font-size: 20px; \n        font-weight: 700;\n        box-shadow:\
+      \ 0px 4px 6px rgba(0,0,0,0.15);\n        display: block;\n        text-align:\
+      \ center;\n        width: 100%;\n        box-sizing: border-box;\n    \">\n\
+      \      Storage Intelligence - Dataset status\n    </a>\n  </div>\n\n</div>"
+    row: 163
     col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (15)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 47
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (16)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Storage Over Time</span>\n</div>"
-    row: 32
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (17)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 63
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (18)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Storage Landscape</span>\n</div>"
-    row: 49
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (19)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n</div>"
-    row: 77
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (20)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n</div>"
-    row: 94
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (21)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #fce8e6; \n    color: #c5221f; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">6</div>\n\n  <div style=\"\n    background: #fef7e0; \n    color:\
-      \ #f09d00; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">7</div>\n\n</div>"
-    row: 104
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (22)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n</div>"
-    row: 115
-    col: 20
-    width: 4
-    height: 2
+    width: 63
+    height: 7
     tab_name: ''
   filters:
-  - name: 1 - Project Name
-    title: 1 - Project Name
+  - name: 1 - Project name
+    title: 1 - Project name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1673,10 +1505,10 @@
       display: popover
     model: gcs_storage_intelligence
     explore: bucket_attributes
-    listens_to_filters: [2 - Bucket Name, 3 - Location]
+    listens_to_filters: [2 - Bucket name, 3 - Location]
     field: project_attributes.project_name
-  - name: 2 - Bucket Name
-    title: 2 - Bucket Name
+  - name: 2 - Bucket name
+    title: 2 - Bucket name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1699,10 +1531,10 @@
       display: popover
     model: gcs_storage_intelligence
     explore: bucket_attributes
-    listens_to_filters: [1 - Project Name, 2 - Bucket Name]
+    listens_to_filters: [1 - Project name, 2 - Bucket name]
     field: bucket_attributes.location
-  - name: 4 - Storage Size Unit
-    title: 4 - Storage Size Unit
+  - name: 4 - Storage size unit
+    title: 4 - Storage size unit
     type: field_filter
     default_value: GiB
     allow_multiple_values: true
@@ -1714,8 +1546,8 @@
     explore: bucket_attributes
     listens_to_filters: []
     field: bucket_attributes.size_unit
-  - name: 5 - Metric Selection
-    title: 5 - Metric Selection
+  - name: Distribution analysis - metric selection
+    title: Distribution analysis - metric selection
     type: field_filter
     default_value: total^_objects
     allow_multiple_values: true
@@ -1727,33 +1559,61 @@
     explore: bucket_attributes
     listens_to_filters: []
     field: bucket_attributes.aggregate_function
-  - name: 6 - Size
-    title: 6 - Size
+  - name: Storage landscape - metric selection
+    title: Storage landscape - metric selection
+    type: field_filter
+    default_value: total^_objects
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: bucket_attributes
+    listens_to_filters: []
+    field: bucket_attributes.aggregate_function
+  - name: Object storage size
+    title: Object storage size
     type: field_filter
     default_value: ">=50"
-    allow_multiple_values: true
+    allow_multiple_values: false
     required: false
     ui_config:
       type: advanced
       display: popover
       options:
-      - '1'
-      - '2'
-      - '3'
+      - "="
+      - "!="
+      - ">"
+      - ">="
+      - "<"
+      - "<="
+      - between
+      - "!between"
+      - 'null'
     model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []
     field: object_attributes.size
-  - name: 7 - Object Age (Days)
-    title: 7 - Object Age (Days)
+  - name: Object age (days)
+    title: Object age (days)
     type: field_filter
     default_value: ">0"
-    allow_multiple_values: true
+    allow_multiple_values: false
     required: false
     ui_config:
       type: advanced
       display: popover
-      options: []
+      options:
+      - "="
+      - "!="
+      - ">"
+      - ">="
+      - "<"
+      - "<="
+      - between
+      - "!between"
+      - 'null'
     model: gcs_storage_intelligence
     explore: object_attributes
     listens_to_filters: []

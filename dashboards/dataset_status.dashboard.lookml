@@ -1,10 +1,12 @@
 ---
-- dashboard: error_and_events
-  title: GCS Storage Intelligence - Error & Events
+- dashboard: dataset_status
+  title: GCS Storage Intelligence - Dataset Status
   preferred_viewer: dashboards-next
+  style: modern
   description: ''
   preferred_slug: ZVB8FZpW76kTEhHMgZIHKd
   theme_name: ''
+  layout_granularity: granular
   layout: newspaper
   tabs:
   - name: ''
@@ -13,6 +15,7 @@
   - name: ''
     type: text
     title_text: ''
+    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -31,12 +34,12 @@
       \        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
       \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::security_and_compliance\"\
-      >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 10px 24px;\
-      \ \n        text-decoration: none; \n        color: #1967d2; \n        background-color:\
-      \ #e8f0fe; \n        font-weight: 700; \n        border-radius: 24px;\n    \
-      \    letter-spacing: 0.2px;\n        transition: background 0.2s;\n    \" href=\"\
-      #\">Error & Events</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\
-      \ \n      display: flex; \n      justify-content: center; \n      align-items:\
+      >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
+      \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
+      \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::context_catalog\"\
+      >Context Catalog</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px; \n\
+      \      display: flex; \n      justify-content: center; \n      align-items:\
       \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
       \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
       \ text-decoration: none; \n        color: #5f6368; \n        font-weight: 500;\
@@ -53,19 +56,19 @@
       >Bucket Region Activity</a>\n  </nav>\n\n</div>"
     row: 0
     col: 0
-    width: 24
-    height: 4
+    width: 72
+    height: 8
     tab_name: ''
   - type: button
-    name: button_503
+    name: button_304
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::bucket_activity"}'
-    row: 69
-    col: 21
-    width: 3
-    height: 2
+    row: 112
+    col: 63
+    width: 9
+    height: 4
     tab_name: ''
-  - title: Total Ingestion Events
-    name: Total Ingestion Events
+  - title: Total ingestion events
+    name: Total ingestion events
     model: gcs_storage_intelligence
     explore: events
     type: single_value
@@ -81,7 +84,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Total Ingestion Events
+    single_value_title: Total ingestion events
     smart_single_value_size: false
     defaults_version: 1
     note_state: collapsed
@@ -93,17 +96,17 @@
       dynamic number representing the total count of successful data ingestion events
       into the Storage Intelligence Metadata and Activity tables.
     listen:
-      1 - Event Location: events.general_location
-      2 - Event View Name: events.general_view_name
-      3 - Code Label: events.code_label
-      4 - Event Time: events.event_time
-    row: 13
-    col: 4
-    width: 5
-    height: 2
+      Event location: events.general_location
+      Event view name: events.general_view_name
+      Code label: events.code_label
+      Event time: events.event_time
+    row: 16
+    col: 12
+    width: 15
+    height: 4
     tab_name: ''
-  - title: Global Metadata Injection
-    name: Global Metadata Injection
+  - title: Global metadata injection
+    name: Global metadata injection
     model: gcs_storage_intelligence
     explore: events
     type: single_value
@@ -121,29 +124,29 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Global Metadata Injection
+    single_value_title: Global metadata injection
     smart_single_value_size: false
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Tracks the frequency of global metadata injection events. Monitoring
+    note_text: Tracks the frequency of global metadata ingestion events. Monitoring
       this ensures your dashboard consistently reflects the most up-to-date state
       of your storage environment.
     aria_description: A scorecard titled "Global Metadata Injection." It displays
       a single dynamic number representing the total count of successful metadata
       ingestion events into the Storage Intelligence system.
     listen:
-      1 - Event Location: events.general_location
-      2 - Event View Name: events.general_view_name
-      3 - Code Label: events.code_label
-      4 - Event Time: events.event_time
-    row: 13
-    col: 9
-    width: 5
-    height: 2
+      Event location: events.general_location
+      Event view name: events.general_view_name
+      Code label: events.code_label
+      Event time: events.event_time
+    row: 16
+    col: 27
+    width: 15
+    height: 4
     tab_name: ''
-  - title: Total Single Region Events
-    name: Total Single Region Events
+  - title: Global activity injection
+    name: Global activity injection
     model: gcs_storage_intelligence
     explore: events
     type: single_value
@@ -161,30 +164,30 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Global Activity Injection
+    single_value_title: Global activity injection
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Tracks the frequency of global activity injection events. Monitoring
+    note_text: Tracks the frequency of global activity ingestion events. Monitoring
       this ensures your dashboard accurately reflects the latest usage and access
       patterns across your storage environment.
     aria_description: A scorecard titled "Global Activity Injection." It displays
       a single dynamic number representing the total count of successful activity
       log ingestion events into the Storage Intelligence system.
     listen:
-      1 - Event Location: events.general_location
-      2 - Event View Name: events.general_view_name
-      3 - Code Label: events.code_label
-      4 - Event Time: events.event_time
-    row: 13
-    col: 14
-    width: 5
-    height: 2
+      Event location: events.general_location
+      Event view name: events.general_view_name
+      Code label: events.code_label
+      Event time: events.event_time
+    row: 16
+    col: 42
+    width: 15
+    height: 4
     tab_name: ''
-  - title: Last Event Time
-    name: Last Event Time
+  - title: Last event time
+    name: Last event time
     model: gcs_storage_intelligence
     explore: events
     type: single_value
@@ -201,7 +204,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Last Event Time
+    single_value_title: Last event time
     smart_single_value_size: true
     defaults_version: 1
     hidden_pivots: {}
@@ -210,14 +213,14 @@
     note_text: Tracks the most recent ingestion timestamp. Use this metric to quickly
       verify the freshness of your Storage Intelligence data.
     listen:
-      1 - Event Location: events.general_location
-      2 - Event View Name: events.general_view_name
-      3 - Code Label: events.code_label
-      4 - Event Time: events.event_time
-    row: 15
-    col: 9
-    width: 5
-    height: 2
+      Event location: events.general_location
+      Event view name: events.general_view_name
+      Code label: events.code_label
+      Event time: events.event_time
+    row: 20
+    col: 27
+    width: 15
+    height: 4
     tab_name: ''
   - title: Latest events logs
     name: Latest events logs
@@ -240,10 +243,29 @@
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
+    header_font_size: '12'
+    rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
+    show_sql_query_menu_options: false
+    show_totals: true
+    show_row_totals: true
+    truncate_header: false
+    minimum_column_width: 75
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     defaults_version: 1
     note_state: collapsed
     note_display: hover
@@ -256,17 +278,17 @@
       update occurred, the associated geographic regions, the type of event, and the
       specific dataset view that was updated.'
     listen:
-      1 - Event Location: events.general_location
-      2 - Event View Name: events.general_view_name
-      3 - Code Label: events.code_label
-      4 - Event Time: events.event_time
-    row: 18
+      Event location: events.general_location
+      Event view name: events.general_view_name
+      Code label: events.code_label
+      Event time: events.event_time
+    row: 24
     col: 0
-    width: 24
-    height: 6
+    width: 72
+    height: 12
     tab_name: ''
-  - title: Metadata & Activity Events over time
-    name: Metadata & Activity Events over time
+  - title: Metadata & activity events over time
+    name: Metadata & activity events over time
     model: gcs_storage_intelligence
     explore: events
     type: looker_line
@@ -319,15 +341,16 @@
       daily volume of "Total Single Region Activity Events" and "Total Single Region
       Metadata Events" successfully ingested into the Storage Intelligence system
       over the selected timeframe.
+    modern2026: true
     listen:
-      1 - Event Location: events.general_location
-      2 - Event View Name: events.general_view_name
-      3 - Code Label: events.code_label
-      4 - Event Time: events.event_time
-    row: 26
+      Event location: events.general_location
+      Event view name: events.general_view_name
+      Code label: events.code_label
+      Event time: events.event_time
+    row: 36
     col: 0
-    width: 24
-    height: 9
+    width: 72
+    height: 18
     tab_name: ''
   - title: Error code by total appearances
     name: Error code by total appearances
@@ -392,14 +415,15 @@
       Storage Intelligence. The legend lists common configuration errors—such as bucket
       authorization issues, missing Storage Intelligence configurations, and project
       organization mismatches—alongside their respective percentage of total occurrences.
+    modern2026: true
     listen:
-      6 - Error Location: error_attributes.source_gcs_location
-      5 - Error Type: error_attributes.error_case
-      7 - Error Date: error_attributes.error_date
-    row: 40
+      Error type: error_attributes.error_case
+      Error location: error_attributes.source_gcs_location
+      Error date: error_attributes.error_date
+    row: 62
     col: 0
-    width: 16
-    height: 8
+    width: 48
+    height: 16
     tab_name: ''
   - title: Total errors
     name: Total errors
@@ -434,31 +458,31 @@
       number representing the total cumulative count of errors encountered while configuring
       the Storage Intelligence feature.
     listen:
-      6 - Error Location: error_attributes.source_gcs_location
-      5 - Error Type: error_attributes.error_case
-      7 - Error Date: error_attributes.error_date
-    row: 43
-    col: 16
-    width: 8
-    height: 2
+      Error type: error_attributes.error_case
+      Error location: error_attributes.source_gcs_location
+      Error date: error_attributes.error_date
+    row: 68
+    col: 48
+    width: 24
+    height: 4
     tab_name: ''
   - name: " (2)"
     type: text
     title_text: ''
     body_text: ''
-    row: 40
-    col: 16
-    width: 8
-    height: 3
+    row: 58
+    col: 48
+    width: 24
+    height: 10
     tab_name: ''
   - name: " (3)"
     type: text
     title_text: ''
     body_text: ''
-    row: 45
-    col: 16
-    width: 8
-    height: 1
+    row: 72
+    col: 48
+    width: 24
+    height: 6
     tab_name: ''
   - title: Total errors over time
     name: Total errors over time
@@ -520,275 +544,65 @@
     note_text: Tracks the daily volume of configuration errors. Use this chart to
       identify sudden spikes, recurring patterns, or trends in setup failures over
       time.
+    modern2026: true
     listen:
-      6 - Error Location: error_attributes.source_gcs_location
-      5 - Error Type: error_attributes.error_case
-      7 - Error Date: error_attributes.error_date
-    row: 48
+      Error type: error_attributes.error_case
+      Error location: error_attributes.source_gcs_location
+      Error date: error_attributes.error_date
+    row: 78
     col: 0
-    width: 24
-    height: 10
+    width: 72
+    height: 20
     tab_name: ''
   - type: button
-    name: button_516
+    name: button_316
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::security_and_compliance"}'
-    row: 69
+    row: 112
     col: 0
-    width: 3
-    height: 2
+    width: 9
+    height: 4
     tab_name: ''
   - name: " (4)"
     type: text
     title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
-      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
-      \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
-      \ 0 1px 3px 1px rgba(60,64,67,0.15);\n    margin-bottom: 20px;\n\">\n\n  <div\
-      \ style=\"\n      display: flex; \n      align-items: center; \n      gap: 32px;\
-      \ \n      margin-bottom: 30px; \n      border-bottom: 1px solid #f1f3f4; \n\
-      \      padding-bottom: 20px;\n  \">\n    <svg style=\"color: #1a73e8; width:\
-      \ 32px; height: 32px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     \
-      \   <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n    </svg>\n\
-      \    \n    <span style=\"font-size: 22px; font-weight: 500; color: #202124;\"\
-      >Filter Applicability Guide</span>\n    \n    <span style=\"font-size: 13px;\
-      \ color: #5f6368; margin-left: auto;\">Refer to the numbers on each chart to\
-      \ see which filters apply</span>\n  </div>\n\n  <div style=\"\n      display:\
-      \ flex; \n      flex-wrap: wrap; \n      gap: 24px; \n      font-size: 14px;\
-      \ \n      color: #3c4043;\n  \">\n\n    <div style=\"display: flex; align-items:\
-      \ center; gap: 16px; width: 280px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #e8f0fe; color: #1967d2; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">1</span>\n      <span style=\"font-size: 16px;\">Event Location</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 280px;\">\n      <span style=\"flex-shrink: 0; background: #fce8e6;\
-      \ color: #c5221f; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >2</span>\n      <span style=\"font-size: 16px;\">Event View Name</span>\n \
-      \   </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 280px;\">\n      <span style=\"flex-shrink: 0; background: #fef7e0;\
-      \ color: #f09d00; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >3</span>\n      <span style=\"font-size: 16px;\">Code Label</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e6f4ea; color: #137333;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">4</span>\n\
-      \      <span style=\"font-size: 16px;\">Event Time</span>\n    </div>\n\n  \
-      \  <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e8f0fe; color: #1967d2;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">5</span>\n\
-      \      <span style=\"font-size: 16px;\">Error Type</span>\n    </div>\n\n  \
-      \  <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fce8e6; color: #c5221f;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">6</span>\n\
-      \      <span style=\"font-size: 16px;\">Error Location</span>\n    </div>\n\n\
-      \    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fef7e0; color: #f09d00;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">7</span>\n\
-      \      <span style=\"font-size: 16px;\">Error Date</span>\n    </div>\n\n  </div>\n\
-      </div>"
-    row: 4
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Events
+      </div>
+    row: 8
     col: 0
-    width: 24
-    height: 6
+    width: 72
+    height: 4
     tab_name: ''
   - name: " (5)"
     type: text
     title_text: ''
-    body_text: ''
-    row: 13
-    col: 19
-    width: 5
-    height: 3
-    tab_name: ''
-  - name: " (6)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Events</span>\n</div>"
-    row: 10
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Errors
+      </div>
+    row: 54
     col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (7)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 16
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (8)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 35
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (9)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 24
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (10)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Errors</span>\n</div>"
-    row: 37
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (11)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 46
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (12)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 67
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (13)"
-    type: text
-    title_text: ''
-    body_text: ''
-    row: 67
-    col: 0
-    width: 20
-    height: 2
-    tab_name: ''
-  - name: " (14)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 58
-    col: 20
-    width: 4
-    height: 2
+    width: 72
+    height: 4
     tab_name: ''
   - title: Latest errors and troubleshooting suggestions
     name: Latest errors and troubleshooting suggestions
@@ -810,7 +624,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -818,11 +632,27 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
     truncate_header: false
     minimum_column_width: 75
+    series_column_widths:
+      error_attributes.error_date: 195
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -849,8 +679,6 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
-    series_column_widths:
-      error_attributes.error_date: 195
     note_state: collapsed
     note_display: hover
     note_text: Provides specific error messages and actionable solutions for recent
@@ -860,17 +688,76 @@
       It lists recent configuration failures, detailing exactly when each error occurred,
       a specific description of the issue, and actionable steps to resolve the problem.'
     listen:
-      5 - Error Type: error_attributes.error_case
-      6 - Error Location: error_attributes.source_gcs_location
-      7 - Error Date: error_attributes.error_date
-    row: 60
+      Error type: error_attributes.error_case
+      Error location: error_attributes.source_gcs_location
+      Error date: error_attributes.error_date
+    row: 98
     col: 0
-    width: 24
-    height: 7
+    width: 72
+    height: 14
+    tab_name: ''
+  - type: filter
+    name: Event view name
+    row: 12
+    col: 9
+    width: 9
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Event time
+    row: 12
+    col: 27
+    width: 9
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Event location
+    row: 12
+    col: 0
+    width: 9
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Code label
+    row: 12
+    col: 18
+    width: 9
+    height: 4
+    tab_name: ''
+  - name: " (6)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: ''
+    row: 12
+    col: 37
+    width: 35
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Error location
+    row: 58
+    col: 9
+    width: 9
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Error date
+    row: 58
+    col: 18
+    width: 9
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Error type
+    row: 58
+    col: 0
+    width: 9
+    height: 4
     tab_name: ''
   filters:
-  - name: 1 - Event Location
-    title: 1 - Event Location
+  - name: Event location
+    title: Event location
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -882,8 +769,8 @@
     explore: events
     listens_to_filters: []
     field: events.general_location
-  - name: 2 - Event View Name
-    title: 2 - Event View Name
+  - name: Event view name
+    title: Event view name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -895,8 +782,8 @@
     explore: events
     listens_to_filters: []
     field: events.general_view_name
-  - name: 3 - Code Label
-    title: 3 - Code Label
+  - name: Code label
+    title: Code label
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -908,8 +795,8 @@
     explore: events
     listens_to_filters: []
     field: events.code_label
-  - name: 4 - Event Time
-    title: 4 - Event Time
+  - name: Event time
+    title: Event time
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -917,13 +804,12 @@
     ui_config:
       type: advanced
       display: popover
-      options: []
     model: gcs_storage_intelligence
     explore: events
     listens_to_filters: []
     field: events.event_time
-  - name: 5 - Error Type
-    title: 5 - Error Type
+  - name: Error type
+    title: Error type
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -935,8 +821,8 @@
     explore: error_attributes
     listens_to_filters: []
     field: error_attributes.error_case
-  - name: 6 - Error Location
-    title: 6 - Error Location
+  - name: Error location
+    title: Error location
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -948,8 +834,8 @@
     explore: error_attributes
     listens_to_filters: []
     field: error_attributes.source_gcs_location
-  - name: 7 - Error Date
-    title: 7 - Error Date
+  - name: Error date
+    title: Error date
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -957,7 +843,6 @@
     ui_config:
       type: advanced
       display: popover
-      options: []
     model: gcs_storage_intelligence
     explore: error_attributes
     listens_to_filters: []

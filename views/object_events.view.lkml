@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 17, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Object Events View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -15,6 +15,7 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -32,14 +33,14 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_name {
-    label: "Bucket Name"
+    label: "Bucket name"
     type: string
     sql: ${TABLE}.bucketName ;;
     description: "The name of the Google Cloud Storage (GCS) bucket from which data is being sourced."
   }
 
   dimension: error_reason {
-    label: "Error Reason"
+    label: "Error reason"
     type: string
     sql: ${TABLE}.errorReason ;;
     description: "Explanatory error message provided by Google Cloud Storage (GCS) when a request fails due to rate limiting (HTTP 429 Too Many Requests). This field is populated only for GCS object modification requests, specifically delete, update and create operations."
@@ -60,21 +61,21 @@ view: object_events {
   }
 
   dimension: object_name {
-    label: "Object Name"
+    label: "Object name"
     type: string
     sql: ${TABLE}.objectName ;;
     description: "The name of the Google Cloud Storage (GCS) object from which data is being sourced."
   }
 
   dimension: project {
-    label: "Project Number"
+    label: "Project number"
     type: string
     sql: CAST(${TABLE}.project AS STRING) ;;
     description: "The Google Cloud project number associated with the project that contains the bucket."
   }
 
   dimension: request_bytes {
-    label: "Data Ingress"
+    label: "Data ingress"
     sql:
       {% if size_unit._parameter_value == "PiB" %}
         CAST(${TABLE}.requestBytes FLOAT64) / (POW(1024, 5))
@@ -95,14 +96,14 @@ view: object_events {
   }
 
   dimension: request_host {
-    label: "Request Host"
+    label: "Request host"
     type: string
     sql: ${TABLE}.requestHost ;;
     description: "Host header value from the original HTTP request. This indicates the domain name that the client was trying to reach (e.g., storage.googleapis.com)"
   }
 
   dimension: request_http_method {
-    label: "Request HTTP Method"
+    label: "Request HTTP method"
     type: string
     sql: ${TABLE}.requestHttpMethod ;;
     description: "The specific HTTP method (e.g., POST, PUT, PATCH, DELETE) used by the client when sending the request. This method determines the intended operation on the requested source."
@@ -116,28 +117,28 @@ view: object_events {
   }
 
   dimension: request_operation {
-    label: "Request Operation"
+    label: "Request operation"
     type: string
     sql: ${TABLE}.requestOperation ;;
     description: "Categorizes the type of operation performed on the storage object."
   }
 
   dimension: request_processing_time {
-    label: "Request Processing Time (ms)"
+    label: "Request processing time (ms)"
     type: number
     sql: ${TABLE}.requestProcessingTimeMicros / 1000 ;;
     description: "The total duration (in milliseconds) taken to process the request. Calculated by converting microseconds from the raw source data."
   }
 
   dimension: request_referrer {
-    label: "Request Referrer"
+    label: "Request referrer"
     type: string
     sql: ${TABLE}.requestReferrer ;;
     description: "Identifies the source URL where the request originated. This field can be used to track which websites or applications are driving traffic to the object."
   }
 
   dimension: response_bytes {
-    label: "Data Egress"
+    label: "Data egress"
     sql:
       {% if size_unit._parameter_value == "PiB" %}
         CAST(${TABLE}.responseBytes FLOAT64) / (POW(1024, 5))
@@ -158,14 +159,14 @@ view: object_events {
   }
 
   dimension: response_status {
-    label: "Response Status"
+    label: "Response status"
     type: number
     sql: ${TABLE}.responseStatus ;;
     description: "The HTTP code indicating the success or failure of the GCS operation (e.g., 200, 400, 500)."
   }
 
   dimension: size {
-    label: "Object Size"
+    label: "Object size"
     type: number
     value_format: "#,##0.00"
     sql:
@@ -188,7 +189,7 @@ view: object_events {
   }
 
   dimension: storage_class {
-    label: "Storage Class"
+    label: "Storage class"
     type: string
     sql: ${TABLE}.storageClass ;;
     description: "The storage class of a Google Cloud Storage (GCS) object. It can be Standard, Nearline, Coldline, Archive or Rapid."
@@ -237,12 +238,12 @@ view: object_events {
   dimension: is_delete_request {
     label: "Is DELETE request?"
     type: yesno
-    description: "A boolean field that describes if the HTTP request method's purpose was inteded to delete an object (DELETE)."
+    description: "A boolean field that describes if the HTTP request method's purpose was intended to delete an object (DELETE)."
     sql: ${request_http_method} = 'DELETE' ;;
   }
 
   dimension: is_error_request {
-    label: "Is an Error Request?"
+    label: "Is an error request?"
     type: yesno
     description: "A boolean field that describes if a request has an error status or not."
     sql: ${response_status} >= 400;;
@@ -251,19 +252,19 @@ view: object_events {
   dimension: is_put_request {
     label: "Is PUT request?"
     type: yesno
-    description: "A boolean field that describes if the HTTP request method's purpose was inteded to create an object (PUT)."
+    description: "A boolean field that describes if the HTTP request method's purpose was intended to create an object (PUT)."
     sql: ${request_http_method} = 'PUT' ;;
   }
 
   dimension: is_too_many_requests_error {
-    label: "Is a 429 (Too Many Requests) Error?"
+    label: "Is a 429 (too many requests) error?"
     type: yesno
-    description: "A boolean field that describes if a requests has a 429 (Too Many Requests) error status or not."
+    description: "A boolean field that describes if a request has a 429 (Too Many Requests) error status or not."
     sql: ${response_status} = 429 ;;
   }
 
   dimension: prefix {
-    label: "Object Prefix"
+    label: "Object prefix"
     type: string
     sql:
       COALESCE(
@@ -304,11 +305,19 @@ view: object_events {
     description: "The Object Prefix dimension displays folder paths up to a specified depth, allowing users to analyze data at desired folder levels. For example, selecting a Prefix Depth of 'Second' shows paths like '/sub-folder1/sub-folder2/'."
   }
 
+  dimension: response_status_string {
+    label: "Response status - (string)"
+    type: string
+    sql: CAST(${TABLE}.responseStatus AS STRING) ;;
+    description: "The HTTP code indicating the success or failure of the GCS operation (e.g., '200', '400', '500')."
+  }
+
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Aid Dimensions -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
   dimension: request_bytes_aid {
+    label: "Request (bytes) - (aid)"
     hidden: yes
     type: string
     sql:
@@ -324,6 +333,7 @@ view: object_events {
   }
 
   dimension: response_bytes_aid {
+    label: "Response (bytes) - (aid)"
     hidden: yes
     type: string
     sql:
@@ -339,6 +349,7 @@ view: object_events {
   }
 
   dimension: size_aid {
+    label: "Size (aid)"
     hidden: yes
     type: string
     sql:
@@ -358,7 +369,7 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   dimension_group: created {
-    group_label: "Time Created"
+    group_label: "Time created"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.timeCreated ;;
@@ -366,7 +377,7 @@ view: object_events {
   }
 
   dimension_group: request_completion {
-    group_label: "Request Completion"
+    group_label: "Request completion"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year, month_name]
     sql: ${TABLE}.requestCompletionTimestamp ;;
@@ -374,8 +385,8 @@ view: object_events {
   }
 
   dimension: request_completion_date_hour {
-    group_label: "Request Completion"
-    label: "Date and Hour"
+    group_label: "Request completion"
+    label: "Date and hour"
     type: date_time
     sql: TIMESTAMP_TRUNC(${TABLE}.requestCompletionTimestamp, HOUR) ;;
     description: "A timestamp representing the request's completion time"
@@ -385,7 +396,7 @@ view: object_events {
 
   dimension: request_completion_dynamic {
     label_from_parameter: date_granularity
-    group_label: "Request Completion"
+    group_label: "Request completion"
     description: "Dynamic date field that changes based on the Parameter selection."
     type: date_time
 
@@ -417,8 +428,8 @@ view: object_events {
   }
 
   dimension: request_completion_year_month {
-    group_label: "Request Completion"
-    label: "Year Month"
+    group_label: "Request completion"
+    label: "Year month"
     type: date_time
     sql: TIMESTAMP_TRUNC(${TABLE}.requestCompletionTimestamp, MONTH) ;;
     description: "A timestamp representing the request's completion time"
@@ -431,8 +442,8 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   measure: average_latency_ms {
-    group_label: "Request Latency"
-    label: "Average Latency (ms)"
+    group_label: "Request latency"
+    label: "Average latency (ms)"
     type: average
     sql: ${request_processing_time} ;;
     value_format_name: dynamic_thousands
@@ -440,8 +451,8 @@ view: object_events {
   }
 
   measure: ninety_five_percentile_request_time {
-    group_label: "Request Latency"
-    label: "95th Percentile - Request Time"
+    group_label: "Request latency"
+    label: "95th percentile - request time"
     type: percentile
     percentile: 95
     sql: ${request_processing_time} ;;
@@ -450,7 +461,7 @@ view: object_events {
   }
 
   measure: selected_measure {
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0"
@@ -482,7 +493,7 @@ view: object_events {
   }
 
   measure: total_client_errors {
-    group_label: "Request Status"
+    group_label: "Request status"
     type: count
     filters: [
       response_status: ">= 400 AND < 500"
@@ -493,7 +504,7 @@ view: object_events {
 
   measure: total_created_storage_size {
     group_label: "Operations"
-    label: "Total Created Storage Size"
+    label: "Total created storage size"
     type: sum
     value_format: "#,##0.00"
     filters: [request_http_method: "PUT"]
@@ -512,12 +523,12 @@ view: object_events {
         ${TABLE}.size
       {% endif %};;
     html: <span>{{ total_created_storage_size_aid._value }}</span> ;;
-    description: "A measure that dispaly the storage size sum for all the objects that were created. It uses the best Unit (KiB, MiB, etc.) in Looker. For CSV or sheets downloads, select your preferred unit with the 'Size Unit' parameter."
+    description: "A measure that displays the storage size sum for all the objects that were created. It uses the best Unit (KiB, MiB, etc.) in Looker. For CSV or sheets downloads, select your preferred unit with the 'Size Unit' parameter."
   }
 
   measure: total_data_egress {
-    group_label: "Data Transfer"
-    label: "Total Data Egress"
+    group_label: "Data transfer"
+    label: "Total data egress"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -539,8 +550,8 @@ view: object_events {
   }
 
   measure: total_data_ingress {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress"
+    group_label: "Data transfer"
+    label: "Total data ingress"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -573,7 +584,7 @@ view: object_events {
 
   measure: total_deleted_storage_size {
     group_label: "Operations"
-    label: "Total Deleted Storage Size"
+    label: "Total deleted storage size"
     type: sum
     value_format: "#,##0.00"
     filters: [request_http_method: "DELETE"]
@@ -592,11 +603,12 @@ view: object_events {
         ${TABLE}.size
       {% endif %};;
     html: <span>{{ total_deleted_storage_size_aid._value }}</span> ;;
-    description: "A measure that dispaly the storage size sum for all the objects that were deleted. It uses the best Unit (KiB, MiB, etc.) in Looker. For CSV or sheets downloads, select your preferred unit with the 'Size Unit' parameter."
+    description: "A measure that displays the storage size sum for all the objects that were deleted. It uses the best Unit (KiB, MiB, etc.) in Looker. For CSV or sheets downloads, select your preferred unit with the 'Size Unit' parameter."
   }
 
   measure: total_errors {
-    group_label: "Request Status"
+    group_label: "Request status"
+    label: "Total errors"
     type: count
     filters: [
       response_status: ">= 400"
@@ -636,8 +648,8 @@ view: object_events {
   }
 
   measure: total_requests {
-    group_label: "Traffic Overview"
-    label: "Total Requests"
+    group_label: "Traffic overview"
+    label: "Total requests"
     type: count_distinct
     sql: ${request_id}  ;;
     description: "The total number of unique operations processed by Google Cloud Storage. This uses a distinct count of Request IDs to ensure accurate traffic volume reporting."
@@ -645,7 +657,8 @@ view: object_events {
   }
 
   measure: total_server_errors {
-    group_label: "Request Status"
+    group_label: "Request status"
+    label: "Total server errors"
     type: count
     filters: [
       response_status: ">= 500"
@@ -656,6 +669,7 @@ view: object_events {
 
   measure: total_storage_size {
     group_label: "Metadata"
+    label: "Total storage size"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -677,7 +691,8 @@ view: object_events {
   }
 
   measure: total_success_requests {
-    group_label: "Request Status"
+    group_label: "Request status"
+    label: "Total success requests"
     type: count
     filters: [
       response_status: ">= 200 AND < 300"
@@ -687,8 +702,8 @@ view: object_events {
   }
 
   measure: total_too_many_requests_errors {
-    group_label: "Request Status"
-    label: "Total 429 (Too Many Requests Errors)"
+    group_label: "Request status"
+    label: "Total 429 (too many requests errors)"
     type: count
     filters: [
       response_status: "429"
@@ -702,6 +717,7 @@ view: object_events {
 
   measure: total_created_storage_size_aid {
     group_label: "Operations"
+    label: "Total created storage size (aid)"
     hidden: yes
     type: string
     sql:
@@ -724,6 +740,7 @@ view: object_events {
   }
 
   measure: total_data_egress_aid {
+    label: "Total data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -740,6 +757,7 @@ view: object_events {
   }
 
   measure: total_data_ingress_aid {
+    label: "Total data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -757,6 +775,7 @@ view: object_events {
 
   measure: total_deleted_storage_size_aid {
     group_label: "Operations"
+    label: "Total deleted storage size (aid)"
     hidden: yes
     type: string
     sql:
@@ -779,6 +798,7 @@ view: object_events {
   }
 
   measure: total_storage_size_aid {
+    label: "Total storage size (aid)"
     hidden: yes
     type: string
     sql:
@@ -799,8 +819,8 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   measure: average_latency_ms_current {
-    group_label: "Request Latency"
-    label: "Average Latency (ms) - Current Period"
+    group_label: "Request latency"
+    label: "Average latency (ms) - current period"
     type: average
     sql:
       CASE
@@ -813,8 +833,8 @@ view: object_events {
   }
 
   measure: average_latency_ms_pop_change {
-    group_label: "Request Latency"
-    label: "Average Latency (ms) - PoP Change"
+    group_label: "Request latency"
+    label: "Average latency (ms) - PoP change"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -837,8 +857,8 @@ view: object_events {
 
 
   measure: average_latency_ms_previous {
-    group_label: "Request Latency"
-    label: "Average Latency (ms) - Previous Period"
+    group_label: "Request latency"
+    label: "Average latency (ms) - previous period"
     type: average
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -858,8 +878,8 @@ view: object_events {
   }
 
   measure: ninety_five_percentile_request_time_current {
-    group_label: "Request Latency"
-    label: "95Th Percentile - Request Time (Current Period)"
+    group_label: "Request latency"
+    label: "95th percentile - request time (current period)"
     type: percentile
     percentile: 95
     sql:
@@ -869,12 +889,12 @@ view: object_events {
         ELSE NULL
       END;;
     value_format_name: dynamic_thousands
-    description: "95th percentile request time the selected analysis period. The unit is in Milliseconds."
+    description: "95th percentile request time for the selected analysis period. The unit is in Milliseconds."
   }
 
   measure: ninety_five_percentile_request_time_pop_change {
-    group_label: "Request Latency"
-    label: "95th Percentile - Request Time (PoP Change)"
+    group_label: "Request latency"
+    label: "95th percentile - request time (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -896,8 +916,8 @@ view: object_events {
   }
 
   measure: ninety_five_percentile_request_time_previous {
-    group_label: "Request Latency"
-    label: "95th Percentile - Request Time (Previous Period)"
+    group_label: "Request latency"
+    label: "95th percentile - request time (previous period)"
     type: percentile
     percentile: 95
     sql:
@@ -915,8 +935,8 @@ view: object_events {
   }
 
   measure: total_client_errors_current {
-    group_label: "Request Status"
-    label: "Total Client Errors (Current Period)"
+    group_label: "Request status"
+    label: "Total client errors (current period)"
     type: sum
     sql:
     CASE
@@ -930,8 +950,8 @@ view: object_events {
   }
 
   measure: total_client_errors_pop_change {
-    group_label: "Request Status"
-    label: "Total Client Errors (PoP Change)"
+    group_label: "Request status"
+    label: "Total client errors (PoP change)"
     type: number
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -953,8 +973,8 @@ view: object_events {
   }
 
   measure: total_client_errors_previous {
-    group_label: "Request Status"
-    label: "Total Client Errors (Previous Period)"
+    group_label: "Request status"
+    label: "Total client errors (previous period)"
     type: sum
     sql:
     CASE
@@ -971,8 +991,8 @@ view: object_events {
   }
 
   measure: total_data_egress_current {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (Current Period)"
+    group_label: "Data transfer"
+    label: "Total data egress (current period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1015,8 +1035,8 @@ view: object_events {
   }
 
   measure: total_data_egress_pop_change {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (PoP Change)"
+    group_label: "Data transfer"
+    label: "Total data egress (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1038,8 +1058,8 @@ view: object_events {
   }
 
   measure: total_data_egress_previous {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (Previous Period)"
+    group_label: "Data transfer"
+    label: "Total data egress (previous period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1074,8 +1094,8 @@ view: object_events {
   }
 
   measure: total_data_ingress_current {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (Current Period)"
+    group_label: "Data transfer"
+    label: "Total data ingress (current period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1119,8 +1139,8 @@ view: object_events {
   }
 
   measure: total_data_ingress_pop_change {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (PoP Change)"
+    group_label: "Data transfer"
+    label: "Total data ingress (PoP change)"
     type: number
     sql:
           {% if analysis_date_filter._is_filtered %}
@@ -1142,8 +1162,8 @@ view: object_events {
   }
 
   measure: total_data_ingress_previous {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (Previous Period)"
+    group_label: "Data transfer"
+    label: "Total data ingress (previous period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1179,8 +1199,8 @@ view: object_events {
   }
 
   measure: total_errors_current {
-    group_label: "Request Status"
-    label: "Total Errors (Current Period)"
+    group_label: "Request status"
+    label: "Total errors (current period)"
     type: sum
     sql:
     CASE
@@ -1194,8 +1214,8 @@ view: object_events {
   }
 
   measure: total_errors_pop_change {
-    group_label: "Request Status"
-    label: "Total Errors (PoP Change)"
+    group_label: "Request status"
+    label: "Total errors (PoP change)"
     type: number
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1217,8 +1237,8 @@ view: object_events {
   }
 
   measure: total_errors_previous {
-    group_label: "Request Status"
-    label: "Total Errors (Previous Period)"
+    group_label: "Request status"
+    label: "Total errors (previous period)"
     type: sum
     sql:
     CASE
@@ -1235,8 +1255,8 @@ view: object_events {
   }
 
   measure: total_requests_current {
-    group_label: "Traffic Overview"
-    label: "Total Requests (Current Period)"
+    group_label: "Traffic overview"
+    label: "Total requests (current period)"
     type: count_distinct
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1252,8 +1272,8 @@ view: object_events {
   }
 
   measure: total_requests_pop_change {
-    group_label: "Traffic Overview"
-    label: "Total Requests (PoP Change)"
+    group_label: "Traffic overview"
+    label: "Total requests (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1275,8 +1295,8 @@ view: object_events {
   }
 
   measure: total_requests_previous {
-    group_label: "Traffic Overview"
-    label: "Total Requests (Previous Period)"
+    group_label: "Traffic overview"
+    label: "Total requests (previous period)"
     type: count_distinct
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1296,8 +1316,8 @@ view: object_events {
   }
 
   measure: total_server_errors_current {
-    group_label: "Request Status"
-    label: "Total Server Errors (Current Period)"
+    group_label: "Request status"
+    label: "Total server errors (current period)"
     type: sum
     sql:
       CASE
@@ -1311,8 +1331,8 @@ view: object_events {
   }
 
   measure: total_server_errors_pop_change {
-    group_label: "Request Status"
-    label: "Total Server Errors (PoP Change)"
+    group_label: "Request status"
+    label: "Total server errors (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1334,8 +1354,8 @@ view: object_events {
   }
 
   measure: total_server_errors_previous {
-    group_label: "Request Status"
-    label: "Total Server Errors (Previous Period)"
+    group_label: "Request status"
+    label: "Total server errors (previous period)"
     type: sum
     sql:
       CASE
@@ -1352,8 +1372,8 @@ view: object_events {
   }
 
   measure: total_success_requests_current {
-    group_label: "Request Status"
-    label: "Total Success Requests (Current Period)"
+    group_label: "Request status"
+    label: "Total success requests (current period)"
     type: sum
     sql:
       CASE
@@ -1367,8 +1387,8 @@ view: object_events {
   }
 
   measure: total_success_requests_pop_change {
-    group_label: "Request Status"
-    label: "Total Success Requests (PoP Change)"
+    group_label: "Request status"
+    label: "Total success requests (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1390,8 +1410,8 @@ view: object_events {
   }
 
   measure: total_success_requests_previous {
-    group_label: "Request Status"
-    label: "Total Success Requests (Previous Period)"
+    group_label: "Request status"
+    label: "Total success requests (previous period)"
     type: sum
     sql:
       CASE
@@ -1413,7 +1433,8 @@ view: object_events {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_data_egress_aid_current {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress current (aid)"
     hidden: yes
     type: string
     sql:
@@ -1448,7 +1469,8 @@ view: object_events {
   }
 
   measure: total_data_egress_aid_previous {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress previous (aid)"
     hidden: yes
     type: string
     sql:
@@ -1475,7 +1497,8 @@ view: object_events {
   }
 
   measure: total_data_ingress_aid_current {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress current (aid)"
     hidden: yes
     type: string
     sql:
@@ -1510,7 +1533,8 @@ view: object_events {
   }
 
   measure: total_data_ingress_aid_previous {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress previous (aid)"
     hidden: yes
     type: string
     sql:
@@ -1542,7 +1566,7 @@ view: object_events {
 
   filter: analysis_date_filter {
     type: date
-    label: "Snapshot Start Range"
+    label: "Snapshot start range"
     description: "Select the date range for analysis. The 'Previous Period' measure will automatically calculate based on this duration."
   }
 
@@ -1550,74 +1574,66 @@ view: object_events {
   # ---------------------------- Parameters -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  parameter: size_unit {
+  parameter: aggregate_function {
+    label: "Selected metric"
     type: unquoted
-    label: "Size Unit"
 
     allowed_value: {
-      label: "PiB"
-      value: "PiB"
+      label: "Total requests"
+      value: "total_requests"
     }
 
     allowed_value: {
-      label: "TiB"
-      value: "TiB"
+      label: "Total POST requests"
+      value: "total_post_requests"
     }
 
     allowed_value: {
-      label: "GiB"
-      value: "GiB"
+      label: "Total PUT requests"
+      value: "total_put_requests"
     }
 
     allowed_value: {
-      label: "MiB"
-      value: "MiB"
+      label: "Total PATCH requests"
+      value: "total_patch_requests"
     }
 
     allowed_value: {
-      label: "KiB"
-      value: "KiB"
+      label: "Total DELETE requests"
+      value: "total_delete_requests"
     }
 
     allowed_value: {
-      label: "B"
-      value: "B"
-    }
-
-    default_value: "GiB"
-    description: "This parameter allows users to select the desired byte unit for storage size visualizations and file downloads (CSV, Sheets). The default value is GiB."
-  }
-
-  parameter: date_granularity {
-    type: unquoted
-    label: "Date Granularity"
-    description: "This parameter allows users to specify the desired Request Completion Timestamp granularity. The default measure for this parameter is Date and Hour."
-
-    allowed_value: {
-      label: "Date and Hour"
-      value: "date_hour"
+      label: "95th percentile - request time"
+      value: "ninety_five_percentile_request_time"
     }
 
     allowed_value: {
-      label: "Date"
-      value: "date"
+      label: "Total success requests"
+      value: "total_success_requests"
     }
 
     allowed_value: {
-      label: "Year Month"
-      value: "year_month"
+      label: "Total errors"
+      value: "total_errors"
     }
 
     allowed_value: {
-      label: "Month Name"
-      value: "month_name"
+      label: "Total client errors"
+      value: "total_client_errors"
     }
 
-    default_value: "date_hour"
+    allowed_value: {
+      label: "Total server errors"
+      value: "total_server_errors"
+    }
+
+    default_value: "total_requests"
+    description: "This parameter allows users to specify the desired measure for the selected measure metric. The default value, 'Total Requests', displays the Total Request metric."
   }
 
   parameter: bucket_project_selector {
-    label: "Bucket or Project selector"
+    label: "Bucket or project selector"
     type: unquoted
 
     allowed_value: {
@@ -1634,12 +1650,40 @@ view: object_events {
     description: "This parameter allows users to specify the desired dimension for the selected Bucket or Project Name. The default value, 'Bucket', displays the Bucket name."
   }
 
+  parameter: date_granularity {
+    type: unquoted
+    label: "Date granularity"
+    description: "This parameter allows users to specify the desired Request Completion Timestamp granularity. The default measure for this parameter is Date and Hour."
+
+    allowed_value: {
+      label: "Date and hour"
+      value: "date_hour"
+    }
+
+    allowed_value: {
+      label: "Date"
+      value: "date"
+    }
+
+    allowed_value: {
+      label: "Year month"
+      value: "year_month"
+    }
+
+    allowed_value: {
+      label: "Month name"
+      value: "month_name"
+    }
+
+    default_value: "date_hour"
+  }
+
   parameter: dimension_selector {
-    label: "Dimension Selector"
+    label: "Dimension selector"
     type: unquoted
 
     allowed_value: {
-      label: "HTTP Method"
+      label: "HTTP method"
       value: "http_method"
     }
 
@@ -1649,12 +1693,12 @@ view: object_events {
     }
 
     allowed_value: {
-      label: "Request Host"
+      label: "Request host"
       value: "request_host"
     }
 
     allowed_value: {
-      label: "Request Operation"
+      label: "Request operation"
       value: "request_operation"
     }
 
@@ -1664,7 +1708,7 @@ view: object_events {
     }
 
     allowed_value: {
-      label: "Storage Class"
+      label: "Storage class"
       value: "storage_class"
     }
 
@@ -1672,65 +1716,8 @@ view: object_events {
     description: "This parameter allows users to specify the desired dimension. The default value: 'HTTP Method."
   }
 
-  parameter: aggregate_function {
-    label: "Selected Metric"
-    type: unquoted
-
-    allowed_value: {
-      label: "Total Requests"
-      value: "total_requests"
-    }
-
-    allowed_value: {
-      label: "Total POST Requests"
-      value: "total_post_requests"
-    }
-
-    allowed_value: {
-      label: "Total PUT Requests"
-      value: "total_put_requests"
-    }
-
-    allowed_value: {
-      label: "Total PATCH Requests"
-      value: "total_patch_requests"
-    }
-
-    allowed_value: {
-      label: "Total DELETE Requests"
-      value: "total_delete_requests"
-    }
-
-    allowed_value: {
-      label: "95th Percentile - Request Time"
-      value: "ninety_five_percentile_request_time"
-    }
-
-    allowed_value: {
-      label: "Total Success Requests"
-      value: "total_success_requests"
-    }
-
-    allowed_value: {
-      label: "Total Errors"
-      value: "total_errors"
-    }
-
-    allowed_value: {
-      label: "Total Client Errors"
-      value: "total_client_errors"
-    }
-
-    allowed_value: {
-      label: "Total Server Errors"
-      value: "total_server_errors"
-    }
-
-    default_value: "total_requests"
-    description: "This parameter allows users to specify the desired measure for the selected measure metric. The default value, 'Total Requests', displays the Total Request metric."
-  }
-
   parameter: prefix_depth {
+    label: "Prefix depth"
 
     type: unquoted
 
@@ -1810,11 +1797,50 @@ view: object_events {
     }
 
     allowed_value: {
-      label: "Full Prefix"
+      label: "Full prefix"
       value: "full_prefix"
     }
 
     default_value: "full_prefix"
     description: "This parameter allows users to specify the prefix depth for the prefix dimension. The default value, 'Full Prefix', displays the complete prefix for objects within a directory hierarchy."
   }
+
+  parameter: size_unit {
+    type: unquoted
+    label: "Size unit"
+
+    allowed_value: {
+      label: "PiB"
+      value: "PiB"
+    }
+
+    allowed_value: {
+      label: "TiB"
+      value: "TiB"
+    }
+
+    allowed_value: {
+      label: "GiB"
+      value: "GiB"
+    }
+
+    allowed_value: {
+      label: "MiB"
+      value: "MiB"
+    }
+
+    allowed_value: {
+      label: "KiB"
+      value: "KiB"
+    }
+
+    allowed_value: {
+      label: "B"
+      value: "B"
+    }
+
+    default_value: "GiB"
+    description: "This parameter allows users to select the desired byte unit for storage size visualizations and file downloads (CSV, Sheets). The default value is GiB."
+  }
+
 }

@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 17, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Project Attributes View Table inside the Storage Intelligence linked Dataset.
 # -------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ view: project_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: project {
-    label: "Project Number"
+    label: "Project number"
     primary_key: yes
     type: string
     sql: CAST(${TABLE}.number AS STRING) ;;
@@ -33,17 +33,18 @@ view: project_attributes {
   # ---------------------------- Dimensions -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  dimension: project_name {
-    type: string
-    sql: ${TABLE}.name ;;
-    description: "The name of the Google Cloud Storage (GCS) project from which data is being sourced."
-  }
-
   dimension: project_id {
     label: "Project ID"
     type: string
     sql: ${TABLE}.id ;;
     description: "The Project ID is a unique, immutable identifier for your GCP project. It is a globally unique string, often derived from the project name."
+  }
+
+  dimension: project_name {
+    label: "Project name"
+    type: string
+    sql: ${TABLE}.name ;;
+    description: "The name of the Google Cloud Storage (GCS) project from which data is being sourced."
   }
 
 }

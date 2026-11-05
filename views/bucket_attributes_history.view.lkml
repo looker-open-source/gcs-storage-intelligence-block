@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Bucket Attributes View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -30,6 +30,7 @@ view: bucket_attributes_history {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -50,13 +51,14 @@ view: bucket_attributes_history {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_name {
+    label: "Bucket name"
     type: string
     sql: ${TABLE}.name ;;
     description: "The name of the Google Cloud Storage (GCS) bucket from which data is being sourced."
   }
 
   dimension: bucket_total_size {
-    label: "Bucket Total Size"
+    label: "Bucket total storage size"
     type: number
     hidden: no
     sql:
@@ -79,12 +81,14 @@ view: bucket_attributes_history {
   }
 
   dimension: location {
+    label: "Location"
     type: string
     sql: ${TABLE}.location ;;
     description: "The geographic location where the bucket's data resides. Values can represent a single region (e.g., 'us-central1'), dual-region, or multi-region (e.g., 'US'). Determines data residency, availability, and pricing."
   }
 
   dimension: metageneration {
+    label: "Metageneration"
     hidden: yes
     type: number
     sql: ${TABLE}.metageneration ;;
@@ -92,6 +96,7 @@ view: bucket_attributes_history {
   }
 
   dimension: object_count {
+    label: "Object count"
     type: number
     hidden: yes
     sql: ${TABLE}.objectCount ;;
@@ -99,13 +104,14 @@ view: bucket_attributes_history {
   }
 
   dimension: project {
-    label: "Project Number"
+    label: "Project number"
     type: string
     sql: CAST(${TABLE}.project AS STRING) ;;
     description: "The unique, immutable numeric identifier for the Google Cloud project containing this bucket."
   }
 
   dimension: storage_class {
+    label: "Storage class"
     type: string
     sql: ${TABLE}.storageClass ;;
     description: "The default storage tier assigned to new objects in the bucket. Determines the balance between storage costs and retrieval pricing. Common values include 'Standard', 'Nearline', 'Coldline', 'Archive', and 'Rapid' ."
@@ -116,6 +122,7 @@ view: bucket_attributes_history {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_size_aid {
+    label: "Bucket total storage size (aid)"
     hidden: yes
     type: string
     sql:
@@ -135,7 +142,7 @@ view: bucket_attributes_history {
   # --------------------------------------------------------------------------------------------------------
 
   dimension_group: snapshot {
-    group_label: "Snapshot Time"
+    group_label: "Snapshot time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.snapshotTime ;;
@@ -147,7 +154,7 @@ view: bucket_attributes_history {
   # --------------------------------------------------------------------------------------------------------
 
   measure: object_sum {
-    label: "Total Objects"
+    label: "Total objects"
     type: sum
     value_format: "#,##0"
     sql: ${object_count} ;;
@@ -155,6 +162,7 @@ view: bucket_attributes_history {
   }
 
   measure: total_storage_size {
+    label: "Total storage size"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -180,6 +188,7 @@ view: bucket_attributes_history {
   # --------------------------------------------------------------------------------------------------------
 
   measure: sum_storage_aid {
+    label: "Total storage size (aid)"
     hidden: yes
     type: string
     sql:
@@ -201,7 +210,7 @@ view: bucket_attributes_history {
 
   parameter: size_unit {
     type: unquoted
-    label: "Storage Size Unit"
+    label: "Storage size unit"
 
     allowed_value: {
       label: "PiB"
@@ -236,11 +245,5 @@ view: bucket_attributes_history {
     default_value: "GiB"
     description: "This parameter allows users to select the desired byte unit for storage size visualizations and file downloads (CSV, Sheets). The default value is GiB."
   }
-
-
-
-
-
-
 
 }

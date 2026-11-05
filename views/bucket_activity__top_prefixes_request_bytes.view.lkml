@@ -2,10 +2,23 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Bucket Activity View Table inside the Storage Intelligence linked Dataset. This view specifically is related to the top object prefixes that experienced the highest volume of requests in bytes.
 # -------------------------------------------------------------------------------------
 view: bucket_activity__top_prefixes_request_bytes {
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Primary Key -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  dimension: primary_key {
+    label: "Primary key"
+    hidden: yes
+    primary_key: yes
+    type: string
+    sql: CONCAT(${bucket_activity.primary_key}, '_', ${TABLE}.prefix) ;;
+    description: "A composite primary key uniquely identifying each top prefix request bytes record per bucket activity window."
+  }
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Dimensions -------------------------------
@@ -39,7 +52,7 @@ view: bucket_activity__top_prefixes_request_bytes {
     label: "Top object prefix"
     type: string
     sql: ${TABLE}.prefix ;;
-    description: "The object key prefix (folder path) associated with the request volume. Represents the directory structure where requests occured."
+    description: "The object key prefix (folder path) associated with the request volume. Represents the directory structure where requests occurred."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -47,6 +60,7 @@ view: bucket_activity__top_prefixes_request_bytes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: count_aid {
+    label: "Data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -66,7 +80,7 @@ view: bucket_activity__top_prefixes_request_bytes {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_ingress_data {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
     label: "Total ingress data"
     value_format: "#,##0.00"
     type: sum
@@ -95,7 +109,8 @@ view: bucket_activity__top_prefixes_request_bytes {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_data_ingress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -117,7 +132,7 @@ view: bucket_activity__top_prefixes_request_bytes {
 
   parameter: throughput_size_unit {
     type: unquoted
-    label: "Throughput Size Unit"
+    label: "Throughput size unit"
 
     allowed_value: {
       label: "PiB"

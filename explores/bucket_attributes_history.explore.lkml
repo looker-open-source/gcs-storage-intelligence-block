@@ -3,6 +3,7 @@
 # Contact Method: insights-customer-support@google.com
 # Created Date: November 15, 2025
 # Modified Date: Feb 17, 2026
+# Purpose: Explore for historical bucket-level metadata snapshots over time.
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"

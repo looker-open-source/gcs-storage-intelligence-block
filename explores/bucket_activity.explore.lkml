@@ -1,9 +1,10 @@
-# -------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
 # Modified Date: Feb 17, 2026
-# -------------------------------------------------------------------------
+# Purpose: Explore for bucket-level activity, traffic volume, and top prefix hotspots.
+# --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 

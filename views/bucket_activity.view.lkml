@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Bucket Activity View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -15,6 +15,7 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -35,13 +36,14 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_name {
+    label: "Bucket name"
     type: string
     sql: ${TABLE}.name ;;
     description: "The name of the Google Cloud Storage (GCS) bucket from which data is being sourced."
   }
 
   dimension: count2xx_preaggregated {
-    label: "Count (2xx) responses - Pre-aggregated"
+    label: "Count (2xx) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count2xx ;;
@@ -49,7 +51,7 @@ view: bucket_activity {
   }
 
   dimension: count400_preaggregated {
-    label: "Count (400) responses - Pre-aggregated"
+    label: "Count (400) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count400 ;;
@@ -57,7 +59,7 @@ view: bucket_activity {
   }
 
   dimension: count401_preaggregated {
-    label: "Count (401) responses - Pre-aggregated"
+    label: "Count (401) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count401 ;;
@@ -65,7 +67,7 @@ view: bucket_activity {
   }
 
   dimension: count403_preaggregated {
-    label: "Count (403) responses - Pre-aggregated"
+    label: "Count (403) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count403 ;;
@@ -73,7 +75,7 @@ view: bucket_activity {
   }
 
   dimension: count429_preaggregated {
-    label: "Count (429) responses - Pre-aggregated"
+    label: "Count (429) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count429 ;;
@@ -81,7 +83,7 @@ view: bucket_activity {
   }
 
   dimension: count4xx_preaggregated {
-    label: "Count (4xx) responses - Pre-aggregated"
+    label: "Count (4xx) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count4xx ;;
@@ -89,7 +91,7 @@ view: bucket_activity {
   }
 
   dimension: count5xx_preaggregated {
-    label: "Count (5xx) responses - Pre-aggregated"
+    label: "Count (5xx) responses - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.count5xx ;;
@@ -97,58 +99,60 @@ view: bucket_activity {
   }
 
   dimension: generation {
+    label: "Generation"
     type: string
     sql: CAST(${TABLE}.generation AS STRING) ;;
     description: "The specific version ID (metageneration) of the bucket. Use this to distinguish between different lifecycle versions of the same bucket name."
   }
 
   dimension: location {
+    label: "location"
     type: string
     sql: ${TABLE}.location ;;
     description: "The region or multi-region location of the source Google Cloud Storage (GCS) bucket."
   }
 
   dimension: project {
-    label: "Project Number"
+    label: "Project number"
     type: string
     sql: CAST(${TABLE}.project AS STRING) ;;
     description: "The Google Cloud project number associated with the project that contains the bucket."
   }
 
   dimension: top_prefixes_429_errors {
-    group_label: "Top Prefixes (Hotspots)"
+    group_label: "Top prefixes (hotspots)"
     hidden: yes
-    label: "Top Prefixes 429 Errors"
+    label: "Top prefixes 429 errors"
     sql: ${TABLE}.topPrefixes429Errors ;;
     description: "A ranked list of the top object prefixes that experienced the highest volume of 429 (Too Many Requests) errors during the hourly capture period."
   }
 
   dimension: top_prefixes_highest_operations {
-    group_label: "Top Prefixes (Hotspots)"
+    group_label: "Top prefixes (hotspots)"
     hidden: yes
-    label: "Top Prefixes Highest Operations"
+    label: "Top prefixes highest operations"
     sql: ${TABLE}.topPrefixesHighestOperations ;;
     description: "A ranked list of the top object prefixes that experienced the highest volume of operations during the hourly capture period."
   }
 
   dimension: top_prefixes_request_bytes {
-    group_label: "Top Prefixes (Hotspots)"
+    group_label: "Top prefixes (hotspots)"
     hidden: yes
-    label: "Top Prefixes Request Bytes"
+    label: "Top prefixes request bytes"
     sql: ${TABLE}.topPrefixesRequestBytes ;;
     description: "A ranked list of the top object prefixes that experienced the highest volume of requests during the hourly capture period."
   }
 
   dimension: top_prefixes_response_bytes {
-    group_label: "Top Prefixes (Hotspots)"
+    group_label: "Top prefixes (hotspots)"
     hidden: yes
-    label: "Top Prefixes Response Bytes"
+    label: "Top prefixes response bytes"
     sql: ${TABLE}.topPrefixesResponseBytes ;;
     description: "A ranked list of the top object prefixes that experienced the highest volume of responses during the hourly capture period."
   }
 
   dimension: total_deletes_preaggregated {
-    label: "Total Delete Requests - Pre-aggregated"
+    label: "Total delete requests - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.totalDeletes ;;
@@ -156,7 +160,7 @@ view: bucket_activity {
   }
 
   dimension: total_lists_preaggregated {
-    label: "Total List Requests - Pre-aggregated"
+    label: "Total list requests - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.totalLists ;;
@@ -164,7 +168,7 @@ view: bucket_activity {
   }
 
   dimension: total_reads_preaggregated {
-    label: "Total Read Requests - Pre-aggregated"
+    label: "Total read requests - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.totalReads ;;
@@ -172,7 +176,7 @@ view: bucket_activity {
   }
 
   dimension: total_request_bytes_preaggregated {
-    label: "Total Request Bytes - Pre-aggregated"
+    label: "Total request bytes - pre-aggregated"
     hidden: yes
     type: number
     value_format: "#,##0.00"
@@ -194,7 +198,7 @@ view: bucket_activity {
   }
 
   dimension: total_requests_preaggregated {
-    label: "Total Requests - Pre-aggregated"
+    label: "Total requests - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.totalRequests ;;
@@ -202,7 +206,7 @@ view: bucket_activity {
   }
 
   dimension: total_response_bytes_preaggregated {
-    label: "Total Response Bytes - Pre-aggregated"
+    label: "Total response bytes - pre-aggregated"
     hidden: yes
     type: number
     sql:
@@ -223,7 +227,7 @@ view: bucket_activity {
   }
 
   dimension: total_updates_preaggregated {
-    label: "Total Update Requests - Pre-aggregated"
+    label: "Total update requests - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.totalUpdates ;;
@@ -231,7 +235,7 @@ view: bucket_activity {
   }
 
   dimension: total_writes_preaggregated {
-    label: "Total Write Requests - Pre-aggregated"
+    label: "Total write requests - pre-aggregated"
     hidden: yes
     type: number
     sql: ${TABLE}.totalWrites ;;
@@ -243,7 +247,7 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   dimension_group:  snapshot_end {
-    group_label: "Snapshot End Time"
+    group_label: "Snapshot end time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.snapshotEndTime ;;
@@ -251,7 +255,7 @@ view: bucket_activity {
   }
 
   dimension_group:  snapshot_start {
-
+    group_label: "Snapshot start time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year, month_name]
     sql: ${TABLE}.snapshotStartTime ;;
@@ -259,7 +263,7 @@ view: bucket_activity {
   }
 
   dimension: snapshot_start_date_hour {
-    group_label: "Snapshot Start Time"
+    group_label: "Snapshot start time"
     label: "Date and Hour"
     type: date_time
     sql: TIMESTAMP_TRUNC(${TABLE}.snapshotStartTime, HOUR) ;;
@@ -269,11 +273,9 @@ view: bucket_activity {
 
   dimension: snapshot_start_dynamic {
     label_from_parameter: date_granularity
-    group_label: "Snapshot Start Time"
+    group_label: "Snapshot start time"
     description: "Dynamic date field that changes based on the Parameter selection: Date Granularity."
-
     type: date_time
-
     sql:
       {% if date_granularity._parameter_value == 'date_hour' %}
         TIMESTAMP_TRUNC(${TABLE}.snapshotStartTime, HOUR)
@@ -302,8 +304,8 @@ view: bucket_activity {
   }
 
   dimension: snapshot_start_time_year_month {
-    group_label: "Snapshot Start Time"
-    label: "Year Month"
+    group_label: "Snapshot start time"
+    label: "Year month"
     type: date
     sql: TIMESTAMP_TRUNC(${TABLE}.snapshotStartTime, MONTH) ;;
     html:
@@ -316,7 +318,7 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   measure: error_rate {
-    group_label: "Request Status"
+    group_label: "Request status"
     label: "Error Rate"
     type: number
     value_format_name: percent_2
@@ -325,8 +327,8 @@ view: bucket_activity {
   }
 
   measure: maximum_data_egress {
-    group_label: "Data Transfer"
-    label: "Maximum Data Egress"
+    group_label: "Data transfer"
+    label: "Maximum data egress"
     type: max
     value_format: "#,##0.00"
     hidden: yes
@@ -349,8 +351,8 @@ view: bucket_activity {
   }
 
   measure: maximum_data_ingress {
-    group_label: "Data Transfer"
-    label: "Maximum Data Ingress"
+    group_label: "Data transfer"
+    label: "Maximum data ingress"
     type: max
     hidden: yes
     value_format: "#,##0.00"
@@ -373,8 +375,8 @@ view: bucket_activity {
   }
 
   measure: median_data_egress {
-    group_label: "Data Transfer"
-    label: "Median Data Egress"
+    group_label: "Data transfer"
+    label: "Median data egress"
     type: number
     value_format: "#,##0.00"
     hidden: yes
@@ -397,8 +399,8 @@ view: bucket_activity {
   }
 
   measure: median_data_ingress {
-    group_label: "Data Transfer"
-    label: "Median Data Ingress"
+    group_label: "Data transfer"
+    label: "Median data ingress"
     type: number
     value_format: "#,##0.00"
     hidden: yes
@@ -421,8 +423,8 @@ view: bucket_activity {
   }
 
   measure: minimum_data_egress {
-    group_label: "Data Transfer"
-    label: "Minimum Data Egress"
+    group_label: "Data transfer"
+    label: "Minimum data egress"
     type: min
     value_format: "#,##0.00"
     hidden: yes
@@ -445,8 +447,8 @@ view: bucket_activity {
   }
 
   measure: minimum_data_ingress {
-    group_label: "Data Transfer"
-    label: "Minimum Data Ingress"
+    group_label: "Data transfer"
+    label: "Minimum data ingress"
     type: min
     hidden: yes
     value_format: "#,##0.00"
@@ -469,8 +471,8 @@ view: bucket_activity {
   }
 
   measure: quarter_percentile_data_egress {
-    group_label: "Data Transfer"
-    label: "25th Percentile Data Egress"
+    group_label: "Data transfer"
+    label: "25th percentile data egress"
     type: number
     value_format: "#,##0.00"
     hidden: yes
@@ -493,8 +495,8 @@ view: bucket_activity {
   }
 
   measure: quarter_percentile_data_ingress {
-    group_label: "Data Transfer"
-    label: "25th Percentile Data Ingress"
+    group_label: "Data transfer"
+    label: "25th percentile data ingress"
     type: number
     value_format: "#,##0.00"
     hidden: yes
@@ -517,7 +519,7 @@ view: bucket_activity {
   }
 
   measure: selected_maximum {
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0.00"
@@ -563,7 +565,7 @@ view: bucket_activity {
   }
 
   measure: selected_measure {
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0.00"
@@ -609,7 +611,7 @@ view: bucket_activity {
   }
 
   measure: selected_median {
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0.00"
@@ -655,7 +657,7 @@ view: bucket_activity {
   }
 
   measure: selected_minimum {
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0.00"
@@ -701,7 +703,7 @@ view: bucket_activity {
   }
 
   measure: selected_quarter_percentile {
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0.00"
@@ -747,7 +749,7 @@ view: bucket_activity {
   }
 
   measure: selected_three_quarter_percentile{
-    group_label: "Dynamic Metrics"
+    group_label: "Dynamic metrics"
     label_from_parameter: aggregate_function
     type: number
     value_format: "#,##0.00"
@@ -793,8 +795,8 @@ view: bucket_activity {
   }
 
   measure: three_quarter_percentile_data_egress {
-    group_label: "Data Transfer"
-    label: "75th Percentile Data Egress"
+    group_label: "Data transfer"
+    label: "75th percentile data egress"
     type: number
     value_format: "#,##0.00"
     hidden: yes
@@ -817,8 +819,8 @@ view: bucket_activity {
   }
 
   measure: three_quarter_percentile_data_ingress {
-    group_label: "Data Transfer"
-    label: "75th Percentile Data Ingress"
+    group_label: "Data transfer"
+    label: "75th percentile data ingress"
     type: number
     value_format: "#,##0.00"
     hidden: yes
@@ -841,8 +843,8 @@ view: bucket_activity {
   }
 
   measure: total_400_error_responses {
-    group_label: "Request Status"
-    label: "Total 400 Error Responses"
+    group_label: "Request status"
+    label: "Total 400 error responses"
     type: sum
     value_format: "#,##0.00"
     sql: ${count400_preaggregated} ;;
@@ -850,24 +852,24 @@ view: bucket_activity {
   }
 
   measure: total_401_error_responses {
-    group_label: "Request Status"
-    label: "Total 401 Error Responses"
+    group_label: "Request status"
+    label: "Total 401 error responses"
     type: sum
     sql: ${count401_preaggregated} ;;
     description: "The total count of HTTP responses with a 401 (Unauthorized) status code. This indicates that the request lacked valid authentication credentials for the target resource."
   }
 
   measure: total_403_error_responses {
-    group_label: "Request Status"
-    label: "Total 403 Error Responses"
+    group_label: "Request status"
+    label: "Total 403 error responses"
     type: sum
     sql: ${count403_preaggregated} ;;
     description: "The total count of HTTP responses with a 403 (Forbidden) status code. This indicates that the server understood the request but refuses to authorize it, typically due to insufficient permissions."
   }
 
   measure: total_429_error_responses {
-    group_label: "Request Status"
-    label: "Total 429 Error Responses"
+    group_label: "Request status"
+    label: "Total 429 error responses"
     type: sum
     sql: ${count429_preaggregated} ;;
     description: "The total count of HTTP responses with a 429 (Too Many Requests) status code. This indicates that the client has sent too many requests in a given amount of time (rate limiting)."
@@ -875,8 +877,8 @@ view: bucket_activity {
   }
 
   measure: total_client_error_responses {
-    group_label: "Request Status"
-    label: "Total Client Error Responses"
+    group_label: "Request status"
+    label: "Total client error responses"
     type: sum
     sql: ${count4xx_preaggregated} ;;
     description: "The total count of HTTP responses with a 4xx (Client Error) status code. This category aggregates all client-side issues (e.g., 400, 401, 403, 429), indicating that the request contains bad syntax or cannot be fulfilled."
@@ -884,9 +886,9 @@ view: bucket_activity {
   }
 
   measure: total_client_error_status_requests {
-    group_label: "Request Status"
+    group_label: "Request status"
     type: sum
-    label: "Total Client Error Requests by Status"
+    label: "Total client error requests by status"
     sql:
       CASE
         WHEN ${client_error_status.client_error_label} = '400' THEN ${count400_preaggregated}
@@ -900,8 +902,8 @@ view: bucket_activity {
   }
 
   measure: total_data_egress {
-    group_label: "Data Transfer"
-    label: "Total Data Egress"
+    group_label: "Data transfer"
+    label: "Total data egress"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -923,8 +925,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress"
+    group_label: "Data transfer"
+    label: "Total data ingress"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -947,15 +949,15 @@ view: bucket_activity {
 
   measure: total_delete_requests {
     group_label: "Operations"
-    label: "Total Delete Requests"
+    label: "Total delete requests"
     type: sum
     sql: ${total_deletes_preaggregated} ;;
     description: "The total count of HTTP requests made using the DELETE method. This metric specifically tracks object-level deletion requests only."
   }
 
   measure: total_errors {
-    group_label: "Request Status"
-    label: "Total Errors"
+    group_label: "Request status"
+    label: "Total errors"
     type: number
     sql: ${total_client_error_responses} + ${total_server_error_responses};;
     description: "The aggregate count of all failed HTTP requests, combining both Client Errors (4xx) and Server Errors (5xx). This metric provides a comprehensive total of all object-level request failures."
@@ -964,7 +966,7 @@ view: bucket_activity {
 
   measure: total_list_requests {
     group_label: "Operations"
-    label: "Total List Requests"
+    label: "Total list requests"
     type: sum
     sql: ${total_lists_preaggregated} ;;
     description: "The total count of requests made to list the objects and prefixes within a bucket. This metric corresponds specifically to the 'storage.objects.list' operation."
@@ -972,7 +974,7 @@ view: bucket_activity {
 
   measure: total_read_requests {
     group_label: "Operations"
-    label: "Total Read Requests"
+    label: "Total read requests"
     type: sum
     sql: ${total_reads_preaggregated} ;;
     description: "The total count of requests made to read or download the actual data contents of an object. This metric corresponds specifically to the 'storage.objects.get' operation."
@@ -980,8 +982,8 @@ view: bucket_activity {
   }
 
   measure: total_requests {
-    group_label: "Traffic Overview"
-    label: "Total Requests"
+    group_label: "Traffic overview"
+    label: "Total requests"
     type: sum
     sql: ${total_requests_preaggregated} ;;
     description: "Grand total of all HTTP requests received by Google Cloud Storage (GCS) for the monitored resources, regardless the operation type (e.g., GET, PUT; POST, DELETE, or LIST)"
@@ -989,8 +991,8 @@ view: bucket_activity {
   }
 
   measure: total_requests_per_status {
-    group_label: "Request Status"
-    label: "Total Requests per Status"
+    group_label: "Request status"
+    label: "Total requests per status"
     type: sum
     sql:
       CASE
@@ -1004,8 +1006,8 @@ view: bucket_activity {
   }
 
   measure: total_server_error_responses {
-    group_label: "Request Status"
-    label: "Total Server Error Responses"
+    group_label: "Request status"
+    label: "Total server error responses"
     type: sum
     sql: ${count5xx_preaggregated} ;;
     value_format_name: dynamic_thousands
@@ -1013,8 +1015,8 @@ view: bucket_activity {
   }
 
   measure: total_success_responses {
-    group_label: "Request Status"
-    label: "Total Success Responses"
+    group_label: "Request status"
+    label: "Total success responses"
     type: sum
     sql: ${count2xx_preaggregated} ;;
     value_format_name: dynamic_thousands
@@ -1023,7 +1025,7 @@ view: bucket_activity {
 
   measure: total_update_requests {
     group_label: "Operations"
-    label: "Total Update Requests"
+    label: "Total update requests"
     type: sum
     sql: ${total_updates_preaggregated} ;;
     description: "The total count of requests made to modify or overwrite an existing object's data or metadata. This metric primarily corresponds to the 'storage.objects.update' and 'storage.objects.patch' operations."
@@ -1031,7 +1033,7 @@ view: bucket_activity {
 
   measure: total_write_requests {
     group_label: "Operations"
-    label: "Total Write Requests"
+    label: "Total write requests"
     type: sum
     sql: ${total_writes_preaggregated} ;;
     description: "The total count of requests made to upload or create a new object. This metric primarily corresponds to the 'storage.objects.insert' operation."
@@ -1042,8 +1044,8 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   measure: error_rate_current {
-    group_label: "Request Status"
-    label: "Error Rate (Current Period)"
+    group_label: "Request status"
+    label: "Error rate (current period)"
     type: number
     value_format_name: percent_2
     sql:
@@ -1053,8 +1055,8 @@ view: bucket_activity {
   }
 
   measure: error_rate_pop_change {
-    group_label: "Request Status"
-    label: "Error Rate (PoP Change)"
+    group_label: "Request status"
+    label: "Error rate (PoP change)"
     type: number
     value_format_name: percent_2
 
@@ -1077,8 +1079,8 @@ view: bucket_activity {
   }
 
   measure: error_rate_previous {
-    group_label: "Request Status"
-    label: "Error Rate (Previous Period)"
+    group_label: "Request status"
+    label: "Error rate (previous period)"
     type: number
     value_format_name: percent_2
     sql:
@@ -1088,8 +1090,8 @@ view: bucket_activity {
   }
 
   measure: total_429_error_responses_current {
-    group_label: "Request Status"
-    label: "Total 429 Error Responses (Current Period)"
+    group_label: "Request status"
+    label: "Total 429 error responses (current period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1106,8 +1108,8 @@ view: bucket_activity {
   }
 
   measure: total_429_error_responses_pop_change {
-    group_label: "Request Status"
-    label: "Total 429 Error Responses (PoP Change)"
+    group_label: "Request status"
+    label: "Total 429 error responses (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1129,8 +1131,8 @@ view: bucket_activity {
   }
 
   measure: total_429_error_responses_previous {
-    group_label: "Request Status"
-    label: "Total 429 Error Responses (Previous Period)"
+    group_label: "Request status"
+    label: "Total 429 error responses (previous period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1151,8 +1153,8 @@ view: bucket_activity {
   }
 
   measure: total_client_error_responses_current {
-    group_label: "Request Status"
-    label: "Total Client Error Responses (Current Period)"
+    group_label: "Request status"
+    label: "Total client error responses (current period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1169,8 +1171,8 @@ view: bucket_activity {
   }
 
   measure: total_client_error_responses_pop_change {
-    group_label: "Request Status"
-    label: "Total Client Error Responses (PoP Change)"
+    group_label: "Request status"
+    label: "Total client error responses (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1192,8 +1194,8 @@ view: bucket_activity {
   }
 
   measure: total_client_error_responses_previous {
-    group_label: "Request Status"
-    label: "Total Client Error Responses (Previous Period)"
+    group_label: "Request status"
+    label: "Total client error responses (previous period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1214,8 +1216,8 @@ view: bucket_activity {
   }
 
   measure: total_data_egress_current {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (Current Period)"
+    group_label: "Data transfer"
+    label: "Total data egress (current period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1258,8 +1260,8 @@ view: bucket_activity {
   }
 
   measure: total_data_egress_pop_change {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (PoP Change)"
+    group_label: "Data transfer"
+    label: "Total data egress (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1281,8 +1283,8 @@ view: bucket_activity {
   }
 
   measure: total_data_egress_previous {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (Previous Period)"
+    group_label: "Data transfer"
+    label: "Total data egress (previous period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1317,8 +1319,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress_current {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (Current Period)"
+    group_label: "Data transfer"
+    label: "Total data ingress (current period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1362,8 +1364,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress_pop_change {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (PoP Change)"
+    group_label: "Data transfer"
+    label: "Total data ingress (PoP change)"
     type: number
     sql:
           {% if analysis_date_filter._is_filtered %}
@@ -1385,8 +1387,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress_previous {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (Previous Period)"
+    group_label: "Data transfer"
+    label: "Total data ingress (previous period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -1423,7 +1425,7 @@ view: bucket_activity {
 
   measure: total_read_requests_current {
     group_label: "Operations"
-    label: "Total Read Requests (Current Period)"
+    label: "Total read requests (current period)"
     type: sum
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1441,7 +1443,7 @@ view: bucket_activity {
 
   measure: total_read_requests_pop_change {
     group_label: "Operations"
-    label: "Total Read Requests (PoP Change)"
+    label: "Total read requests (PoP change)"
     type: number
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1464,7 +1466,7 @@ view: bucket_activity {
 
   measure: total_read_requests_previous {
     group_label: "Operations"
-    label: "Total Read Requests (Previous Period)"
+    label: "Total read requests (previous period)"
     type: sum
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1485,8 +1487,8 @@ view: bucket_activity {
   }
 
   measure: total_requests_current {
-    group_label: "Traffic Overview"
-    label: "Total Requests (Current Period)"
+    group_label: "Traffic overview"
+    label: "Total requests (current period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1503,8 +1505,8 @@ view: bucket_activity {
   }
 
   measure: total_requests_pop_change {
-    group_label: "Traffic Overview"
-    label: "Total Requests (PoP Change)"
+    group_label: "Traffic overview"
+    label: "Total requests (PoP change)"
     type: number
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1527,8 +1529,8 @@ view: bucket_activity {
   }
 
   measure: total_requests_previous {
-    group_label: "Traffic Overview"
-    label: "Total Requests (Previous Period)"
+    group_label: "Traffic overview"
+    label: "Total requests (previous period)"
     type: sum
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1549,8 +1551,8 @@ view: bucket_activity {
   }
 
   measure: total_server_error_responses_current {
-    group_label: "Request Status"
-    label: "Total Server Error Responses (Current Period)"
+    group_label: "Request status"
+    label: "Total server error responses (current period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1567,8 +1569,8 @@ view: bucket_activity {
   }
 
   measure: total_server_error_responses_pop_change {
-    group_label: "Request Status"
-    label: "Total Server Error Responses (PoP Change)"
+    group_label: "Request status"
+    label: "Total server error responses (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1591,8 +1593,8 @@ view: bucket_activity {
   }
 
   measure: total_server_error_responses_previous {
-    group_label: "Request Status"
-    label: "Total Server Error Responses (Previous Period)"
+    group_label: "Request status"
+    label: "Total server error responses (previous period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1613,8 +1615,8 @@ view: bucket_activity {
   }
 
   measure: total_success_responses_current {
-    group_label: "Request Status"
-    label: "Total Success Responses (Current Period)"
+    group_label: "Request status"
+    label: "Total success responses (current period)"
     type: sum
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -1631,8 +1633,8 @@ view: bucket_activity {
   }
 
   measure: total_success_responses_pop_change {
-    group_label: "Request Status"
-    label: "Total Success Responses (PoP Change)"
+    group_label: "Request status"
+    label: "Total success responses (PoP change)"
     type: number
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1655,8 +1657,8 @@ view: bucket_activity {
   }
 
   measure: total_success_responses_previous {
-    group_label: "Request Status"
-    label: "Total Success Responses (Previous Period)"
+    group_label: "Request status"
+    label: "Total success responses (previous period)"
     type: sum
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -1681,7 +1683,8 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   measure: maximum_data_egress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Maximum data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1698,7 +1701,8 @@ view: bucket_activity {
   }
 
   measure: maximum_data_ingress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Maximum data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1715,7 +1719,8 @@ view: bucket_activity {
   }
 
   measure: median_data_egress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Median data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1732,7 +1737,8 @@ view: bucket_activity {
   }
 
   measure: median_data_ingress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Median data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1749,7 +1755,8 @@ view: bucket_activity {
   }
 
   measure: minimum_data_egress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Minimum data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1767,6 +1774,7 @@ view: bucket_activity {
 
   measure: minimum_data_ingress_aid {
     group_label: "Data Transfer"
+    label: "Minimum data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1783,7 +1791,8 @@ view: bucket_activity {
   }
 
   measure: quarter_percentile_data_egress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Quarter percentile data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1800,7 +1809,8 @@ view: bucket_activity {
   }
 
   measure: quarter_percentile_data_ingress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Quarter percentile data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1817,7 +1827,8 @@ view: bucket_activity {
   }
 
   measure: three_quarter_percentile_data_egress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Three quarter percentile data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1834,7 +1845,8 @@ view: bucket_activity {
   }
 
   measure: three_quarter_percentile_data_ingress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Three quarter percentile data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1851,7 +1863,8 @@ view: bucket_activity {
   }
 
   measure: total_data_egress_aid {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1868,6 +1881,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress_aid {
+    group_label: "Data transfer"
+    label: "Total data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -1888,7 +1903,8 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_data_egress_aid_current {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress current (aid)"
     hidden: yes
     type: string
     sql:
@@ -1923,7 +1939,8 @@ view: bucket_activity {
   }
 
   measure: total_data_egress_aid_previous {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress previous (aid)"
     hidden: yes
     type: string
     sql:
@@ -1950,7 +1967,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress_aid_current {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress current (aid)"
     hidden: yes
     type: string
     sql:
@@ -1985,7 +2003,8 @@ view: bucket_activity {
   }
 
   measure: total_data_ingress_aid_previous {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress previous (aid)"
     hidden: yes
     type: string
     sql:
@@ -2016,8 +2035,8 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   filter: analysis_date_filter {
+    label: "Snapshot start range"
     type: date
-    label: "Snapshot Start Range"
     description: "Select the date range for analysis. The 'Previous Period' measure will automatically calculate based on this duration."
   }
 
@@ -2027,11 +2046,11 @@ view: bucket_activity {
 
   parameter: date_granularity {
     type: unquoted
-    label: "Date Granularity"
+    label: "Date granularity"
     description: "This parameter allows users to specify the desired snapshot start time granularity. The default measure for this parameter is Date and Hour."
 
     allowed_value: {
-      label: "Date and Hour"
+      label: "Date and hour"
       value: "date_hour"
     }
 
@@ -2041,12 +2060,12 @@ view: bucket_activity {
     }
 
     allowed_value: {
-      label: "Year Month"
+      label: "Year month"
       value: "year_month"
     }
 
     allowed_value: {
-      label: "Month Name"
+      label: "Month name"
       value: "month_name"
     }
 
@@ -2055,7 +2074,7 @@ view: bucket_activity {
 
   parameter: throughput_size_unit {
     type: unquoted
-    label: "Throughput Size Unit"
+    label: "Throughput size unit"
 
     allowed_value: {
       label: "PiB"
@@ -2096,75 +2115,75 @@ view: bucket_activity {
   # --------------------------------------------------------------------------------------------------------
 
   parameter: aggregate_function {
-    label: "Selected Metric"
+    label: "Selected metric"
     type: unquoted
     allowed_value: {
-      label: "Total 400 Error Responses"
+      label: "Total 400 error responses"
       value: "total_400_error_responses"
     }
 
     allowed_value: {
-      label: "Total 401 Error Responses"
+      label: "Total 401 error responses"
       value: "total_401_error_responses"
     }
 
     allowed_value: {
-      label: "Total 403 Error Responses"
+      label: "Total 403 error responses"
       value: "total_403_error_responses"
     }
 
     allowed_value: {
-      label: "Total 429 Error Responses"
+      label: "Total 429 error responses"
       value: "total_429_error_responses"
     }
 
     allowed_value: {
-      label: "Total Client Error Responses"
+      label: "Total client error responses"
       value: "total_client_error_responses"
     }
 
     allowed_value: {
-      label: "Total Data Egress"
+      label: "Total data egress"
       value: "total_data_egress"
     }
 
     allowed_value: {
-      label: "Total Data Ingress"
+      label: "Total data ingress"
       value: "total_data_ingress"
     }
 
     allowed_value: {
-      label: "Total Delete Requests"
+      label: "Total delete requests"
       value: "total_delete_requests"
     }
 
     allowed_value: {
-      label: "Total List Requests"
+      label: "Total list requests"
       value: "total_list_requests"
     }
 
     allowed_value: {
-      label: "Total Read Requests"
+      label: "Total read requests"
       value: "total_read_requests"
     }
 
     allowed_value: {
-      label: "Total Requests"
+      label: "Total requests"
       value: "total_requests"
     }
 
     allowed_value: {
-      label: "Total Server Error Responses"
+      label: "Total server error responses"
       value: "total_server_error_responses"
     }
 
     allowed_value: {
-      label: "Total Success Responses"
+      label: "Total success responses"
       value: "total_success_responses"
     }
 
     allowed_value: {
-      label: "Total Update Requests"
+      label: "Total update requests"
       value: "total_update_requests"
     }
 

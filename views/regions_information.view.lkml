@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Google Cloud Storage Regions catalog.
 # --------------------------------------------------------------------------
 view: regions_information {
@@ -139,7 +139,16 @@ view: regions_information {
         UNION ALL SELECT 'us-east4-b', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 39.045953, -77.487424, '39.045953, -77.487424'
         UNION ALL SELECT 'us-east4-c', 'Zone', 'United States', 'North America', '39.490678, -99.266138', 39.045953, -77.487424, '39.045953, -77.487424'
       )
-      SELECT * FROM regions_data ;;
+      SELECT
+        location,
+        location_type,
+        countries,
+        geographic_area,
+        geographic_area_coordinates,
+        latitude,
+        longitude,
+        location_coordinates
+      FROM regions_data ;;
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -147,6 +156,7 @@ view: regions_information {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: location {
+    label: "Location"
     primary_key: yes
     type: string
     sql: ${TABLE}.location ;;
@@ -158,11 +168,21 @@ view: regions_information {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: coordinates {
+    label: "Coordinates"
     type: location
     sql_latitude: ${latitude} ;;
     sql_longitude: ${longitude} ;;
     html: <span>{{ location._value }}</span> ;;
     description: "The set of coordinates for the region based on latitude and longitude."
+  }
+
+  dimension: countries {
+    label: "Countries (single)"
+    hidden: yes
+    type: string
+    sql: ${TABLE}.countries ;;
+    map_layer_name: single_countries
+    description: "The country or countries comprising the geographic scope of the region"
   }
 
   dimension: countries_union {
@@ -177,25 +197,18 @@ view: regions_information {
     description: "This field categorizes regions based on country membership within the European Union or the United States. Regions outside these unions retain their standard 'Countries' designation."
   }
 
-  dimension: countries {
-    hidden: yes
+  dimension: geographic_area {
+    label: "Geographic area"
     type: string
-    sql: ${TABLE}.countries ;;
-    map_layer_name: single_countries
-    description: "The country or countries comprising the geographic scope of the region"
+    sql: ${TABLE}.geographic_area ;;
+    map_layer_name: gcs_regions
+    description: "Geographic Area is derived from the bucket's location, adhering to Google Cloud Storage Single-Region location specifications. Available regions are categorized as: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa."
   }
 
   dimension: geographic_area_coordinates {
     type: string
     sql: ${TABLE}.geographic_area_coordinates ;;
     description: "This field represents the cartesian coordinate pair associated with the Geographic Area."
-  }
-
-  dimension: geographic_area {
-    type: string
-    sql: ${TABLE}.geographic_area ;;
-    map_layer_name: gcs_regions
-    description: "Geographic Area is derived from the bucket's location, adhering to Google Cloud Storage Single-Region location specifications. Available regions are categorized as: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa."
   }
 
   dimension: geographical_value {
@@ -211,24 +224,28 @@ view: regions_information {
   }
 
   dimension: latitude {
+    label: "Latitude"
     type: number
     sql: ${TABLE}.latitude ;;
     description: "The specific latitude of the region."
   }
 
   dimension: location_coordinates {
+    label: "Location coordinates"
     type: string
     sql: ${TABLE}.location_coordinates ;;
     description: "This field provides a string containing the concatenated latitude and longitude coordinates for each region."
   }
 
   dimension: location_type {
+    label: "Location type"
     type: string
     sql: ${TABLE}.location_type ;;
     description: "This field identifies the bucket's location type, classified as: Region (single), Dual-Region (two distinct regions), or Multi-Region (a pre-defined set of regions)."
   }
 
   dimension: longitude {
+    label: "Longitude"
     type: number
     sql: ${TABLE}.longitude ;;
     description: "The specific longitude of the region."
@@ -242,13 +259,14 @@ view: regions_information {
   }
 
   dimension: outside_usa {
-    label: "Is outside USA"
+    label: "Is outside USA?"
     type: yesno
     sql: ${countries_union} != 'United States' ;;
     description: "A boolean value specifying if the region's geographical location is external to the United States."
   }
 
   dimension: region {
+    label: "Region"
     type: string
     sql: ${TABLE}.location ;;
     map_layer_name: region_coordinates
@@ -256,6 +274,7 @@ view: regions_information {
   }
 
   dimension: selected_country {
+    label: "Selected country"
     type: string
     sql:
       CASE
@@ -272,6 +291,7 @@ view: regions_information {
   # --------------------------------------------------------------------------------------------------------
 
   measure: count {
+    label: "Total regions"
     type: count
     drill_fields: [detail*]
     description: "A measure that counts the total number of regions within the Google Cloud Storage (GCS) catalog."
@@ -282,6 +302,7 @@ view: regions_information {
   # --------------------------------------------------------------------------------------------------------
 
   parameter: country_options {
+    label: "Country options"
     type: string
     description: "Predefined values representing all single countries within the Google Cloud Storage (GCS) Regions catalog."
     default_value: "select"
@@ -433,6 +454,7 @@ view: regions_information {
   }
 
   parameter: map_selection {
+    label: "Map selection"
     type: unquoted
 
     allowed_value: {

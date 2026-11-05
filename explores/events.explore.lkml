@@ -2,14 +2,15 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 17, 2026
+# Modified Date: Nov 4, 2026
+# Purpose: Explore for Storage Intelligence dataset ingestion and system events.
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"
 
 explore: events {
   persist_with: storage_intelligence_activity_datagroup
-  description: "Injection event tracking for Storage Intelligence datasets. This view only includes events associated with valid geographic regions to ensure data integrity and regional reporting accuracy."
+  description: "System and ingestion event tracking for Storage Intelligence datasets, enriched with regional metadata to monitor snapshot generation, activity journals, and dataset readiness across locations."
 
   join: regions_information {
     type: left_outer

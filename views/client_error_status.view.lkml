@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: An unpivot helper view that generates a static list of 4xx error codes.
 #          Joined via CROSS JOIN to the main activity explores, it converts the separate
 #          count400/401/etc. columns into a single dimension ('Client Error Label'),
@@ -25,7 +25,7 @@ view: client_error_status {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: client_error_label {
-    label: "Client Error Label"
+    label: "Client error label"
     primary_key: yes
     type: string
     sql: ${TABLE}.client_error_label ;;

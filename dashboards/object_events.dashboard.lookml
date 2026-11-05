@@ -2,9 +2,11 @@
 - dashboard: object_events
   title: GCS Storage Intelligence - Object Events
   preferred_viewer: dashboards-next
+  style: modern
   description: ''
   preferred_slug: ROyzRVzdNgSQlRQ6oDhwEF
   theme_name: ''
+  layout_granularity: granular
   layout: newspaper
   tabs:
   - name: ''
@@ -13,6 +15,7 @@
   - name: ''
     type: text
     title_text: ''
+    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -34,13 +37,13 @@
       >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
       \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
-      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::error_and_events\"\
-      >Error & Events</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\n \
-      \     display: flex; \n      justify-content: center; \n      align-items: center;\n\
-      \      gap: 16px; \n      padding: 16px 0;\n      background-color: #fff;\n\
-      \  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n        text-decoration:\
-      \ none; \n        color: #5f6368; \n        font-weight: 500; \n        border-radius:\
-      \ 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::context_catalog\"\
+      >Context Catalog</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\n\
+      \      display: flex; \n      justify-content: center; \n      align-items:\
+      \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
+      \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
+      \ text-decoration: none; \n        color: #5f6368; \n        font-weight: 500;\
+      \ \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
       >Bucket Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n \
       \       text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::project_activity\"\
@@ -54,16 +57,16 @@
       >Bucket Region Activity</a>\n  </nav>\n\n</div>"
     row: 0
     col: 0
-    width: 24
-    height: 4
+    width: 72
+    height: 8
     tab_name: ''
   - type: button
-    name: button_371
+    name: button_454
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::bucket_region_activity"}'
-    row: 145
-    col: 21
-    width: 3
-    height: 2
+    row: 242
+    col: 63
+    width: 9
+    height: 4
     tab_name: ''
   - title: 'Total # of requests'
     name: 'Total # of requests'
@@ -89,18 +92,21 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the total volume of object-level API requests recorded in the event logs during the selected timeframe, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
-    row: 14
-    col: 2
-    width: 4
-    height: 2
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
+    row: 12
+    col: 6
+    width: 12
+    height: 4
     tab_name: ''
   - title: 95th Percentile processing time [ms]
     name: 95th Percentile processing time [ms]
@@ -122,22 +128,25 @@
     color_application:
       collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2
       palette_id: 5d189dfc-4f46-46f3-822b-bfb0b61777b1
-    single_value_title: P95 Latency [ms]
+    single_value_title: P95 latency [ms]
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the 95th percentile request processing latency in milliseconds across object-level operations, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
-    row: 14
-    col: 6
-    width: 4
-    height: 2
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
+    row: 12
+    col: 18
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total data egress
     name: Total data egress
@@ -163,19 +172,22 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the cumulative outbound data volume read from object-level operations during the selected period, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
-    row: 14
-    col: 10
-    width: 4
-    height: 2
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 12
+    col: 30
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total data ingress
     name: Total data ingress
@@ -201,19 +213,22 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the cumulative inbound data volume written by object-level operations during the selected period, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
-    row: 14
-    col: 14
-    width: 4
-    height: 2
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 12
+    col: 42
+    width: 12
+    height: 4
     tab_name: ''
   - title: 'Total # of success requests'
     name: 'Total # of success requests'
@@ -239,18 +254,21 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the total count of object-level API operations that returned a successful (HTTP 2xx) response status, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
-    row: 14
-    col: 18
-    width: 4
-    height: 2
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
+    row: 12
+    col: 54
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total errors
     name: Total errors
@@ -276,18 +294,21 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the combined count of object-level API operations that resulted in a client-side (4xx) or server-side (5xx) error, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
     row: 16
-    col: 4
-    width: 4
-    height: 2
+    col: 12
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total client errors
     name: Total client errors
@@ -313,18 +334,21 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the total count of object-level API requests that returned a client-side error (HTTP 4xx), alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
     row: 16
-    col: 8
-    width: 4
-    height: 2
+    col: 24
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total server errors
     name: Total server errors
@@ -350,18 +374,21 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the total count of object-level API requests that returned a server-side error (HTTP 5xx), alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
     row: 16
-    col: 12
-    width: 4
-    height: 2
+    col: 36
+    width: 12
+    height: 4
     tab_name: ''
   - title: Average latency (ms)
     name: Average latency (ms)
@@ -387,21 +414,24 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the mean request processing time in milliseconds across object-level API operations, alongside the period-over-period change.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.analysis_date_filter
+      1 - Request completion Time: object_events.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
     row: 16
-    col: 16
-    width: 4
-    height: 2
+    col: 48
+    width: 12
+    height: 4
     tab_name: ''
-  - title: Requests Over Time
-    name: Requests Over Time
+  - title: Requests over time
+    name: Requests over time
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_line
@@ -438,21 +468,25 @@
     interpolation: linear
     defaults_version: 1
     hidden_series: []
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the volume of mutation and upload operations (DELETE, PATCH, POST, and PUT requests) over time at the selected date granularity.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 69
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
+    row: 106
     col: 0
-    width: 24
-    height: 9
+    width: 72
+    height: 18
     tab_name: ''
-  - title: Top Prefixes by Selected Measure
-    name: Top Prefixes by Selected Measure
+  - title: Top prefixes by selected measure
+    name: Top prefixes by selected measure
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_grid
@@ -470,7 +504,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -478,6 +512,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -486,6 +521,19 @@
     series_cell_visualizations:
       object_events.selected_measure:
         is_active: false
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -512,24 +560,27 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Lists object prefixes ranked by the selected activity metric at the configured prefix depth to pinpoint high-traffic folder paths.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      10 - Prefix Depth: object_events.prefix_depth
-      9 - Selected Metric: object_events.aggregate_function
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 23
+      Activity breakdown - metric selection: object_events.aggregate_function
+      Prefix depth: object_events.prefix_depth
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 28
     col: 0
-    width: 24
-    height: 8
+    width: 72
+    height: 16
     tab_name: ''
-  - title: Top Buckets or Projects by Selected Metric
-    name: Top Buckets or Projects by Selected Metric
+  - title: Top buckets or projects by selected metric
+    name: Top buckets or projects by selected metric
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_bar
@@ -572,24 +623,28 @@
     series_colors:
       object_events.selected_measure: "#9FA8DA"
     defaults_version: 1
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Ranks the top buckets or projects according to the primary selected activity metric for comparative workload analysis.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      11 - Bucket or Project selector: object_events.bucket_project_selector
-      9 - Selected Metric: object_events.aggregate_function
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 95
+      Comparison - bucket or project selector: object_events.bucket_project_selector
+      Comparison - metric selection: object_events.aggregate_function
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 156
     col: 0
-    width: 12
-    height: 9
+    width: 36
+    height: 18
     tab_name: ''
-  - title: Top Projects or Buckets by Selected Metric
-    name: Top Projects or Buckets by Selected Metric
+  - title: Top projects or buckets by selected metric
+    name: Top projects or buckets by selected metric
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_bar
@@ -632,24 +687,28 @@
     series_colors:
       object_events.selected_measure: "#F06292"
     defaults_version: 1
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Ranks the top buckets or projects according to the secondary comparison metric for side-by-side correlation.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      11 - Bucket or Project selector: object_events.bucket_project_selector
-      12 - Comparison Selected Metric: object_events.aggregate_function
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 95
-    col: 12
-    width: 12
-    height: 9
+      Comparison - bucket or project selector: object_events.bucket_project_selector
+      Comparison - metric selection II: object_events.aggregate_function
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 156
+    col: 36
+    width: 36
+    height: 18
     tab_name: ''
-  - title: Top Distribution
-    name: Top Distribution
+  - title: Top distribution
+    name: Top distribution
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_pie
@@ -726,24 +785,28 @@
     defaults_version: 1
     hide_totals: false
     hide_row_totals: false
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the proportional breakdown of the selected activity metric across the chosen dimension (such as HTTP Method, Storage Class, or Location).
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      13 - Dimension Selector: object_events.dimension_selector
-      9 - Selected Metric: object_events.aggregate_function
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 33
+      Activity breakdown - metric selection II: object_events.aggregate_function
+      Activity breakdown - dimension selection: object_events.dimension_selector
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 48
     col: 0
-    width: 24
-    height: 10
+    width: 72
+    height: 20
     tab_name: ''
-  - title: Requests Status Over Time
-    name: Requests Status Over Time
+  - title: Requests status over time
+    name: Requests status over time
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_line
@@ -787,22 +850,25 @@
       object_events.total_success_requests: "#7CB342"
     defaults_version: 1
     hidden_pivots: {}
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Plots Successful Requests (2xx), Client Errors (4xx), and Server Errors (5xx) over time to correlate error spikes with overall request volume.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      9 - Selected Metric: object_events.aggregate_function
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 80
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      5 - Response status: object_events.response_status_string
+    row: 124
     col: 0
-    width: 24
-    height: 10
+    width: 72
+    height: 20
     tab_name: ''
-  - title: Created and Deleted Storage Size Over Time
-    name: Created and Deleted Storage Size Over Time
+  - title: Created and deleted storage size over time
+    name: Created and deleted storage size over time
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_line
@@ -854,22 +920,26 @@
       object_events.total_success_requests: "#7CB342"
     defaults_version: 1
     hidden_pivots: {}
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Compares the volume of newly created object storage against deleted object storage over time to track net data churn.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 54
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 82
     col: 0
-    width: 24
-    height: 10
+    width: 72
+    height: 20
     tab_name: ''
-  - title: Error Details
-    name: Error Details
+  - title: Error details
+    name: Error details
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_grid
@@ -887,7 +957,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -895,11 +965,25 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
     truncate_header: false
     minimum_column_width: 75
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -926,22 +1010,25 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Provides a granular event log of failed object requests, listing Request Completion Time, HTTP Method, Object Name, Response Status, and Error Reason.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      14 - Object Name: object_events.object_name
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 109
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      Object name: object_events.object_name
+      Error analysis - response status: object_events.response_status_string
+    row: 186
     col: 0
-    width: 24
-    height: 8
+    width: 72
+    height: 16
     tab_name: ''
-  - title: Top Error-Prone Objects
-    name: Top Error-Prone Objects
+  - title: Top error-prone objects
+    name: Top error-prone objects
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_grid
@@ -959,7 +1046,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -967,6 +1054,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -977,6 +1065,19 @@
     series_cell_visualizations:
       object_events.total_requests:
         is_active: false
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     series_value_format:
       object_events.total_requests:
         name: id
@@ -1008,21 +1109,24 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Identifies the specific objects and buckets experiencing the highest count of failed requests by HTTP Response Status.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 119
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      Error analysis - response status: object_events.response_status_string
+    row: 202
     col: 0
-    width: 24
-    height: 8
+    width: 72
+    height: 16
     tab_name: ''
-  - title: Top 429 Error Reasons
-    name: Top 429 Error Reasons
+  - title: Top 429 error reasons
+    name: Top 429 error reasons
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_grid
@@ -1047,6 +1151,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -1061,6 +1166,19 @@
           custom_colors:
           - "#E1BEE7"
           - "#6A1B9A"
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     series_value_format:
       object_events.total_requests:
         name: id
@@ -1092,21 +1210,23 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Breaks down HTTP 429 (Too Many Requests) throttling events by their specific Error Reason and total request count.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 129
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+    row: 218
     col: 0
-    width: 24
-    height: 4
+    width: 72
+    height: 8
     tab_name: ''
-  - title: Created and Deleted Objects Request Information
-    name: Created and Deleted Objects Request Information
+  - title: Created and deleted objects request information
+    name: Created and deleted objects request information
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_grid
@@ -1133,6 +1253,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -1141,6 +1262,19 @@
     series_cell_visualizations:
       object_events.total_storage_size:
         is_active: false
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -1167,22 +1301,25 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Lists individual object creation and deletion events with Bucket Name, Object Name, Location, Request Completion Time, HTTP Method, Total Storage Size, and Response Status.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      8 - Size Unit: object_events.size_unit
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 45
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+      8 - Size unit: object_events.size_unit
+      5 - Response status: object_events.response_status_string
+    row: 68
     col: 0
-    width: 24
-    height: 7
+    width: 72
+    height: 14
     tab_name: ''
-  - title: Total 429 Errors Trend
-    name: Total 429 Errors Trend
+  - title: Total 429 errors trend
+    name: Total 429 errors trend
     model: gcs_storage_intelligence
     explore: object_events
     type: looker_line
@@ -1226,741 +1363,211 @@
       object_events.total_too_many_requests_errors: "#EA4335"
     defaults_version: 1
     hidden_pivots: {}
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: Tracks the trend of HTTP 429 (Too Many Requests) rate-limiting errors over time to identify throttling windows.
     listen:
-      2 - Project Name: project_attributes.project_name
-      3 - Bucket Name: object_events.bucket_name
-      5 - Response Status: object_events.response_status
       6 - Location: object_events.location
-      7 - Storage Class: object_events.storage_class
-      4 - HTTP Method: object_events.request_http_method
-      1 - Request Completion Time: object_events.request_completion_time
-    row: 135
+      1 - Request completion Time: object_events.request_completion_time
+      2 - Project name: project_attributes.project_name
+      3 - Bucket name: object_events.bucket_name
+      4 - HTTP method: object_events.request_http_method
+      7 - Storage class: object_events.storage_class
+    row: 226
     col: 0
-    width: 24
-    height: 8
+    width: 72
+    height: 16
     tab_name: ''
   - type: button
-    name: button_393
+    name: button_476
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::project_activity"}'
-    row: 145
+    row: 242
     col: 0
-    width: 3
-    height: 2
+    width: 9
+    height: 4
     tab_name: ''
   - name: " (2)"
     type: text
     title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n       padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Key Performance Indicators (KPIs)</span>\n</div>"
-    row: 11
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Key performance indicators (KPIs)
+      </div>
+    row: 8
     col: 0
-    width: 24
-    height: 3
+    width: 72
+    height: 4
     tab_name: ''
   - name: " (3)"
     type: text
     title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
-      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
-      \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
-      \ 0 1px 3px 1px rgba(60,64,67,0.15);\n    margin-bottom: 20px;\n\">\n\n  <div\
-      \ style=\"\n      display: flex; \n      align-items: center; \n      gap: 32px;\
-      \ \n      margin-bottom: 30px; \n      border-bottom: 1px solid #f1f3f4; \n\
-      \      padding-bottom: 20px;\n  \">\n    <svg style=\"color: #1a73e8; width:\
-      \ 32px; height: 32px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     \
-      \   <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n    </svg>\n\
-      \    \n    <span style=\"font-size: 22px; font-weight: 500; color: #202124;\"\
-      >Filter Applicability Guide</span>\n    \n    <span style=\"font-size: 13px;\
-      \ color: #5f6368; margin-left: auto;\">Refer to the numbers on each chart to\
-      \ see which filters apply</span>\n  </div>\n\n  <div style=\"\n      display:\
-      \ flex; \n      flex-wrap: wrap; \n      gap: 24px; \n      font-size: 14px;\
-      \ \n      color: #3c4043;\n  \">\n\n    <div style=\"display: flex; align-items:\
-      \ center; gap: 16px; width: 280px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #e8f0fe; color: #1967d2; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">1</span>\n      <span style=\"font-size: 16px;\">Request Completion\
-      \ Time</span>\n    </div>\n\n    <div style=\"display: flex; align-items: center;\
-      \ gap: 16px; width: 280px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #fce8e6; color: #c5221f; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">2</span>\n      <span style=\"font-size: 16px;\">Project Name</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 280px;\">\n      <span style=\"flex-shrink: 0; background: #fef7e0;\
-      \ color: #f09d00; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >3</span>\n      <span style=\"font-size: 16px;\">Bucket Name</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e6f4ea; color: #137333;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">4</span>\n\
-      \      <span style=\"font-size: 16px;\">HTTP Method</span>\n    </div>\n\n \
-      \   <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e8f0fe; color: #1967d2;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">5</span>\n\
-      \      <span style=\"font-size: 16px;\">Response Status</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fce8e6; color: #c5221f;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">6</span>\n\
-      \      <span style=\"font-size: 16px;\">Location</span>\n    </div>\n\n    <div\
-      \ style=\"display: flex; align-items: center; gap: 16px; width: 280px;\">\n\
-      \      <span style=\"flex-shrink: 0; background: #fef7e0; color: #f09d00; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">7</span>\n      <span\
-      \ style=\"font-size: 16px;\">Storage Class</span>\n    </div>\n\n    <div style=\"\
-      display: flex; align-items: center; gap: 16px; width: 280px;\">\n      <span\
-      \ style=\"flex-shrink: 0; background: #e6f4ea; color: #137333; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">8</span>\n      <span\
-      \ style=\"font-size: 16px;\">Size Unit</span>\n    </div>\n\n    <div style=\"\
-      display: flex; align-items: center; gap: 16px; width: 280px;\">\n      <span\
-      \ style=\"flex-shrink: 0; background: #e8f0fe; color: #1967d2; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">9</span>\n      <span\
-      \ style=\"font-size: 16px;\">Selected Metric</span>\n    </div>\n\n    <div\
-      \ style=\"display: flex; align-items: center; gap: 16px; width: 280px;\">\n\
-      \      <span style=\"flex-shrink: 0; background: #fce8e6; color: #c5221f; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">10</span>\n      <span\
-      \ style=\"font-size: 16px;\">Prefix Depth</span>\n    </div>\n\n    <div style=\"\
-      display: flex; align-items: center; gap: 16px; width: 280px;\">\n      <span\
-      \ style=\"flex-shrink: 0; background: #fef7e0; color: #f09d00; font-weight:\
-      \ 700; font-size: 16px; height: 40px; width: 40px; border-radius: 50%; display:\
-      \ flex; align-items: center; justify-content: center;\">11</span>\n      <span\
-      \ style=\"font-size: 16px;\">Bucket or Project selector</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e6f4ea; color: #137333;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">12</span>\n\
-      \      <span style=\"font-size: 16px;\">Comparison Selected Metric</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 280px;\">\n      <span style=\"flex-shrink: 0; background: #e8f0fe;\
-      \ color: #1967d2; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >13</span>\n      <span style=\"font-size: 16px;\">Dimension Selector</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 280px;\">\n      <span style=\"flex-shrink: 0; background: #fce8e6;\
-      \ color: #c5221f; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >14</span>\n      <span style=\"font-size: 16px;\">Object Name</span>\n    </div>\n\
-      \n  </div>\n</div>"
-    row: 4
-    col: 0
-    width: 24
-    height: 7
-    tab_name: ''
-  - name: " (4)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n</div>"
-    row: 18
-    col: 17
-    width: 7
-    height: 2
-    tab_name: ''
-  - name: " (5)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Activity Breakdown</span>\n</div>"
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Activity breakdown
+      </div>
     row: 20
     col: 0
-    width: 24
-    height: 3
+    width: 72
+    height: 4
     tab_name: ''
   - name: " "
     type: text
     title_text: " "
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px\
-      \ 0; \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px;\
-      \ height: 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24\
-      \ 24\">\n     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52\
-      \ 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Activity & Performance Trends</span>\n</div>"
-    row: 66
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+         Activity performance trends
+      </div>
+    row: 102
     col: 0
-    width: 24
-    height: 3
+    width: 72
+    height: 4
+    tab_name: ''
+  - name: " (4)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Error Analysis
+      </div>
+    row: 174
+    col: 0
+    width: 72
+    height: 4
+    tab_name: ''
+  - name: " (5)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Comparison
+      </div>
+    row: 144
+    col: 0
+    width: 72
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Activity breakdown - metric selection
+    row: 24
+    col: 0
+    width: 12
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Prefix depth
+    row: 24
+    col: 12
+    width: 12
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Activity breakdown - dimension selection
+    row: 44
+    col: 16
+    width: 15
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Activity breakdown - metric selection II
+    row: 44
+    col: 0
+    width: 15
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Comparison - bucket or project selector
+    row: 148
+    col: 0
+    width: 14
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Comparison - metric selection II
+    row: 152
+    col: 36
+    width: 12
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Comparison - metric selection
+    row: 152
+    col: 0
+    width: 12
+    height: 4
     tab_name: ''
   - name: " (6)"
     type: text
     title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">9</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">10</div>\n\n</div>"
-    row: 31
-    col: 17
-    width: 7
-    height: 2
-    tab_name: ''
-  - name: " (7)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">9</div>\n\n  <div style=\"\n    background: #e8f0fe; \n    color:\
-      \ #1967d2; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">13</div>\n\n</div>"
-    row: 43
-    col: 17
-    width: 7
-    height: 2
-    tab_name: ''
-  - name: " (8)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n</div>"
-    row: 52
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (9)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Error Analysis</span>\n</div>"
-    row: 106
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (10)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n</div>"
-    row: 64
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (11)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 78
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (12)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Comparison</span>\n</div>"
-    row: 92
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (13)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 90
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (14)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">9</div>\n\n  <div style=\"\n    background: #fef7e0; \n    color:\
-      \ #f09d00; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">11</div>\n\n</div>"
-    row: 104
-    col: 5
-    width: 7
-    height: 2
-    tab_name: ''
-  - name: " (15)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">8</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">11</div>\n\n  <div style=\"\n    background: #e6f4ea; \n   \
-      \ color: #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height:\
-      \ 32px; \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n\
-      \    align-items: center; \n    justify-content: center;\n  \">12</div>\n\n\
-      </div>"
-    row: 104
-    col: 17
-    width: 7
-    height: 2
-    tab_name: ''
-  - name: " (16)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">14</div>\n\n</div>"
-    row: 117
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (17)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 127
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (18)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 143
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (19)"
-    type: text
-    title_text: ''
+    subtitle_text: ''
     body_text: ''
-    row: 143
-    col: 0
-    width: 18
-    height: 2
-    tab_name: ''
-  - name: " (20)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 133
+    row: 148
     col: 18
-    width: 6
-    height: 2
+    width: 52
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Object name
+    row: 182
+    col: 2
+    width: 10
+    height: 4
+    tab_name: ''
+  - type: filter
+    name: Error analysis - response status
+    row: 178
+    col: 0
+    width: 12
+    height: 4
     tab_name: ''
   filters:
-  - name: 1 - Request Completion Time
-    title: 1 - Request Completion Time
+  - name: 1 - Request completion Time
+    title: 1 - Request completion Time
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1968,13 +1575,12 @@
     ui_config:
       type: advanced
       display: popover
-      options: []
     model: gcs_storage_intelligence
     explore: object_events
     listens_to_filters: []
     field: object_events.request_completion_time
-  - name: 2 - Project Name
-    title: 2 - Project Name
+  - name: 2 - Project name
+    title: 2 - Project name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1986,8 +1592,8 @@
     explore: object_events
     listens_to_filters: []
     field: project_attributes.project_name
-  - name: 3 - Bucket Name
-    title: 3 - Bucket Name
+  - name: 3 - Bucket name
+    title: 3 - Bucket name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1999,8 +1605,8 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.bucket_name
-  - name: 4 - HTTP Method
-    title: 4 - HTTP Method
+  - name: 4 - HTTP method
+    title: 4 - HTTP method
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -2012,20 +1618,24 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.request_http_method
-  - name: 5 - Response Status
-    title: 5 - Response Status
+  - name: 5 - Response status
+    title: 5 - Response status
     type: field_filter
     default_value: ''
-    allow_multiple_values: false
+    allow_multiple_values: true
     required: false
     ui_config:
       type: advanced
       display: popover
-      options: []
+      options:
+      - match
+      - "!match"
+      - startsWith
+      - endsWith
     model: gcs_storage_intelligence
     explore: object_events
     listens_to_filters: []
-    field: object_events.response_status
+    field: object_events.response_status_string
   - name: 6 - Location
     title: 6 - Location
     type: field_filter
@@ -2039,8 +1649,8 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.location
-  - name: 7 - Storage Class
-    title: 7 - Storage Class
+  - name: 7 - Storage class
+    title: 7 - Storage class
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -2052,8 +1662,8 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.storage_class
-  - name: 8 - Size Unit
-    title: 8 - Size Unit
+  - name: 8 - Size unit
+    title: 8 - Size unit
     type: field_filter
     default_value: GiB
     allow_multiple_values: true
@@ -2065,8 +1675,8 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.size_unit
-  - name: 9 - Selected Metric
-    title: 9 - Selected Metric
+  - name: Activity breakdown - metric selection
+    title: Activity breakdown - metric selection
     type: field_filter
     default_value: total^_requests
     allow_multiple_values: true
@@ -2078,8 +1688,8 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.aggregate_function
-  - name: 10 - Prefix Depth
-    title: 10 - Prefix Depth
+  - name: Prefix depth
+    title: Prefix depth
     type: field_filter
     default_value: full^_prefix
     allow_multiple_values: true
@@ -2091,23 +1701,10 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.prefix_depth
-  - name: 11 - Bucket or Project selector
-    title: 11 - Bucket or Project selector
+  - name: Activity breakdown - metric selection II
+    title: Activity breakdown - metric selection II
     type: field_filter
-    default_value: bucket
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: dropdown_menu
-      display: inline
-    model: gcs_storage_intelligence
-    explore: object_events
-    listens_to_filters: []
-    field: object_events.bucket_project_selector
-  - name: 12 - Comparison Selected Metric
-    title: 12 - Comparison Selected Metric
-    type: field_filter
-    default_value: total^_errors
+    default_value: total^_requests
     allow_multiple_values: true
     required: false
     ui_config:
@@ -2117,8 +1714,8 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.aggregate_function
-  - name: 13 - Dimension Selector
-    title: 13 - Dimension Selector
+  - name: Activity breakdown - dimension selection
+    title: Activity breakdown - dimension selection
     type: field_filter
     default_value: http^_method
     allow_multiple_values: true
@@ -2130,8 +1727,47 @@
     explore: object_events
     listens_to_filters: []
     field: object_events.dimension_selector
-  - name: 14 - Object Name
-    title: 14 - Object Name
+  - name: Comparison - bucket or project selector
+    title: Comparison - bucket or project selector
+    type: field_filter
+    default_value: bucket
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: object_events
+    listens_to_filters: []
+    field: object_events.bucket_project_selector
+  - name: Comparison - metric selection
+    title: Comparison - metric selection
+    type: field_filter
+    default_value: total^_requests
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: object_events
+    listens_to_filters: []
+    field: object_events.aggregate_function
+  - name: Comparison - metric selection II
+    title: Comparison - metric selection II
+    type: field_filter
+    default_value: total^_requests
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: object_events
+    listens_to_filters: []
+    field: object_events.aggregate_function
+  - name: Object name
+    title: Object name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -2139,7 +1775,41 @@
     ui_config:
       type: advanced
       display: popover
+      options:
+      - match
+      - "!match"
+      - contains
+      - "!contains"
+      - startsWith
+      - "!startsWith"
+      - endsWith
+      - "!endsWith"
+      - blank
+      - "!blank"
+      - 'null'
     model: gcs_storage_intelligence
     explore: object_events
     listens_to_filters: []
     field: object_events.object_name
+  - name: Error analysis - response status
+    title: Error analysis - response status
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+      options:
+      - '400'
+      - '401'
+      - '403'
+      - '404'
+      - '429'
+      - '500'
+      - '502'
+      - '503'
+    model: gcs_storage_intelligence
+    explore: object_events
+    listens_to_filters: []
+    field: object_events.response_status_string

@@ -2,9 +2,11 @@
 - dashboard: bucket_region_activity
   title: GCS Storage Intelligence - Bucket Region Activity
   preferred_viewer: dashboards-next
+  style: modern
   description: ''
   preferred_slug: 03XYfpAg6gzvI7yv3hFKas
   theme_name: ''
+  layout_granularity: granular
   layout: newspaper
   tabs:
   - name: ''
@@ -13,6 +15,7 @@
   - name: ''
     type: text
     title_text: ''
+    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -34,13 +37,13 @@
       >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
       \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
-      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::error_and_events\"\
-      >Error & Events</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\n \
-      \     display: flex; \n      justify-content: center; \n      align-items: center;\n\
-      \      gap: 16px; \n      padding: 16px 0;\n      background-color: #fff;\n\
-      \  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n        text-decoration:\
-      \ none; \n        color: #5f6368; \n        font-weight: 500; \n        border-radius:\
-      \ 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::context_catalog\"\
+      >Context Catalog</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\n\
+      \      display: flex; \n      justify-content: center; \n      align-items:\
+      \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
+      \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
+      \ text-decoration: none; \n        color: #5f6368; \n        font-weight: 500;\
+      \ \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
       >Bucket Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n \
       \       text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500; \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::project_activity\"\
@@ -54,8 +57,8 @@
       \  </nav>\n\n</div>"
     row: 0
     col: 0
-    width: 24
-    height: 4
+    width: 72
+    height: 8
     tab_name: ''
   - title: 'Total # of buckets'
     name: 'Total # of buckets'
@@ -81,16 +84,19 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the count of unique storage buckets with recorded regional activity during the selected period, alongside the period-over-period change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
       1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
-    row: 10
-    col: 2
-    width: 5
-    height: 2
+    row: 8
+    col: 6
+    width: 15
+    height: 4
     tab_name: ''
   - title: 'Total # of requested regions'
     name: 'Total # of requested regions'
@@ -113,16 +119,19 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the count of distinct Google Cloud regions from which requests originated against the selected buckets, alongside the period-over-period change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
       4 - Source Location: bucket_region_activity.bucket_location
       5 - Request Location: bucket_region_activity.request_location
       1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
-    row: 10
-    col: 7
-    width: 5
-    height: 2
+    row: 8
+    col: 21
+    width: 15
+    height: 4
     tab_name: ''
   - title: Total data egress
     name: Total data egress
@@ -148,6 +157,9 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the total volume of outbound data read from buckets across regional request paths during the selected period, alongside the period-over-period change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -155,10 +167,10 @@
       5 - Request Location: bucket_region_activity.request_location
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
       1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
-    row: 10
-    col: 12
-    width: 5
-    height: 2
+    row: 8
+    col: 36
+    width: 15
+    height: 4
     tab_name: ''
   - title: Total data ingress
     name: Total data ingress
@@ -181,6 +193,9 @@
     smart_single_value_size: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Displays the total volume of inbound data written to buckets across regional request paths during the selected period, alongside the period-over-period change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -188,10 +203,10 @@
       5 - Request Location: bucket_region_activity.request_location
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
       1 - Snapshot Start Time: bucket_region_activity.analysis_date_filter
-    row: 10
-    col: 17
-    width: 5
-    height: 2
+    row: 8
+    col: 51
+    width: 15
+    height: 4
     tab_name: ''
   - title: Data Flow by Bucket and Request Location
     name: Data Flow by Bucket and Request Location
@@ -251,6 +266,9 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: A Sankey flow diagram mapping traffic between the physical Bucket Location and the originating Request Location for the selected activity metric, highlighting cross-region data transfer patterns.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -259,10 +277,10 @@
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
       7 - Selected Metric: bucket_region_activity.aggregate_function
       1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
-    row: 14
+    row: 12
     col: 0
-    width: 24
-    height: 15
+    width: 72
+    height: 30
     tab_name: ''
   - title: Bucket Region Traffic Distribution
     name: Bucket Region Traffic Distribution
@@ -286,7 +304,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: white
+    table_theme: modern
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -342,6 +360,10 @@
     totals_color: "#808080"
     defaults_version: 1
     hidden_pivots: {}
+    modern2026: true
+    note_state: collapsed
+    note_display: hover
+    note_text: A granular breakdown of regional bucket traffic by Bucket Name, Project, Bucket Location, and Request Location. Contrasts the regional metric and traffic percentage against total bucket activity to pinpoint cross-region egress hotspots.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -350,192 +372,18 @@
       6 - Throughput Size Unit: bucket_region_activity.throughput_size_unit
       7 - Selected Metric: bucket_region_activity.aggregate_function
       1 - Snapshot Start Time: bucket_region_activity.snapshot_start_time
-    row: 31
-    col: 0
-    width: 24
-    height: 9
-    tab_name: ''
-  - type: button
-    name: button_421
-    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::object_events"}'
     row: 42
     col: 0
-    width: 3
-    height: 2
+    width: 72
+    height: 18
     tab_name: ''
-  - name: " (2)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
-      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
-      \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
-      \ 0 1px 3px 1px rgba(60,64,67,0.15);\n    margin-bottom: 20px;\n\">\n\n  <div\
-      \ style=\"\n      display: flex; \n      align-items: center; \n      gap: 32px;\
-      \ \n      margin-bottom: 30px; \n      border-bottom: 1px solid #f1f3f4; \n\
-      \      padding-bottom: 20px;\n  \">\n    <svg style=\"color: #1a73e8; width:\
-      \ 32px; height: 32px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     \
-      \   <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n    </svg>\n\
-      \    \n    <span style=\"font-size: 22px; font-weight: 500; color: #202124;\"\
-      >Filter Applicability Guide</span>\n    \n    <span style=\"font-size: 13px;\
-      \ color: #5f6368; margin-left: auto;\">Refer to the numbers on each chart to\
-      \ see which filters apply</span>\n  </div>\n\n  <div style=\"\n      display:\
-      \ flex; \n      flex-wrap: wrap; \n      gap: 24px; \n      font-size: 14px;\
-      \ \n      color: #3c4043;\n  \">\n\n    <div style=\"display: flex; align-items:\
-      \ center; gap: 16px; width: 280px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #e8f0fe; color: #1967d2; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">1</span>\n      <span style=\"font-size: 16px;\">Snapshot Start\
-      \ Time</span>\n    </div>\n\n    <div style=\"display: flex; align-items: center;\
-      \ gap: 16px; width: 280px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #fce8e6; color: #c5221f; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">2</span>\n      <span style=\"font-size: 16px;\">Project Name</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 280px;\">\n      <span style=\"flex-shrink: 0; background: #fef7e0;\
-      \ color: #f09d00; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >3</span>\n      <span style=\"font-size: 16px;\">Bucket Name</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e6f4ea; color: #137333;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">4</span>\n\
-      \      <span style=\"font-size: 16px;\">Source Location</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #e8f0fe; color: #1967d2;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">5</span>\n\
-      \      <span style=\"font-size: 16px;\">Request Location</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fce8e6; color: #c5221f;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">6</span>\n\
-      \      <span style=\"font-size: 16px;\">Throughput Size Unit</span>\n    </div>\n\
-      \n    <div style=\"display: flex; align-items: center; gap: 16px; width: 280px;\"\
-      >\n      <span style=\"flex-shrink: 0; background: #fef7e0; color: #f09d00;\
-      \ font-weight: 700; font-size: 16px; height: 40px; width: 40px; border-radius:\
-      \ 50%; display: flex; align-items: center; justify-content: center;\">7</span>\n\
-      \      <span style=\"font-size: 16px;\">Selected Metric</span>\n    </div>\n\
-      \n  </div>\n</div>"
-    row: 4
+  - type: button
+    name: button_517
+    rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::object_events"}'
+    row: 60
     col: 0
-    width: 24
-    height: 6
-    tab_name: ''
-  - name: " (3)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n</div>"
-    row: 12
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (4)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 29
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (5)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n    flex-wrap: wrap;\n\">\n  \n  <span style=\"\
-      font-size: 13px; color: #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\
-      \n  <div style=\"\n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight:\
-      \ 700; \n    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">6</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">7</div>\n\n</div>"
-    row: 40
-    col: 18
-    width: 6
-    height: 2
-    tab_name: ''
-  - name: " (6)"
-    type: text
-    title_text: ''
-    body_text: ''
-    row: 40
-    col: 0
-    width: 18
-    height: 2
+    width: 9
+    height: 4
     tab_name: ''
   filters:
   - name: 1 - Snapshot Start Time

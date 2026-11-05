@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: A Dynamic Derived Table that calculates the total ingress/egress per bucket
 #          based on the user's selected timeframe. Used as a source for "Percent of Total"
 #          calculations in the Bucket Region Activity Explore.
@@ -32,6 +32,7 @@ view: bucket_totals_summary {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_name {
+    label: "Bucket name"
     primary_key: yes
     hidden: yes
     sql: ${TABLE}.bucket_name ;;
@@ -41,50 +42,6 @@ view: bucket_totals_summary {
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Dimensions -------------------------------
   # --------------------------------------------------------------------------------------------------------
-
-  dimension: total_egress_bytes {
-    hidden: yes
-    type: number
-    sql:
-      {% if bucket_region_activity.throughput_size_unit._parameter_value == "PiB" %}
-        ${TABLE}.total_egress_bytes / POW(1024, 5)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "TiB" %}
-        ${TABLE}.total_egress_bytes / POW(1024, 4)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "GiB" %}
-        ${TABLE}.total_egress_bytes / POW(1024, 3)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "MiB" %}
-        ${TABLE}.total_egress_bytes / POW(1024, 2)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
-        ${TABLE}.total_egress_bytes / 1024
-      {% else %}
-        ${TABLE}.total_egress_bytes
-      {% endif %}
-    ;;
-    html: <span>{{ total_egress_bytes_aid._value }}</span>;;
-    description: "The total volume of data egress (outbound traffic) for the entire bucket within the selected timeframe. This aggregated value serves as the denominator for calculating percentage shares of traffic by location."
-  }
-
-  dimension: total_ingress_bytes {
-    hidden: yes
-    type: number
-    sql:
-      {% if bucket_region_activity.throughput_size_unit._parameter_value == "PiB" %}
-        ${TABLE}.total_ingress_bytes / POW(1024, 5)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "TiB" %}
-        ${TABLE}.total_ingress_bytes / POW(1024, 4)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "GiB" %}
-        ${TABLE}.total_ingress_bytes / POW(1024, 3)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "MiB" %}
-        ${TABLE}.total_ingress_bytes / POW(1024, 2)
-      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
-        ${TABLE}.total_ingress_bytes / 1024
-      {% else %}
-        ${TABLE}.total_ingress_bytes
-      {% endif %}
-    ;;
-    html: <span>{{ total_ingress_bytes_aid._value }}</span>;;
-    description: "The total volume of data ingress (inbound traffic) for the entire bucket within the selected timeframe. This aggregated value serves as the denominator for calculating percentage shares of traffic by location."
-  }
 
   dimension: selected_total {
     hidden: yes
@@ -108,11 +65,58 @@ view: bucket_totals_summary {
     description: "Dynamically selects the total bucket volume (Ingress or Egress) based on the user's parameter selection. This value serves as the denominator for the 'Traffic Percent' calculation."
   }
 
+  dimension: total_egress_bytes {
+    label: "Total data egress (bytes)"
+    hidden: yes
+    type: number
+    sql:
+      {% if bucket_region_activity.throughput_size_unit._parameter_value == "PiB" %}
+        ${TABLE}.total_egress_bytes / POW(1024, 5)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "TiB" %}
+        ${TABLE}.total_egress_bytes / POW(1024, 4)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "GiB" %}
+        ${TABLE}.total_egress_bytes / POW(1024, 3)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "MiB" %}
+        ${TABLE}.total_egress_bytes / POW(1024, 2)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
+        ${TABLE}.total_egress_bytes / 1024
+      {% else %}
+        ${TABLE}.total_egress_bytes
+      {% endif %}
+    ;;
+    html: <span>{{ total_egress_bytes_aid._value }}</span>;;
+    description: "The total volume of data egress (outbound traffic) for the entire bucket within the selected timeframe. This aggregated value serves as the denominator for calculating percentage shares of traffic by location."
+  }
+
+  dimension: total_ingress_bytes {
+    label: "Total data ingress (bytes)"
+    hidden: yes
+    type: number
+    sql:
+      {% if bucket_region_activity.throughput_size_unit._parameter_value == "PiB" %}
+        ${TABLE}.total_ingress_bytes / POW(1024, 5)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "TiB" %}
+        ${TABLE}.total_ingress_bytes / POW(1024, 4)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "GiB" %}
+        ${TABLE}.total_ingress_bytes / POW(1024, 3)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "MiB" %}
+        ${TABLE}.total_ingress_bytes / POW(1024, 2)
+      {% elsif bucket_region_activity.throughput_size_unit._parameter_value == "KiB" %}
+        ${TABLE}.total_ingress_bytes / 1024
+      {% else %}
+        ${TABLE}.total_ingress_bytes
+      {% endif %}
+    ;;
+    html: <span>{{ total_ingress_bytes_aid._value }}</span>;;
+    description: "The total volume of data ingress (inbound traffic) for the entire bucket within the selected timeframe. This aggregated value serves as the denominator for calculating percentage shares of traffic by location."
+  }
+
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Aid Dimensions -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
   dimension: total_egress_bytes_aid {
+    label: "Total data egress (bytes) - (aid)"
     hidden: yes
     type: string
     sql:
@@ -129,6 +133,7 @@ view: bucket_totals_summary {
   }
 
   dimension: total_ingress_bytes_aid {
+    label: "Total data ingress (bytes) - (aid)"
     hidden: yes
     type: string
     sql:
@@ -170,7 +175,7 @@ view: bucket_totals_summary {
   }
 
   measure: total_data_egress {
-    label: "Total Data Egress"
+    label: "Total data egress"
     type: sum
     sql:
       {% if bucket_region_activity.throughput_size_unit._parameter_value == "PiB" %}
@@ -192,7 +197,7 @@ view: bucket_totals_summary {
   }
 
   measure: total_data_ingress{
-    label: "Total Data Ingress"
+    label: "Total data ingress"
     type: sum
     sql:
       {% if bucket_region_activity.throughput_size_unit._parameter_value == "PiB" %}
@@ -218,6 +223,7 @@ view: bucket_totals_summary {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_data_egress_aid {
+    label: "Total data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -241,6 +247,7 @@ view: bucket_totals_summary {
   }
 
   measure: total_data_ingress_aid {
+    label: "Total data ingress (aid)"
     hidden: yes
     type: string
     sql:
