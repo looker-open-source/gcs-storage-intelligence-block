@@ -3,6 +3,7 @@
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
 # Modified Date: Feb 17, 2026
+# Purpose: Explore for latest object-level inventory, storage classes, and security insights.
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"

@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Bucket Attributes Latest Snapshot View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -15,6 +15,7 @@ view: bucket_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -34,23 +35,31 @@ view: bucket_attributes {
   # ---------------------------- Dimensions -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
+  dimension: bucket_allowed_encryptions {
+    label: "Bucket allowed encryptions"
+    type: string
+    sql: ARRAY_TO_STRING(${TABLE}.enforcedEncryptionAllowedTypes, ' ') ;;
+    description: "A comma-separated list representing the encryption types allowed on the Cloud Storage bucket (e.g., GMEK, CMEK, CSEK) as part of its encryption enforcement configuration."
+  }
+
   dimension: bucket_name {
+    label: "Bucket name"
     type: string
     sql: ${TABLE}.name ;;
     description: "The name of the Google Cloud Storage (GCS) bucket from which data is being sourced."
   }
 
   dimension: bucket_policy_only {
-    group_label: "Public"
     hidden: yes
-    label: "Has Bucket Policy Only Restrictions?"
+    group_label: "Public"
+    label: "Has bucket policy only restrictions?"
     type: yesno
     sql: ${TABLE}.public.bucketPolicyOnly ;;
     description: "A boolean value indicating whether the bucket enforces IAM bucket policy only restrictions."
   }
 
   dimension: bucket_total_size {
-    label: "Bucket Total Size"
+    label: "Bucket total size"
     type: number
     hidden: no
     sql:
@@ -72,42 +81,60 @@ view: bucket_attributes {
     description: "The calculated total storage size of the bucket. The value is dynamically converted to the unit selected in the 'Size Unit' parameter (KiB, MiB, GiB, TiB, PiB)."
   }
 
+  dimension: default_encryption_type {
+    label: "Default encryption type (default)"
+    hidden: yes
+    type: string
+    sql: ${TABLE}.defaultEncryptionType ;;
+    description: "The default type of encryption applied to the bucket."
+  }
+
   dimension: enabled {
     group_label: "Autoclass"
-    label: "Is Enabled"
+    label: "Is autoclass enabled?"
     type: yesno
     sql: ${TABLE}.autoclass.enabled ;;
     description: "Indicates whether Autoclass is active on the bucket. When true, Google Cloud automatically transitions objects to appropriate storage classes (e.g., Standard to Nearline/Coldline) based on their last access time to optimize costs."
   }
 
   dimension: lifecycle {
-    label: "Has lifecycle policies"
+    label: "Has lifecycle policies?"
     type: yesno
     sql: ${TABLE}.lifecycle ;;
     description: "Indicates whether the bucket has user-defined lifecycle rules attached. Returns true if the customer has configured policies to automatically delete or transition objects based on age or versioning."
   }
 
   dimension: location {
+    label: "Location"
     type: string
     sql: ${TABLE}.location ;;
     description: "The geographic location where the bucket's data resides. Values can represent a single region (e.g., 'us-central1'), dual-region, or multi-region (e.g., 'US'). Determines data residency, availability, and pricing."
   }
 
   dimension: metageneration {
+    label: "Metageneration"
     type: number
     sql: ${TABLE}.metageneration ;;
     description: "The version counter for the bucket's metadata. This number increments whenever bucket configuration properties are updated."
   }
 
   dimension: object_count {
+    label: "Object count"
     type: number
     hidden: yes
     sql: ${TABLE}.objectCount ;;
     description: "The total number of objects (files) stored in the bucket at the time of the snapshot."
   }
 
+  dimension: object_retention_enabled {
+    label: "Is object retention enabled?"
+    type: yesno
+    sql: ${TABLE}.objectRetentionEnabled ;;
+    description: "Indicates whether object retention is enabled for the bucket."
+  }
+
   dimension: project {
-    label: "Project Number"
+    label: "Project number"
     type: string
     sql: CAST(${TABLE}.project AS STRING) ;;
     description: "The unique, immutable numeric identifier for the Google Cloud project containing this bucket."
@@ -115,6 +142,7 @@ view: bucket_attributes {
 
   dimension: public_access_prevention {
     group_label: "IAM configuration"
+    label: "Public access prevention"
     type: string
     sql: ${TABLE}.iamConfiguration.publicAccessPrevention ;;
     description: "The status of Public Access Prevention (PAP). 'ENFORCED' blocks all public access to the bucket and its objects, overriding any existing IAM policies or ACLs that grant public access. 'INHERITED' means the bucket inherits the PAP setting from its project or organization policy."
@@ -122,14 +150,29 @@ view: bucket_attributes {
 
   dimension: retention_duration_seconds {
     hidden: yes
-    group_label: "Soft-Delete"
+    group_label: "Soft-delete"
     label: "Seconds"
     type: number
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds ;;
     description: "The period of time in seconds that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. The value must be greater than or equal to 604,800 seconds (7 days) and less than 7,776,000 seconds (90 days)."
   }
 
+  dimension: retention_mode {
+    label: "Retention mode"
+    type: string
+    sql: ${TABLE}.retentionMode ;;
+    description: "The retention mode of the bucket's data retention policy. Possible values are 'LOCKED' (policy cannot be reduced/removed) or 'UNLOCKED' (policy can be modified/removed)."
+  }
+
+  dimension: retention_period {
+    label: "Retention period"
+    type: number
+    sql: ${TABLE}.retentionPeriod ;;
+    description: "The retention period applied to the bucket, in seconds."
+  }
+
   dimension: storage_class {
+    label: "Storage class"
     type: string
     sql: ${TABLE}.storageClass ;;
     description: "The default storage tier assigned to new objects in the bucket. Determines the balance between storage costs and retrieval pricing. Common values include 'Standard', 'Nearline', 'Coldline', 'Archive', and 'Rapid' ."
@@ -137,34 +180,74 @@ view: bucket_attributes {
 
   dimension: uniform_bucket_level_access {
     group_label: "IAM configuration"
-    label: "Is Uniform Bucket Level Access Enabled?"
+    label: "Is uniform bucket level access enabled?"
     type: yesno
     sql: ${TABLE}.iamConfiguration.uniformBucketLevelAccess.enabled ;;
     description: "Indicates whether Uniform Bucket-Level Access is active. When true, the bucket ignores object-level Access Control Lists (ACLs) and relies exclusively on bucket-level IAM policies. This unifies access control and prevents accidental public exposure via ACLs."
   }
 
   dimension: versioning {
-    label: "Is Versioned?"
+    label: "Is versioned?"
     type: yesno
     sql: ${TABLE}.versioning ;;
     description: "Indicates whether Object Versioning is enabled. When true, the bucket retains a history of object modifications (including overwrites and deletions), allowing for recovery of previous versions."
+  }
+
+  dimension: versioning_status {
+    label: "Versioning status"
+    type: string
+    sql:
+      CASE
+        WHEN ${versioning} THEN 'Enabled'
+        ELSE 'Disabled'
+      END ;;
+    description: "The Object Versioning status of the bucket (Enabled/Disabled). When enabled, a noncurrent history of objects is
+    safely retained upon modification or deletion."
   }
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Extra Dimensions -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
+  dimension: bucket_default_encryption {
+    label: "Bucket default encryption"
+    type: string
+    sql:
+      CASE
+        WHEN ${default_encryption_type} = 'GMEK' THEN 'Google-managed (GMEK)'
+        WHEN ${default_encryption_type} = 'CMEK' THEN 'Customer-managed (CMEK)'
+        ELSE ${default_encryption_type}
+      END ;;
+    description: "The default encryption configuration of the bucket. Displays 'Customer-managed (CMEK)' if a default KMS key is configured, or 'Google-managed (GMEK)' if standard Google-owned keys are used. This dictates how new objects are encrypted by default."
+  }
+
   dimension: bucket_level_access_disabled {
-    label: "Is Bucket Level Access Disabled"
+    label: "Is bucket level access disabled"
     group_label: "IAM configuration"
     type: yesno
     sql: NOT ${TABLE}.iamConfiguration.uniformBucketLevelAccess.enabled AND NOT ${TABLE}.iamConfiguration.publicAccessPrevention = 'ENFORCED' ;;
     description: "Indicates if the bucket uses legacy access controls. Returns true only if both Uniform Bucket Level Access is disabled (allowing fine-grained ACLs) and Public Access Prevention is not enforced."
   }
 
+  dimension: bucket_retention_configuration {
+    label: "Bucket retention configuration"
+    type: string
+    sql:
+      CASE
+        WHEN UPPER(${retention_mode}) IN ('LOCKED', 'UNLOCKED') AND ${object_retention_enabled}
+          THEN 'Bucket (uniform) & object allowed retentions'
+        WHEN UPPER(${retention_mode}) IN ('LOCKED', 'UNLOCKED')
+          THEN 'Bucket retention (uniform)'
+        WHEN (${retention_mode} IS NULL OR ${retention_mode} = '') AND ${object_retention_enabled}
+          THEN 'Object retention allowed (granular)'
+        ELSE 'No retention'
+      END ;;
+    description: "Categorizes the bucket's data retention state by evaluating both bucket-level (uniform) and object-level (granular) retention policies. Outputs identify if retention is applied uniformly at the bucket level, granularly at the object level, both, or neither."
+  }
+
   dimension: retention_duration_days {
     hidden: yes
-    group_label: "Soft-Delete"
+    group_label: "Soft-delete"
     label: "Days"
     type: number
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds / 86400;;
@@ -174,7 +257,7 @@ view: bucket_attributes {
 
   dimension: retention_duration_hours {
     hidden: yes
-    group_label: "Soft-Delete"
+    group_label: "Soft-delete"
     label: "Hours"
     type: number
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds / 3600;;
@@ -184,7 +267,7 @@ view: bucket_attributes {
 
   dimension: retention_duration_minutes {
     hidden: yes
-    group_label: "Soft-Delete"
+    group_label: "Soft-delete"
     label: "Minutes"
     type: number
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds / 60 ;;
@@ -194,7 +277,7 @@ view: bucket_attributes {
 
   dimension: retention_duration_months {
     hidden: yes
-    group_label: "Soft-Delete"
+    group_label: "Soft-delete"
     label: "Months"
     type: number
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds / 2592000;;
@@ -202,9 +285,29 @@ view: bucket_attributes {
     description: "The Soft-Delete retention period converted to months. Calculated by dividing the retention duration in seconds by 2,592,000 (assuming a standardized 30-day month)."
   }
 
+  dimension: retention_duration_string {
+    label: "Retention period (duration)"
+    type: string
+    order_by_field: retention_period
+    sql:
+      CASE
+        WHEN ${retention_period} IS NULL THEN '-'
+        WHEN ${retention_period} = 0 THEN '0 seconds'
+        WHEN ${retention_period} = 1 THEN '1 second'
+        WHEN ${retention_period} < 60 THEN CONCAT(CAST(${retention_period} AS STRING), ' seconds')
+        WHEN ROUND(${retention_period} / 60, 0) = 1 AND ${retention_period} < 3600 THEN '1 minute'
+        WHEN ${retention_period} < 3600 THEN CONCAT(CAST(ROUND(${retention_period} / 60, 0) AS STRING), ' minutes')
+        WHEN ROUND(${retention_period} / 3600, 0) = 1 AND ${retention_period} < 86400 THEN '1 hour'
+        WHEN ${retention_period} < 86400 THEN CONCAT(CAST(ROUND(${retention_period} / 3600, 0) AS STRING), ' hours')
+        WHEN ROUND(${retention_period} / 86400, 0) = 1 THEN '1 day'
+        ELSE CONCAT(CAST(ROUND(${retention_period} / 86400, 0) AS STRING), ' days')
+      END ;;
+    description: "The bucket's retention period formatted as a human-readable string (e.g., '1 day', '5 hours')."
+  }
+
   dimension: retention_duration_timeframe_selection {
-    group_label: "Soft-Delete"
-    label: "Retention Duration"
+    group_label: "Soft-delete"
+    label: "Retention duration"
     label_from_parameter: retention_duration_timeframe
     type: number
     sql:
@@ -227,7 +330,7 @@ view: bucket_attributes {
 
   dimension: retention_duration_weeks {
     hidden: yes
-    group_label: "Soft-Delete"
+    group_label: "Soft-delete"
     label: "Weeks"
     type: number
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds / 604800;;
@@ -236,11 +339,56 @@ view: bucket_attributes {
   }
 
   dimension: soft_delete_enabled {
-    group_label: "Soft-Delete"
-    label: "Is Soft-Delete enabled?"
+    group_label: "Soft-delete"
+    label: "Is soft-delete policy enabled?"
     type: yesno
     sql: ${TABLE}.softDeletePolicy.retentionDurationSeconds > 0 ;;
     description: "Indicates whether the Soft-Delete policy is active and has a retention period greater than zero. When true, deleted objects are retained for the specified duration, allowing them to be restored before permanent deletion."
+  }
+
+  dimension: soft_delete_retention_duration_string {
+    group_label: "Soft-delete"
+    label: "Retention duration (formatted)"
+    type: string
+    order_by_field: retention_duration_seconds
+    sql:
+          CASE
+            WHEN ${TABLE}.softDeletePolicy.retentionDurationSeconds IS NULL OR ${TABLE}.softDeletePolicy.retentionDurationSeconds = 0 THEN '0 Seconds'
+            WHEN ${TABLE}.softDeletePolicy.retentionDurationSeconds = 1 THEN '1 Second'
+            WHEN ${TABLE}.softDeletePolicy.retentionDurationSeconds < 60 THEN CONCAT(CAST(${TABLE}.softDeletePolicy.retentionDurationSeconds AS STRING), ' Seconds')
+            WHEN ROUND(${TABLE}.softDeletePolicy.retentionDurationSeconds / 60, 0) = 1 AND ${TABLE}.softDeletePolicy.retentionDurationSeconds < 3600 THEN '1 Minute'
+            WHEN ${TABLE}.softDeletePolicy.retentionDurationSeconds < 3600 THEN CONCAT(CAST(ROUND(${TABLE}.softDeletePolicy.retentionDurationSeconds / 60, 0) AS STRING), ' Minutes')
+            WHEN ROUND(${TABLE}.softDeletePolicy.retentionDurationSeconds / 3600, 0) = 1 AND ${TABLE}.softDeletePolicy.retentionDurationSeconds < 86400 THEN '1 Hour'
+            WHEN ${TABLE}.softDeletePolicy.retentionDurationSeconds < 86400 THEN CONCAT(CAST(ROUND(${TABLE}.softDeletePolicy.retentionDurationSeconds / 3600, 0) AS STRING), ' Hours')
+            WHEN ROUND(${TABLE}.softDeletePolicy.retentionDurationSeconds / 86400, 0) = 1 THEN '1 Day'
+            ELSE CONCAT(CAST(ROUND(${TABLE}.softDeletePolicy.retentionDurationSeconds / 86400, 0) AS STRING), ' Days')
+          END ;;
+    description: "The bucket's soft-delete retention duration formatted as a human-readable string. This field is automatically
+    sorted chronologically."
+  }
+
+  dimension: soft_delete_status {
+    group_label: "Soft-delete"
+    label: "Soft-delete policy status"
+    type: string
+    sql:
+      CASE
+        WHEN ${TABLE}.softDeletePolicy.retentionDurationSeconds IS NOT NULL THEN 'Enabled'
+        ELSE 'Disabled'
+      END ;;
+    description: "The string status of the soft-delete policy (Enabled/Disabled)."
+  }
+
+  dimension: uniform_bucket_level_access_status {
+    group_label: "IAM configuration"
+    label: "Uniform bucket level access status"
+    type: string
+    sql:
+      CASE
+        WHEN ${TABLE}.iamConfiguration.uniformBucketLevelAccess.enabled THEN 'Enabled'
+        ELSE 'Disabled'
+      END ;;
+    description: "Identifies whether IAM policies are strictly enforced at the bucket level, overriding individual object-level Access Control Lists (ACLs)."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -248,6 +396,7 @@ view: bucket_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_size_aid {
+    label: "Bucket size (aid)"
     hidden: yes
     type: string
     sql:
@@ -262,12 +411,20 @@ view: bucket_attributes {
     description: "A helper dimension that formats the raw bucket size (bytes) into human-readable IEC units (KiB, MiB, GiB, etc.). Used to populate the HTML 'size' parameter."
   }
 
+  dimension: total_row_label {
+    label: "Total row label (aid)"
+    hidden: yes
+    type: string
+    sql: 'Total' ;;
+    description: "A static label used to force bucket counts into a single row, enabling single-bar stacked horizontal charts."
+  }
+
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Dimension Group -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
   dimension_group: autoclass_toggle {
-    group_label: "Autoclass Toggle Time"
+    group_label: "Autoclass toggle time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.autoclass.toggleTime ;;
@@ -275,7 +432,7 @@ view: bucket_attributes {
   }
 
   dimension_group: created {
-    group_label: "Time Created"
+    group_label: "Time created"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.timeCreated ;;
@@ -283,7 +440,7 @@ view: bucket_attributes {
   }
 
   dimension_group: effective {
-    group_label: "Soft-Delete Effective Time"
+    group_label: "Soft-delete effective time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.softDeletePolicy.effectiveTime ;;
@@ -291,7 +448,7 @@ view: bucket_attributes {
   }
 
   dimension_group: snapshot {
-    group_label: "Snapshot Time"
+    group_label: "Snapshot time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.snapshotTime ;;
@@ -303,7 +460,7 @@ view: bucket_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   measure: bucket_count {
-    label: "Total Buckets"
+    label: "Total buckets"
     type: count_distinct
     value_format: "#,##0"
     drill_fields: [detail*]
@@ -311,8 +468,16 @@ view: bucket_attributes {
     description: "A measure that counts the total number of buckets within a snapshot."
   }
 
+  measure: context_coverage {
+    label: "Context Coverage %"
+    type: number
+    value_format_name: percent_2
+    sql: 1.0 * ${object_contexts_catalog__filtered_contexts.total_filtered_objects} / NULLIF(${object_sum}, 0) ;;
+    description: "Calculates the percentage of total objects in the bucket that have matching object contexts attached."
+  }
+
   measure: object_sum {
-    label: "Total Objects"
+    label: "Total objects"
     type: sum
     value_format: "#,##0"
     sql: ${object_count} ;;
@@ -339,6 +504,7 @@ view: bucket_attributes {
   }
 
   measure: total_storage_size {
+    label: "Total storage size"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -363,7 +529,16 @@ view: bucket_attributes {
   # ---------------------------- Aid Measures -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
+  measure: object_sum_aid {
+    label: "Total objects (aid)"
+    hidden: yes
+    type: string
+    sql: FORMAT("%'d", ${object_sum}) ;;
+    description: "Helper measure that formats the total object count as a string with thousands separators (e.g., '1,234,567'). Designed for use in HTML Liquid templates where native Looker value formatting might be bypassed."
+  }
+
   measure: sum_storage_aid {
+    label: "Total storage size (aid)"
     hidden: yes
     type: string
     sql:
@@ -379,18 +554,12 @@ view: bucket_attributes {
     description: "Helper measure that calculates the total storage size and converts it to the largest appropriate IEC unit (e.g., GiB, TiB) as a string. Used for HTML formatting in the 'Total Storage Size' measure."
   }
 
-  measure: object_sum_aid {
-    hidden: yes
-    type: string
-    sql: FORMAT("%'d", ${object_sum}) ;;
-    description: "Helper measure that formats the total object count as a string with thousands separators (e.g., '1,234,567'). Designed for use in HTML Liquid templates where native Looker value formatting might be bypassed."
-  }
-
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Parameters -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
   parameter: retention_duration_timeframe {
+    label: "Retention duration timeframe"
     type: string
 
     allowed_value: {
@@ -429,7 +598,7 @@ view: bucket_attributes {
 
   parameter: size_unit {
     type: unquoted
-    label: "Storage Size Unit"
+    label: "Storage size unit"
 
     allowed_value: {
       label: "PiB"
@@ -470,19 +639,36 @@ view: bucket_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   parameter: aggregate_function {
+    label: "Aggregate function"
     type: unquoted
     allowed_value: {
-      label: "Total Objects"
+      label: "Total objects"
       value: "total_objects"
     }
 
     allowed_value: {
-      label: "Total Storage Size"
+      label: "Total storage size"
       value: "total_storage_size"
     }
 
     default_value: "total_objects"
     description: "This parameter allows users to specify the aggregated function for the 'Selected Measure' field. The default measure for this parameter is Total Objects."
+  }
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Filters -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  filter: filter_context_key {
+    label: "Filter: Context Key"
+    type: string
+    description: "Use this to filter Context Coverage without deleting empty buckets."
+  }
+
+  filter: filter_context_value {
+    label: "Filter: Context Value"
+    type: string
+    description: "Use this to filter Context Coverage without deleting empty buckets."
   }
 
 

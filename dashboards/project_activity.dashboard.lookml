@@ -2,9 +2,11 @@
 - dashboard: project_activity
   title: GCS Storage Intelligence - Project Activity
   preferred_viewer: dashboards-next
+  style: modern
   description: ''
   preferred_slug: IJVLmGw3j18uE47Opvn3xC
   theme_name: ''
+  layout_granularity: granular
   layout: newspaper
   tabs:
   - name: ''
@@ -52,12 +54,12 @@
       GET, PUT) against selected projects. This metric includes all requests, regardless
       of status, serving as the primary baseline for system load and access frequency.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 13
-    col: 2
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 12
+    col: 6
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total success responses
     name: Total success responses
@@ -90,12 +92,12 @@
       a successful response (HTTP 2xx status). This metric tracks the volume of effective
       operations, filtering out client and server errors.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 13
-    col: 6
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 12
+    col: 18
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total data egress
     name: Total data egress
@@ -124,13 +126,13 @@
       This metric tracks egress volume, serving as a key indicator of data retrieval
       intensity and network consumption.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-    row: 13
-    col: 10
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 12
+    col: 30
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total data ingress
     name: Total data ingress
@@ -161,13 +163,13 @@
     aria_description: The total volume of data uploaded to the selected projects (ingress).
       This metric measures the cumulative size of all incoming write operations.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-    row: 13
-    col: 14
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 12
+    col: 42
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total read requests
     name: Total read requests
@@ -198,15 +200,15 @@
     aria_description: The total count of object-level read requests (e.g., GET operations).
       This metric measures the volume of data retrieval and access events.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 13
-    col: 18
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 12
+    col: 54
+    width: 12
+    height: 4
     tab_name: ''
-  - title: Error Rate
-    name: Error Rate
+  - title: Error rate
+    name: Error rate
     model: gcs_storage_intelligence
     explore: project_activity
     type: single_value
@@ -222,7 +224,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    single_value_title: Error Rate
+    single_value_title: Error rate
     smart_single_value_size: false
     show_view_names: false
     show_row_numbers: true
@@ -246,12 +248,12 @@
     aria_description: The percentage of object-level API requests that resulted in
       an error (HTTP 4xx or 5xx status). This metric measures the rate of failed operations.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 15
-    col: 4
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 16
+    col: 12
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total server errors
     name: Total server errors
@@ -295,12 +297,12 @@
       a server error (HTTP 5xx). This metric measures the volume of internal system
       failures.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 15
-    col: 8
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 16
+    col: 24
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total client errors
     name: Total client errors
@@ -343,12 +345,12 @@
       a client error (HTTP 4xx). This metric measures the volume of invalid or unauthorized
       requests.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 15
-    col: 12
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 16
+    col: 36
+    width: 12
+    height: 4
     tab_name: ''
   - title: Total limit exceeded errors
     name: Total limit exceeded errors
@@ -393,15 +395,15 @@
       a 429 error (Too Many Requests). This metric measures the volume of rate-limited
       operations.
     listen:
-      1 - Snapshot Start Date: project_activity.analysis_date_filter
-      2 - Project Name: project_attributes.project_name
-    row: 15
-    col: 16
-    width: 4
-    height: 2
+      1 - Snapshot start date: project_activity.analysis_date_filter
+      2 - Project name: project_attributes.project_name
+    row: 16
+    col: 48
+    width: 12
+    height: 4
     tab_name: ''
-  - title: Volume Trend
-    name: Volume Trend
+  - title: Volume trend
+    name: Volume trend
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_line
@@ -458,24 +460,26 @@
     aria_description: A dynamic line chart showing the trend over time for the metric
       currently active in the 'Selected Metric' filter. The Y-axis values update to
       reflect the chosen data point (e.g., Total Requests, Data Egress, or Error counts).
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-      4 - Selected Metric: project_activity.aggregate_function
-      5 - Date Granularity: project_activity.date_granularity
-    row: 22
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      Time selection: project_activity.date_granularity
+      Historical analysis - metric selection: project_activity.aggregate_function
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 32
     col: 0
-    width: 24
-    height: 9
+    width: 72
+    height: 18
     tab_name: ''
-  - title: Error Rate Trends
-    name: Error Rate Trends
+  - title: Error rate trends
+    name: Error rate trends
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_line
-    fields: [project_activity.snapshot_start_dynamic, project_activity.error_rate, project_activity.total_server_error_responses,
-      project_activity.total_client_error_responses, project_activity.total_requests]
+    fields: [project_activity.snapshot_start_dynamic, project_activity.error_rate,
+      project_activity.total_server_error_responses, project_activity.total_client_error_responses,
+      project_activity.total_requests]
     filters:
       project_activity.date_granularity: date^_hour
       project_activity.aggregate_function: total^_requests
@@ -510,12 +514,12 @@
             id: project_activity.error_rate, name: Error Rate}], showLabels: true,
         showValues: true, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
         type: linear}, {label: !!null '', orientation: right, series: [{axisId: project_activity.total_server_error_responses,
-            id: project_activity.total_server_error_responses, name: Total Server Error
-              Responses}, {axisId: project_activity.total_requests, id: project_activity.total_requests,
+            id: project_activity.total_server_error_responses, name: Total Server
+              Error Responses}, {axisId: project_activity.total_requests, id: project_activity.total_requests,
             name: Total Requests}, {axisId: project_activity.total_client_error_responses,
-            id: project_activity.total_client_error_responses, name: Total Client Error
-              Responses}], showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
+            id: project_activity.total_client_error_responses, name: Total Client
+              Error Responses}], showLabels: true, showValues: true, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear}]
     x_axis_zoom: true
     y_axis_zoom: true
     series_colors:
@@ -534,15 +538,16 @@
     aria_description: A multi-line chart displaying trends for Error Rate, Total Server
       Errors, Total Client Errors, and Total Requests over time. This visualization
       correlates failure percentages with traffic volume and specific error types.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-      5 - Date Granularity: project_activity.date_granularity
-    row: 33
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      Time selection: project_activity.date_granularity
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 50
     col: 0
-    width: 24
-    height: 10
+    width: 72
+    height: 20
     tab_name: ''
   - title: Box plot distribution by selected metric
     name: Box plot distribution by selected metric
@@ -596,19 +601,20 @@
       maximum, median, and quartiles) for the metric currently active in the 'Selected
       Metric' filter. This chart highlights variability and outliers in daily project
       activity.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-      4 - Selected Metric: project_activity.aggregate_function
-      5 - Date Granularity: project_activity.date_granularity
-    row: 45
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      Time selection: project_activity.date_granularity
+      Historical analysis - metric selection II: project_activity.aggregate_function
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 74
     col: 0
-    width: 24
-    height: 11
+    width: 72
+    height: 22
     tab_name: ''
-  - title: Total Data Ingress and Total Data Egress by time
-    name: Total Data Ingress and Total Data Egress by time
+  - title: Total data ingress and total data egress by time
+    name: Total data ingress and total data egress by time
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_line
@@ -651,18 +657,19 @@
     aria_description: A dual-line chart comparing Total Data Ingress and Total Data
       Egress trends over time. This visualization contrasts the volume of incoming
       data (uploads) against outgoing data (downloads).
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-      5 - Date Granularity: project_activity.date_granularity
-    row: 58
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      Time selection: project_activity.date_granularity
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 96
     col: 0
-    width: 24
-    height: 12
+    width: 72
+    height: 24
     tab_name: ''
-  - title: Top 10 Projects by selected metric
-    name: Top 10 Projects by selected metric
+  - title: Top 10 projects by selected metric
+    name: Top 10 projects by selected metric
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_bar
@@ -716,18 +723,19 @@
       two different metrics. The first chart reflects the 'Selected Metric' (Filter
       6), and the second chart reflects the 'Comparison Metric' (Filter 6), allowing
       for visual correlation of project performance.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-      4 - Selected Metric: project_activity.aggregate_function
-    row: 87
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      3 - Throughput size unit: project_activity.throughput_size_unit
+      Comparison Selected Metric: project_activity.aggregate_function
+    row: 148
     col: 0
-    width: 12
-    height: 10
+    width: 36
+    height: 20
     tab_name: ''
-  - title: Top 10 Projects by selected metric
-    name: Top 10 Projects by selected metric (2)
+  - title: Top 10 projects by selected metric
+    name: Top 10 projects by selected metric (2)
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_bar
@@ -781,18 +789,19 @@
       two different metrics. The first chart reflects the 'Selected Metric' (Filter
       6), and the second chart reflects the 'Comparison Metric' (Filter 6), allowing
       for visual correlation of projects performance.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-      3 - Throughput Size Unit: project_activity.throughput_size_unit
-      6 - Comparison Selected Metric: project_activity.aggregate_function
-    row: 87
-    col: 12
-    width: 12
-    height: 10
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      3 - Throughput size unit: project_activity.throughput_size_unit
+      Comparison - metric selection II: project_activity.aggregate_function
+    row: 148
+    col: 36
+    width: 36
+    height: 20
     tab_name: ''
-  - title: Mutation Requests over time
-    name: Mutation Requests over time
+  - title: Mutation requests over time
+    name: Mutation requests over time
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_column
@@ -843,16 +852,17 @@
     aria_description: A 100% stacked bar chart showing the daily ratio of data mutation
       types. It compares the proportion of Total Write Requests, Total Update Requests,
       and Total Delete Requests over time.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-    row: 72
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+    row: 120
     col: 0
-    width: 24
-    height: 10
+    width: 72
+    height: 20
     tab_name: ''
-  - title: 4xx Status Distribution
-    name: 4xx Status Distribution
+  - title: 4xx status distribution
+    name: 4xx status distribution
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_pie
@@ -889,16 +899,17 @@
     aria_description: A donut chart showing the percentage distribution of specific
       4xx error codes. It breaks down client errors into categories like 400 Bad Request,
       403 Forbidden, and 429 Too Many Requests.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-    row: 102
-    col: 12
-    width: 12
-    height: 8
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+    row: 172
+    col: 36
+    width: 36
+    height: 16
     tab_name: ''
-  - title: Status Distribution
-    name: Status Distribution
+  - title: Status distribution
+    name: Status distribution
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_pie
@@ -930,13 +941,14 @@
     aria_description: A donut chart showing the percentage distribution of HTTP status
       codes. It compares the volume of successful requests (2xx) against client errors
       (4xx) and server errors (5xx).
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-    row: 102
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+    row: 172
     col: 0
-    width: 12
-    height: 8
+    width: 36
+    height: 16
     tab_name: ''
   - title: Top projects by number of requests
     name: Top projects by number of requests
@@ -988,21 +1000,22 @@
     aria_description: A bar chart displaying the top projects ranked by total number
       of requests. This visualization identifies the most active storage containers
       in the system.
+    modern2026: true
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-    row: 115
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+    row: 192
     col: 0
-    width: 24
-    height: 11
+    width: 72
+    height: 22
     tab_name: ''
-  - title: Most Active Projects
-    name: Most Active Projects
+  - title: Most active projects
+    name: Most active projects
     model: gcs_storage_intelligence
     explore: project_activity
     type: looker_grid
-    fields: [project_attributes.project_name, project_activity.total_requests,
-      project_activity.total_errors, project_activity.total_data_egress]
+    fields: [project_attributes.project_name, project_activity.total_requests, project_activity.total_errors,
+      project_activity.total_data_egress]
     sorts: [project_activity.total_requests desc 0, project_activity.total_data_egress
         desc]
     limit: 500
@@ -1014,7 +1027,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: gray
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -1022,6 +1035,14 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    color_application:
+      collection_id: looker_2026
+      options:
+        mirror: false
+        reverse: false
+        stepped: false
+      palette_id: looker_2026_categorical_1
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -1030,6 +1051,19 @@
     series_cell_visualizations:
       project_activity.total_requests:
         is_active: false
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     hidden_pivots: {}
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -1060,89 +1094,36 @@
     note_state: collapsed
     note_display: hover
     note_text: 'A detailed tabular view listing individual storage projects with their
-      corresponding key performance indicators: Location, Total Requests, Total Errors,
+      corresponding key performance indicators: Project Name, Total Requests, Total Errors,
       and Total Data Egress. This detailed breakdown supports granular analysis, allowing
       you to correlate high traffic volume with specific error counts or bandwidth
       usage at the project level.'
     listen:
-      1 - Snapshot Start Date: project_activity.snapshot_start_date
-      2 - Project Name: project_attributes.project_name
-    row: 128
+      1 - Snapshot start date: project_activity.snapshot_start_date
+      2 - Project name: project_attributes.project_name
+      3 - Throughput size unit: project_activity.throughput_size_unit
+    row: 214
     col: 0
-    width: 24
-    height: 6
+    width: 72
+    height: 12
     tab_name: ''
   - type: button
-    name: button_89
+    name: button_425
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#80868B","href":"/dashboards/gcs_storage_intelligence::bucket_activity"}'
-    row: 136
+    row: 226
     col: 0
-    width: 3
-    height: 2
+    width: 9
+    height: 4
     tab_name: ''
   - type: button
-    name: button_90
+    name: button_426
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#80868B","href":"/dashboards/gcs_storage_intelligence::object_events"}'
-    row: 136
-    col: 21
-    width: 3
-    height: 2
+    row: 226
+    col: 63
+    width: 9
+    height: 4
     tab_name: ''
   - name: ''
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
-      \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
-      \ 8px; \n    padding: 24px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),\
-      \ 0 1px 3px 1px rgba(60,64,67,0.15);\n    margin-bottom: 20px;\n\">\n\n  <div\
-      \ style=\"\n      display: flex; \n      align-items: center; \n      gap: 32px;\
-      \ \n      margin-bottom: 30px; \n      border-bottom: 1px solid #f1f3f4; \n\
-      \      padding-bottom: 20px;\n  \">\n    <svg style=\"color: #1a73e8; width:\
-      \ 32px; height: 32px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     \
-      \   <path d=\"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z\"/>\n    </svg>\n\
-      \    \n    <span style=\"font-size: 22px; font-weight: 500; color: #202124;\"\
-      >Filter Applicability Guide</span>\n    \n    <span style=\"font-size: 13px;\
-      \ color: #5f6368; margin-left: auto;\">Refer to the numbers on each chart to\
-      \ see which filters apply</span>\n  </div>\n\n  <div style=\"\n      display:\
-      \ flex; \n      flex-wrap: wrap; \n      gap: 24px; \n      font-size: 14px;\
-      \ \n      color: #3c4043;\n  \">\n\n    <div style=\"display: flex; align-items:\
-      \ center; gap: 16px; width: 260px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #e8f0fe; color: #1967d2; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">1</span>\n      <span style=\"font-size: 16px;\">Snapshot Start\
-      \ Date</span>\n    </div>\n\n    <div style=\"display: flex; align-items: center;\
-      \ gap: 16px; width: 260px;\">\n      <span style=\"flex-shrink: 0; background:\
-      \ #fce8e6; color: #c5221f; font-weight: 700; font-size: 16px; height: 40px;\
-      \ width: 40px; border-radius: 50%; display: flex; align-items: center; justify-content:\
-      \ center;\">2</span>\n      <span style=\"font-size: 16px;\">Project Name</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 260px;\">\n      <span style=\"flex-shrink: 0; background: #fef7e0;\
-      \ color: #f09d00; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >3</span>\n      <span style=\"font-size: 16px;\">Throughput Size Unit</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 260px;\">\n      <span style=\"flex-shrink: 0; background: #e6f4ea;\
-      \ color: #137333; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >4</span>\n      <span style=\"font-size: 16px;\">Selected Metric</span>\n \
-      \   </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 260px;\">\n      <span style=\"flex-shrink: 0; background: #e8f0fe;\
-      \ color: #1967d2; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >5</span>\n      <span style=\"font-size: 16px;\">Date Granularity</span>\n\
-      \    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 16px;\
-      \ width: 260px;\">\n      <span style=\"flex-shrink: 0; background: #fce8e6;\
-      \ color: #c5221f; font-weight: 700; font-size: 16px; height: 40px; width: 40px;\
-      \ border-radius: 50%; display: flex; align-items: center; justify-content: center;\"\
-      >6</span>\n      <span style=\"font-size: 16px;\">Comparison Selected Metric</span>\n\
-      \    </div>\n\n  </div>\n</div>"
-    row: 4
-    col: 0
-    width: 24
-    height: 6
-    tab_name: ''
-  - name: " (2)"
     type: text
     title_text: ''
     subtitle_text: ''
@@ -1167,13 +1148,13 @@
       >Security & Compliance</a>\n    \n    <a style=\"\n        padding: 18px 24px;\
       \ \n        text-decoration: none; \n        color: #5f6368; \n        font-weight:\
       \ 500;\n        border-bottom: 3px solid transparent; \n        transition:\
-      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::error_and_events\"\
-      >Error & Events</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\n \
-      \     display: flex; \n      justify-content: center; \n      align-items: center;\n\
-      \      gap: 16px; \n      padding: 16px 0;\n      background-color: #fff;\n\
-      \  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n        text-decoration:\
-      \ none; \n        color: #5f6368; \n        font-weight: 500; \n        border-radius:\
-      \ 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
+      \ background 0.2s;\n    \" href=\"/dashboards/gcs_storage_intelligence::context_catalog\"\
+      >Context Catalog</a>\n  </nav>\n\n  <nav style=\"\n      font-size: 16px;\n\
+      \      display: flex; \n      justify-content: center; \n      align-items:\
+      \ center;\n      gap: 16px; \n      padding: 16px 0;\n      background-color:\
+      \ #fff;\n  \">\n    \n    <a style=\"\n        padding: 8px 20px; \n       \
+      \ text-decoration: none; \n        color: #5f6368; \n        font-weight: 500;\
+      \ \n        border-radius: 24px;\n    \" href=\"/dashboards/gcs_storage_intelligence::bucket_activity\"\
       >Bucket Activity</a>\n    \n    <a style=\"\n        padding: 8px 20px; \n \
       \       text-decoration: none; \n        color: #1967d2; \n        background-color:\
       \ #e8f0fe; \n        font-weight: 700; \n        border-radius: 24px;\n    \
@@ -1187,401 +1168,161 @@
       >Bucket Region Activity</a>\n  </nav>\n\n</div>"
     row: 0
     col: 0
-    width: 24
+    width: 72
+    height: 8
+    tab_name: ''
+  - name: " (2)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Key performance indicators (KPIs)
+      </div>
+    row: 8
+    col: 0
+    width: 72
+    height: 4
+    tab_name: ''
+  - name: " "
+    type: text
+    title_text: " "
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Historical analysis
+      </div>
+    row: 20
+    col: 0
+    width: 72
     height: 4
     tab_name: ''
   - name: " (3)"
     type: text
     title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n        padding: 24px 0 16px 0; \n    color: #202124;\n\
-      \">\n  <svg style=\"color: #1a73e8; width: 32px; height: 32px; margin-right:\
-      \ 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n     <path d=\"M12 2C6.48\
-      \ 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"\
-      />\n  </svg>\n\n  <span style=\"font-size: 24px; font-weight: 400;\">Key Performance\
-      \ Indicators (KPIs)</span>\n</div>"
-    row: 10
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " "
-    type: text
-    title_text: " "
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Historical Analysis</span>\n</div>"
-    row: 19
-    col: 0
-    width: 24
-    height: 3
+    body_text: ''
+    row: 16
+    col: 60
+    width: 12
+    height: 4
     tab_name: ''
   - name: " (4)"
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n</div>"
-    row: 17
-    col: 20
-    width: 4
-    height: 2
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Comparison
+      </div>
+    row: 140
+    col: 0
+    width: 72
+    height: 4
     tab_name: ''
   - name: " (5)"
     type: text
     title_text: ''
-    body_text: ''
-    row: 15
-    col: 20
-    width: 4
-    height: 2
+    subtitle_text: ''
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Error distribution
+      </div>
+    row: 168
+    col: 0
+    width: 72
+    height: 4
     tab_name: ''
   - name: " (6)"
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #e6f4ea; \n    color: #137333; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">4</div>\n\n  <div style=\"\n    background: #e8f0fe; \n    color:\
-      \ #1967d2; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">5</div>\n\n</div>"
-    row: 43
-    col: 20
-    width: 4
-    height: 2
+    body_text: |-
+      <div style="
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          color: #5f6368;
+          border-bottom: 2px solid #c4c4c4;
+          padding: 0 0 8px 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          font-weight: 600;
+      ">
+          Project insights
+      </div>
+    row: 188
+    col: 0
+    width: 72
+    height: 4
     tab_name: ''
-  - name: " (7)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n</div>"
-    row: 31
-    col: 19
-    width: 5
-    height: 2
+  - type: filter
+    name: Historical analysis - metric selection
+    row: 28
+    col: 2
+    width: 12
+    height: 4
     tab_name: ''
-  - name: " (8)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n</div>"
-    row: 56
-    col: 19
-    width: 5
-    height: 2
+  - type: filter
+    name: Time selection
+    row: 24
+    col: 0
+    width: 12
+    height: 4
     tab_name: ''
-  - name: " (9)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n</div>"
+  - type: filter
+    name: Historical analysis - metric selection II
     row: 70
-    col: 20
-    width: 4
-    height: 2
+    col: 2
+    width: 12
+    height: 4
     tab_name: ''
-  - name: " (10)"
-    type: text
-    title_text: ''
-    body_text: ''
-    row: 82
-    col: 0
-    width: 20
-    height: 2
+  - type: filter
+    name: Comparison - metric selection II
+    row: 144
+    col: 36
+    width: 12
+    height: 4
     tab_name: ''
-  - name: " (11)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n</div>"
-    row: 82
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (12)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Comparison</span>\n</div>"
-    row: 84
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (13)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">5</div>\n\n</div>"
-    row: 97
-    col: 7
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (14)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n  <div style=\"\n    background: #e6f4ea; \n    color:\
-      \ #137333; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">4</div>\n\n  <div style=\"\n\
-      \    background: #fce8e6; \n    color: #c5221f; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">6</div>\n\n</div>"
-    row: 97
-    col: 19
-    width: 5
-    height: 2
-    tab_name: ''
-  - name: " (15)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Error Distribution</span>\n</div>"
-    row: 99
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (16)"
-    type: text
-    title_text: ''
-    body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    display: flex; \n    align-items: center; \n    padding: 24px 0 16px 0;\
-      \ \n    color: #202124;\n\">\n  <svg style=\"color: #1a73e8; width: 32px; height:\
-      \ 32px; margin-right: 24px;\" fill=\"currentColor\" viewBox=\"0 0 24 24\">\n\
-      \     <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2\
-      \ 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/>\n  </svg>\n\n  <span style=\"font-size:\
-      \ 24px; font-weight: 400;\">Bucket Insights</span>\n</div>"
-    row: 112
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
-  - name: " (17)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n</div>"
-    row: 110
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (18)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n</div>"
-    row: 126
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (19)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: "<div style=\"\n    width: 100%;\n    display: flex;\n    align-items:\
-      \ center;\n    gap: 12px; \n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\n\
-      \    padding: 8px 0 16px 0;\n\">\n  \n  <span style=\"font-size: 13px; color:\
-      \ #5f6368; margin-right: 8px;\">Applicable Filters:</span>\n\n  <div style=\"\
-      \n    background: #e8f0fe; \n    color: #1967d2; \n    font-weight: 700; \n\
-      \    font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">1</div>\n\n  <div style=\"\n    background: #fce8e6; \n    color:\
-      \ #c5221f; \n    font-weight: 700; \n    font-size: 14px; \n    height: 32px;\
-      \ \n    width: 32px; \n    border-radius: 50%; \n    display: flex; \n    align-items:\
-      \ center; \n    justify-content: center;\n  \">2</div>\n\n  <div style=\"\n\
-      \    background: #fef7e0; \n    color: #f09d00; \n    font-weight: 700; \n \
-      \   font-size: 14px; \n    height: 32px; \n    width: 32px; \n    border-radius:\
-      \ 50%; \n    display: flex; \n    align-items: center; \n    justify-content:\
-      \ center;\n  \">3</div>\n\n</div>"
-    row: 134
-    col: 20
-    width: 4
-    height: 2
-    tab_name: ''
-  - name: " (20)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: ''
-    row: 134
-    col: 0
-    width: 19
-    height: 2
+  - type: filter
+    name: Comparison Selected Metric
+    row: 144
+    col: 1
+    width: 12
+    height: 4
     tab_name: ''
   filters:
-  - name: 1 - Snapshot Start Date
-    title: 1 - Snapshot Start Date
+  - name: 1 - Snapshot start date
+    title: 1 - Snapshot start date
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1589,13 +1330,12 @@
     ui_config:
       type: advanced
       display: popover
-      options: []
     model: gcs_storage_intelligence
     explore: project_activity
     listens_to_filters: []
     field: project_activity.snapshot_start_date
-  - name: 2 - Project Name
-    title: 2 - Project Name
+  - name: 2 - Project name
+    title: 2 - Project name
     type: field_filter
     default_value: ''
     allow_multiple_values: true
@@ -1607,8 +1347,8 @@
     explore: project_activity
     listens_to_filters: []
     field: project_attributes.project_name
-  - name: 3 - Throughput Size Unit
-    title: 3 - Throughput Size Unit
+  - name: 3 - Throughput size unit
+    title: 3 - Throughput size unit
     type: field_filter
     default_value: TiB
     allow_multiple_values: true
@@ -1620,21 +1360,8 @@
     explore: project_activity
     listens_to_filters: []
     field: project_activity.throughput_size_unit
-  - name: 4 - Selected Metric
-    title: 4 - Selected Metric
-    type: field_filter
-    default_value: total^_requests
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: dropdown_menu
-      display: inline
-    model: gcs_storage_intelligence
-    explore: project_activity
-    listens_to_filters: []
-    field: project_activity.aggregate_function
-  - name: 5 - Date Granularity
-    title: 5 - Date Granularity
+  - name: Time selection
+    title: Time selection
     type: field_filter
     default_value: date
     allow_multiple_values: true
@@ -1646,10 +1373,49 @@
     explore: project_activity
     listens_to_filters: []
     field: project_activity.date_granularity
-  - name: 6 - Comparison Selected Metric
-    title: 6 - Comparison Selected Metric
+  - name: Historical analysis - metric selection
+    title: Historical analysis - metric selection
     type: field_filter
-    default_value: total^_client^_error^_responses
+    default_value: total^_requests
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: project_activity
+    listens_to_filters: []
+    field: project_activity.aggregate_function
+  - name: Historical analysis - metric selection II
+    title: Historical analysis - metric selection II
+    type: field_filter
+    default_value: total^_requests
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: project_activity
+    listens_to_filters: []
+    field: project_activity.aggregate_function
+  - name: Comparison Selected Metric
+    title: Comparison Selected Metric
+    type: field_filter
+    default_value: total^_requests
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
+      display: inline
+    model: gcs_storage_intelligence
+    explore: project_activity
+    listens_to_filters: []
+    field: project_activity.aggregate_function
+  - name: Comparison - metric selection II
+    title: Comparison - metric selection II
+    type: field_filter
+    default_value: total^_requests
     allow_multiple_values: true
     required: false
     ui_config:

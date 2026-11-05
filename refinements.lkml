@@ -1,3 +1,11 @@
+# --------------------------------------------------------------------------
+# Owner: Google Cloud Storage
+# Contact Method: insights-customer-support@google.com
+# Created Date: March 24, 2025
+# Modified Date: Nov 4, 2026
+# Purpose: Template file for defining LookML view and explore refinements.
+# --------------------------------------------------------------------------
+
 # views
 include: "/views/*.view.lkml"
 # explores

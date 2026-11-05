@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Bucket Region Activity View Table inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 view: bucket_region_activity {
@@ -14,6 +14,7 @@ view: bucket_region_activity {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -34,14 +35,14 @@ view: bucket_region_activity {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_location {
-    label: "Bucket Location"
+    label: "Bucket location"
     type: string
     sql: ${TABLE}.bucketLocation ;;
     description: "The region where the API calls were executed and processed. Use this dimension to analyze traffic patterns, specifically to track data volume sent (egress) from and injected (ingress) into this location."
   }
 
   dimension: bucket_name {
-    label: "Bucket Name"
+    label: "Bucket name"
     type: string
     sql: ${TABLE}.name ;;
     description: "The unique name of the Google Cloud Storage bucket."
@@ -56,14 +57,14 @@ view: bucket_region_activity {
   }
 
   dimension: project {
-    label: "Project Number"
+    label: "Project number"
     type: string
     sql: CAST(${TABLE}.project AS STRING) ;;
     description: "The unique numeric identifier for the Google Cloud Project (e.g., 123456789012)."
   }
 
   dimension: request_bytes {
-    label: "Ingress Data - Operation"
+    label: "Ingress data - operation"
     type: number
     value_format: "#,##0.00"
     sql:
@@ -85,14 +86,14 @@ view: bucket_region_activity {
   }
 
   dimension: request_location {
-    label: "Request Location"
+    label: "Request location"
     type: string
     sql: UPPER(${TABLE}.requestLocation) ;;
     description: "The remote location where the data was sent or transferred. Represents the destination of egress traffic or the origin of the request, distinct from the bucket's physical storage location."
   }
 
   dimension: response_bytes {
-    label: "Data Egress - Operation"
+    label: "Data egress - operation"
     type: number
     value_format: "#,##0.00"
     sql:
@@ -118,6 +119,7 @@ view: bucket_region_activity {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: request_bytes_aid {
+    label: "Request bytes (aid)"
     hidden: yes
     type: string
     sql:
@@ -133,6 +135,7 @@ view: bucket_region_activity {
   }
 
   dimension: response_bytes_aid {
+    label: "Response bytes (aid)"
     hidden: yes
     type: string
     sql:
@@ -151,87 +154,25 @@ view: bucket_region_activity {
   # ---------------------------- Dimension Group -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
-  dimension_group: snapshot_start {
-    group_label: "Snapshot Start Timeframe"
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.snapshotStartTime ;;
-    description: "The start time of the aggregation interval. Traffic volume (ingress/egress) recorded in this row occurred after this timestamp."
-  }
-
-
   dimension_group: snapshot_end {
-    group_label: "Snapshot End Timeframe"
+    group_label: "Snapshot end timeframe"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.snapshotEndTime ;;
     description: "The end time of the aggregation interval (exclusive). Traffic volume recorded in this row occurred strictly before this timestamp."
   }
 
+  dimension_group: snapshot_start {
+    group_label: "Snapshot start timeframe"
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}.snapshotStartTime ;;
+    description: "The start time of the aggregation interval. Traffic volume (ingress/egress) recorded in this row occurred after this timestamp."
+  }
+
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Measures -------------------------------
   # --------------------------------------------------------------------------------------------------------
-
-  measure: total_buckets {
-    group_label: "Inventory Overview"
-    label: "Total Buckets"
-    type: count_distinct
-    sql: ${bucket_name} ;;
-    description: "The count of unique buckets that had active traffic (ingress or egress) during the selected time period."
-    value_format_name: dynamic_thousands
-  }
-
-  measure: total_requested_locations {
-    group_label: "Inventory Overview"
-    label: "Total Requested Locations"
-    type: count_distinct
-    sql: ${request_location} ;;
-    description: "The number of unique regions or zones that interacted with the buckets. Use this to measure the geographic spread of your data consumers and identify where traffic is originating or terminating."
-  }
-
-  measure: total_data_egress {
-    label: "Total Data Egress"
-    type: sum
-    value_format: "#,##0.00"
-    sql:
-      {% if throughput_size_unit._parameter_value == "PiB" %}
-        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
-      {% elsif throughput_size_unit._parameter_value == "TiB" %}
-        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
-      {% elsif throughput_size_unit._parameter_value == "GiB" %}
-        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
-      {% elsif throughput_size_unit._parameter_value == "MiB" %}
-        ${TABLE}.responseBytes / (POW(1024, 2))
-      {% elsif throughput_size_unit._parameter_value == "KiB" %}
-        ${TABLE}.responseBytes / (1024)
-      {% else %}
-        ${TABLE}.responseBytes
-      {% endif %};;
-    html: <span>{{ total_data_egress_aid._value }}</span>;;
-    description: "The total volume of data sent (Egress) from Google Cloud Storage buckets to the request locations. Visualizations display formatted units (e.g., 'GiB'), while exports use the raw value scaled to the 'Throughput Size Unit' parameter."
-  }
-
-  measure: total_data_ingress {
-    label: "Total Data Ingress"
-    type: sum
-    value_format: "#,##0.00"
-    sql:
-      {% if throughput_size_unit._parameter_value == "PiB" %}
-        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
-      {% elsif throughput_size_unit._parameter_value == "TiB" %}
-        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
-      {% elsif throughput_size_unit._parameter_value == "GiB" %}
-        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
-      {% elsif throughput_size_unit._parameter_value == "MiB" %}
-        ${TABLE}.requestBytes / (POW(1024, 2))
-      {% elsif throughput_size_unit._parameter_value == "KiB" %}
-        ${TABLE}.requestBytes / (1024)
-      {% else %}
-        ${TABLE}.requestBytes
-      {% endif %};;
-    html: <span>{{ total_data_ingress_aid._value }}</span>;;
-    description: "The total volume of data injected (Ingress) into Google Cloud Storage buckets from external locations. Visualizations display formatted units (e.g., 'GiB'), while exports use the raw value scaled to the 'Throughput Size Unit' parameter."
-  }
 
   measure: selected_measure {
     label_from_parameter: aggregate_function
@@ -254,20 +195,81 @@ view: bucket_region_activity {
     description: "Dynamic measure that switches between Ingress and Egress metrics based on the user's selection in the 'Aggregate Function' parameter."
   }
 
+  measure: total_buckets {
+    group_label: "Inventory overview"
+    label: "Total buckets"
+    type: count_distinct
+    sql: ${bucket_name} ;;
+    description: "The count of unique buckets that had active traffic (ingress or egress) during the selected time period."
+    value_format_name: dynamic_thousands
+  }
+
+  measure: total_data_egress {
+    label: "Total data egress"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+      {% if throughput_size_unit._parameter_value == "PiB" %}
+        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 5))
+      {% elsif throughput_size_unit._parameter_value == "TiB" %}
+        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 4))
+      {% elsif throughput_size_unit._parameter_value == "GiB" %}
+        CAST(${TABLE}.responseBytes AS FLOAT64) / (POW(1024, 3))
+      {% elsif throughput_size_unit._parameter_value == "MiB" %}
+        ${TABLE}.responseBytes / (POW(1024, 2))
+      {% elsif throughput_size_unit._parameter_value == "KiB" %}
+        ${TABLE}.responseBytes / (1024)
+      {% else %}
+        ${TABLE}.responseBytes
+      {% endif %};;
+    html: <span>{{ total_data_egress_aid._value }}</span>;;
+    description: "The total volume of data sent (Egress) from Google Cloud Storage buckets to the request locations. Visualizations display formatted units (e.g., 'GiB'), while exports use the raw value scaled to the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_data_ingress {
+    label: "Total data ingress"
+    type: sum
+    value_format: "#,##0.00"
+    sql:
+      {% if throughput_size_unit._parameter_value == "PiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 5))
+      {% elsif throughput_size_unit._parameter_value == "TiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 4))
+      {% elsif throughput_size_unit._parameter_value == "GiB" %}
+        CAST(${TABLE}.requestBytes AS FLOAT64) / (POW(1024, 3))
+      {% elsif throughput_size_unit._parameter_value == "MiB" %}
+        ${TABLE}.requestBytes / (POW(1024, 2))
+      {% elsif throughput_size_unit._parameter_value == "KiB" %}
+        ${TABLE}.requestBytes / (1024)
+      {% else %}
+        ${TABLE}.requestBytes
+      {% endif %};;
+    html: <span>{{ total_data_ingress_aid._value }}</span>;;
+    description: "The total volume of data injected (Ingress) into Google Cloud Storage buckets from external locations. Visualizations display formatted units (e.g., 'GiB'), while exports use the raw value scaled to the 'Throughput Size Unit' parameter."
+  }
+
+  measure: total_requested_locations {
+    group_label: "Inventory overview"
+    label: "Total requested locations"
+    type: count_distinct
+    sql: ${request_location} ;;
+    description: "The number of unique regions or zones that interacted with the buckets. Use this to measure the geographic spread of your data consumers and identify where traffic is originating or terminating."
+  }
+
   measure: traffic_percentage {
-    label: "Traffic Percent"
+    label: "Traffic percent"
     type: number
     sql: 1.0 * ${selected_measure} / NULLIF(${bucket_totals_summary.selected_measure}, 0) ;;
     value_format_name: percent_2
     description: "The percentage of the bucket's total traffic that is attributed to this specific request location."
   }
 
-
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Aid Measures -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_data_egress_aid {
+    label: "Total data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -284,6 +286,7 @@ view: bucket_region_activity {
   }
 
   measure: total_data_ingress_aid {
+    label: "Total data ingress (aid)"
     hidden: yes
     type: string
     sql:
@@ -304,8 +307,8 @@ view: bucket_region_activity {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_buckets_current {
-    group_label: "Inventory Overview"
-    label: "Total Buckets (Current Period)"
+    group_label: "Inventory overview"
+    label: "Total buckets (current period)"
     type: count_distinct
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -321,8 +324,8 @@ view: bucket_region_activity {
   }
 
   measure: total_buckets_pop_change {
-    group_label: "Inventory Overview"
-    label: "Total Buckets (PoP Change)"
+    group_label: "Inventory overview"
+    label: "Total buckets (PoP change)"
     type: number
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -344,8 +347,8 @@ view: bucket_region_activity {
   }
 
   measure: total_buckets_previous {
-    group_label: "Inventory Overview"
-    label: "Total Buckets (Previous Period)"
+    group_label: "Inventory overview"
+    label: "Total buckets (previous period)"
     type: count_distinct
     sql:
     {% if analysis_date_filter._is_filtered %}
@@ -364,71 +367,9 @@ view: bucket_region_activity {
     description: "The count of unique buckets with active traffic during the timeframe immediately preceding the selected analysis period."
   }
 
-  measure: total_requested_locations_current {
-    group_label: "Inventory Overview"
-    label: "Total Requested Locations (Current Period)"
-    type: count_distinct
-    sql:
-    {% if analysis_date_filter._is_filtered %}
-      CASE
-        WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %}
-        THEN ${request_location}
-      END
-    {% else %}
-      ${request_location}
-    {% endif %} ;;
-    value_format_name: dynamic_thousands
-    description: "The number of unique regions or zones active specifically within the selected analysis period."
-  }
-
-  measure: total_requested_locations_pop_change {
-    group_label: "Inventory Overview"
-    label: "Total Requested Locations (PoP Change)"
-    type: number
-    sql:
-    {% if analysis_date_filter._is_filtered %}
-      SAFE_DIVIDE(
-        (${total_requested_locations_current} - ${total_requested_locations_previous}),
-        ${total_requested_locations_previous}
-      )
-    {% else %}
-      0
-    {% endif %};;
-    value_format_name: percent_2
-    html:
-    {% if analysis_date_filter._is_filtered %}
-      {{ rendered_value }}
-    {% else %}
-      <div style="display: none;"></div>
-    {% endif %} ;;
-    description: "The percentage change in the number of unique requested locations compared to the previous period."
-  }
-
-
-  measure: total_requested_locations_previous {
-    group_label: "Inventory Overview"
-    label: "Total Requested Locations (Previous Period)"
-    type: count_distinct
-    sql:
-    {% if analysis_date_filter._is_filtered %}
-      CASE
-        WHEN ${snapshot_start_raw} >=
-          TIMESTAMP_SUB({% date_start analysis_date_filter %},
-          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
-        AND
-          ${snapshot_start_raw} < {% date_start analysis_date_filter %}
-        THEN ${request_location}
-      END
-    {% else %}
-      NULL
-    {% endif %};;
-    value_format_name: dynamic_thousands
-    description: "The number of unique regions or zones active during the timeframe immediately preceding the selected analysis period."
-  }
-
   measure: total_data_egress_current {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (Current Period)"
+    group_label: "Data transfer"
+    label: "Total data egress (current period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -471,8 +412,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_egress_pop_change {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (PoP Change)"
+    group_label: "Data transfer"
+    label: "Total data egress (PoP change)"
     type: number
     sql:
       {% if analysis_date_filter._is_filtered %}
@@ -494,8 +435,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_egress_previous {
-    group_label: "Data Transfer"
-    label: "Total Data Egress (Previous Period)"
+    group_label: "Data transfer"
+    label: "Total data egress (previous period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -530,8 +471,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_ingress_current {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (Current Period)"
+    group_label: "Data transfer"
+    label: "Total data ingress (current period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -575,8 +516,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_ingress_pop_change {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (PoP Change)"
+    group_label: "Data transfer"
+    label: "Total data ingress (PoP change)"
     type: number
     sql:
           {% if analysis_date_filter._is_filtered %}
@@ -598,8 +539,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_ingress_previous {
-    group_label: "Data Transfer"
-    label: "Total Data Ingress (Previous Period)"
+    group_label: "Data transfer"
+    label: "Total data ingress (previous period)"
     type: sum
     value_format: "#,##0.00"
     sql:
@@ -634,12 +575,74 @@ view: bucket_region_activity {
     description: "The total volume of data uploaded or transferred into Google Cloud Storage (GCS) during the timeframe immediately preceding the selected analysis period. This serves as the historical baseline for comparing current data ingress trends. The unit scales dynamically based on the 'Throughput Size Unit' parameter."
   }
 
+  measure: total_requested_locations_current {
+    group_label: "Inventory overview"
+    label: "Total requested locations (current period)"
+    type: count_distinct
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN {% condition analysis_date_filter %} ${snapshot_start_raw} {% endcondition %}
+        THEN ${request_location}
+      END
+    {% else %}
+      ${request_location}
+    {% endif %} ;;
+    value_format_name: dynamic_thousands
+    description: "The number of unique regions or zones active specifically within the selected analysis period."
+  }
+
+  measure: total_requested_locations_pop_change {
+    group_label: "Inventory overview"
+    label: "Total requested locations (PoP change)"
+    type: number
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      SAFE_DIVIDE(
+        (${total_requested_locations_current} - ${total_requested_locations_previous}),
+        ${total_requested_locations_previous}
+      )
+    {% else %}
+      0
+    {% endif %};;
+    value_format_name: percent_2
+    html:
+    {% if analysis_date_filter._is_filtered %}
+      {{ rendered_value }}
+    {% else %}
+      <div style="display: none;"></div>
+    {% endif %} ;;
+    description: "The percentage change in the number of unique requested locations compared to the previous period."
+  }
+
+  measure: total_requested_locations_previous {
+    group_label: "Inventory overview"
+    label: "Total requested locations (previous period)"
+    type: count_distinct
+    sql:
+    {% if analysis_date_filter._is_filtered %}
+      CASE
+        WHEN ${snapshot_start_raw} >=
+          TIMESTAMP_SUB({% date_start analysis_date_filter %},
+          INTERVAL TIMESTAMP_DIFF({% date_end analysis_date_filter %}, {% date_start analysis_date_filter %}, SECOND) SECOND)
+        AND
+          ${snapshot_start_raw} < {% date_start analysis_date_filter %}
+        THEN ${request_location}
+      END
+    {% else %}
+      NULL
+    {% endif %};;
+    value_format_name: dynamic_thousands
+    description: "The number of unique regions or zones active during the timeframe immediately preceding the selected analysis period."
+  }
+
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Aid Period over Period (PoP) Measures -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_data_egress_aid_current {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress current (aid)"
     hidden: yes
     type: string
     sql:
@@ -674,7 +677,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_egress_aid_previous {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data egress previous (aid)"
     hidden: yes
     type: string
     sql:
@@ -701,7 +705,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_ingress_aid_current {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress current (aid)"
     hidden: yes
     type: string
     sql:
@@ -736,7 +741,8 @@ view: bucket_region_activity {
   }
 
   measure: total_data_ingress_aid_previous {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
+    label: "Total data ingress previous (aid)"
     hidden: yes
     type: string
     sql:
@@ -768,7 +774,7 @@ view: bucket_region_activity {
 
   filter: analysis_date_filter {
     type: date
-    label: "Snapshot Start Range"
+    label: "Snapshot start range"
     description: "Select the date range for analysis. The 'Previous Period' measure will automatically calculate based on this duration."
   }
 
@@ -776,9 +782,28 @@ view: bucket_region_activity {
   # ---------------------------- Parameters -------------------------------
   # --------------------------------------------------------------------------------------------------------
 
+  parameter: aggregate_function {
+
+    label: "Selected metric"
+    type: unquoted
+
+    allowed_value: {
+      label: "Total data egress"
+      value: "total_data_egress"
+    }
+
+    allowed_value: {
+      label: "Total data ingress"
+      value: "total_data_ingress"
+    }
+
+    default_value: "total_data_egress"
+    description: "This parameter allows users to specify the desired measure for the selected measure metric. The default value, 'Total Data Egress'."
+  }
+
   parameter: throughput_size_unit {
     type: unquoted
-    label: "Throughput Size Unit"
+    label: "Throughput size unit"
 
     allowed_value: {
       label: "PiB"
@@ -812,25 +837,6 @@ view: bucket_region_activity {
 
     default_value: "GiB"
     description: "This parameter allows users to select the desired byte unit for the throughput storage size visualizations and file downloads (CSV, Sheets). The default value is GiB."
-  }
-
-  parameter: aggregate_function {
-
-    label: "Selected Metric"
-    type: unquoted
-
-    allowed_value: {
-      label: "Total Data Egress"
-      value: "total_data_egress"
-    }
-
-    allowed_value: {
-      label: "Total Data Ingress"
-      value: "total_data_ingress"
-    }
-
-    default_value: "total_data_egress"
-    description: "This parameter allows users to specify the desired measure for the selected measure metric. The default value, 'Total Data Egress'."
   }
 
 

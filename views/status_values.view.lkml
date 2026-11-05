@@ -2,10 +2,10 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: An unpivot helper view that generates a static list of all status available.
 #          Joined via CROSS JOIN to the main activity explores, it converts the separate
-#          count2xx/4xxx/5xx. columns into a single dimension ('Status Label'),
+#          count2xx/4xxx/5xx. columns into a single dimension ('Status label'),
 #          enabling breakdown visualizations like Pie Charts and Bar Graphs.
 # --------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ view: status_values {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: status_label {
-    label: "Status Label"
+    label: "Status label"
     primary_key: yes
     type: string
     sql: ${TABLE}.status_label ;;

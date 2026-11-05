@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Mar 2, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Error Attributes View Table inside the Storage Intelligence linked Dataset.
 # -------------------------------------------------------------------------
 view: error_attributes {
@@ -14,6 +14,7 @@ view: error_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -26,30 +27,32 @@ view: error_attributes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: bucket_error_record__bucket_name {
-    label: "Bucket Name"
+    label: "Bucket name"
     type: string
     sql: ${TABLE}.bucketErrorRecord.bucketName ;;
-    group_label: "Bucket Error Record"
+    group_label: "Bucket error record"
     group_item_label: "Bucket Name"
     description: "The name of the Google Cloud Storage bucket identified in the error record. Use this dimension to pinpoint which specific bucket is triggering errors or failing to report data."
   }
 
   dimension: bucket_error_record__service_account {
-    label: "Service Account"
+    label: "Service account"
     type: string
     sql: ${TABLE}.bucketErrorRecord.serviceAccount ;;
-    group_label: "Bucket Error Record"
+    group_label: "Bucket error record"
     group_item_label: "Service Account"
     description: "The Google Cloud Service Account that encountered the error. Use this to identify which identity was attempting the operation."
   }
 
   dimension: error_code {
+    label: "Error code"
     type: number
     sql: ${TABLE}.errorCode ;;
     description: "The internal numeric identifier for the Storage Intelligence error. Use this for filtering specific failure types."
   }
 
   dimension: error_source {
+    label: "Error source"
     type: string
     sql: ${TABLE}.errorSource ;;
     description: "The source that generated the GCS Storage Intelligence error."
@@ -59,17 +62,17 @@ view: error_attributes {
     label: "Organization"
     type: string
     sql: ${TABLE}.projectErrorRecord.organizationName ;;
-    group_label: "Project Error Record"
-    group_item_label: "Organization Name"
+    group_label: "Project error record"
+    group_item_label: "Organization name"
     description: "The name of the Google Cloud Organization that owns the project reporting the GCS Storage Intelligence error."
   }
 
   dimension: project_error_record__project_number {
-    label: "Project Number"
+    label: "Project number"
     type: number
     sql: CAST(COALESCE(${TABLE}.projectErrorRecord.projectNumber, 0) AS STRING) ;;
-    group_label: "Project Error Record"
-    group_item_label: "Project Number"
+    group_label: "Project error record"
+    group_item_label: "Project number"
     description: "The Google Cloud Project number associated with the GCS error."
   }
 
@@ -115,7 +118,7 @@ view: error_attributes {
   }
 
   dimension: error_with_buckets {
-    label: "Has Associated Bucket?"
+    label: "Has associated bucket?"
     hidden: no
     type: yesno
     sql: ${bucket_error_record__bucket_name} IS NOT NULL  ;;
@@ -150,6 +153,7 @@ view: error_attributes {
   ################################## Measures ##################################
 
   measure: total_errors {
+    label: "Total errors"
     type: count
     description: "The total number of Storage Intelligence failures logged during the selected timeframe."
     drill_fields: [

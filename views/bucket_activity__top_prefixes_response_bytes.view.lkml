@@ -2,10 +2,23 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
-# Modified Date: Feb 12, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Bucket Activity View Table inside the Storage Intelligence linked Dataset. This view specifically is related to the top object prefixes that experienced the highest volume of responses in bytes.
 # -------------------------------------------------------------------------------------
 view: bucket_activity__top_prefixes_response_bytes {
+
+  # --------------------------------------------------------------------------------------------------------
+  # ---------------------------- Primary Key -------------------------------
+  # --------------------------------------------------------------------------------------------------------
+
+  dimension: primary_key {
+    label: "Primary key"
+    hidden: yes
+    primary_key: yes
+    type: string
+    sql: CONCAT(${bucket_activity.primary_key}, '_', ${TABLE}.prefix) ;;
+    description: "A composite primary key uniquely identifying each top prefix response bytes record per bucket activity window."
+  }
 
   # --------------------------------------------------------------------------------------------------------
   # ---------------------------- Dimensions -------------------------------
@@ -39,7 +52,7 @@ view: bucket_activity__top_prefixes_response_bytes {
     label: "Top object prefix"
     type: string
     sql: ${TABLE}.prefix ;;
-    description: "The object key prefix (folder path) associated with the response volume. Represents the directory structure where responses occured."
+    description: "The object key prefix (folder path) associated with the response volume. Represents the directory structure where responses occurred."
   }
 
   # --------------------------------------------------------------------------------------------------------
@@ -47,6 +60,7 @@ view: bucket_activity__top_prefixes_response_bytes {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: count_aid {
+    label: "Egress data (aid)"
     hidden: yes
     type: string
     sql:
@@ -66,7 +80,7 @@ view: bucket_activity__top_prefixes_response_bytes {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_egress_data {
-    group_label: "Data Transfer"
+    group_label: "Data transfer"
     label: "Total egress data"
     value_format: "#,##0.00"
     type: sum
@@ -95,6 +109,7 @@ view: bucket_activity__top_prefixes_response_bytes {
 
   measure: total_data_egress_aid {
     group_label: "Data Transfer"
+    label: "Total data egress (aid)"
     hidden: yes
     type: string
     sql:
@@ -116,7 +131,7 @@ view: bucket_activity__top_prefixes_response_bytes {
 
   parameter: throughput_size_unit {
     type: unquoted
-    label: "Throughput Size Unit"
+    label: "Throughput size unit"
 
     allowed_value: {
       label: "PiB"

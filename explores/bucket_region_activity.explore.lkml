@@ -3,6 +3,7 @@
 # Contact Method: insights-customer-support@google.com
 # Created Date: Feb 12, 2026
 # Modified Date: Feb 17, 2026
+# Purpose: Explore for cross-region bucket activity and regional egress analysis.
 # --------------------------------------------------------------------------
 
 include: "/views/*.view.lkml"

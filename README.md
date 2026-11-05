@@ -11,7 +11,7 @@ This is not an officially supported Google product. This project is not eligible
 
 <p>This dashboard utilizes two Persistent Derived Tables (PDTs). For proper functionality, it is essential that your Looker connection is configured to enable PDT functionality.</p>
 
-<p>In case you need some help with the connection, plase refer to this Looker Documentation: <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery" target="_blank">BigQuery</a></p>
+<p>In case you need some help with the connection, please refer to this Looker Documentation: <a href="https://cloud.google.com/looker/docs/db-config-google-bigquery" target="_blank">BigQuery</a></p>
 
 For questions/issues and feedback, reach out to <b><i>insights-customer-support@google.com</i></b>.
 
@@ -86,6 +86,24 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 </div>
 
+## Architecture & Topology
+
+<div style="text-align: justify; line-height: 1.5;">
+
+<p>The architecture of the Storage Intelligence Looker Block relies on a robust and automated data pipeline connecting Google Cloud Storage directly to your analytics environment. This seamless integration ensures high performance and requires minimal maintenance.</p>
+
+<p><b>System Architecture and Data Flow:</b></p>
+<ul>
+    <li><b>Data Generation:</b> Google Cloud Storage Insights systematically scans your storage environment, generating detailed inventory reports, activity logs, and object metadata.</li>
+    <li><b>BigQuery Export:</b> These insights are automatically exposed via linked datasets within Google Cloud BigQuery. This serverless mechanism eliminates the need for custom ETL infrastructure.</li>
+    <li><b>Looker Integration:</b> Looker sits directly on top of the BigQuery linked dataset. Using this LookML block, Looker dynamically generates optimized SQL queries that run in-place against the underlying BigQuery views, mapping raw schemas into governed dimensions, measures, explores, and dashboards.</li>
+</ul>
+
+<p><b>Data Freshness:</b></p>
+<p>The underlying views are refreshed automatically by Cloud Storage Intelligence according to each table's update cadence (for example, daily metadata snapshots, 24-hour context catalog refreshes, and continuous activity/event views). Because Looker queries BigQuery directly using datagroup caching policies (<code>storage_intelligence_metadata_datagroup</code> and <code>storage_intelligence_activity_datagroup</code>), dashboards reflect the latest state as soon as exports complete.</p>
+
+</div>
+
 # GCS Storage Intelligence Data Structure
 
 <div style="text-align: justify; line-height: 1.5;">
@@ -106,6 +124,7 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
     <li><code>object_events_view</code></li>
     <li><code>project_activity_view</code></li>
     <li><code>project_attributes_view</code></li>
+    <li><code>object_contexts_catalog_view</code></li>
 </ul>
 
 </div>
@@ -155,8 +174,30 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
             <li><b>labels.value</b>: The label value.</li>
         </ul>
     </li>
-    <li><b>public <small>(Deprecated)</small></b>: Indicates public accessibility. Use <code>iamConfiguration</code> instead.</li>
-    <li><b>tags <small>(Deprecated)</small></b>: User-defined key-value pairs. Use <code>resourceTags</code> instead.</li>
+    <li><b>public <small>(Deprecated)</small></b>: Indicates whether a bucket is publicly accessible. Use <code>iamConfiguration</code> instead.
+        <ul>
+            <li><b>public.bucketPolicyOnly <small>(Deprecated)</small></b>: Indicates whether uniform bucket-level access is enabled, which prevents access through object-level ACLs.</li>
+            <li><b>public.publicAccessPrevention <small>(Deprecated)</small></b>: Indicates whether public access to the bucket is prevented.</li>
+        </ul>
+    </li>
+    <li><b>tags <small>(Deprecated)</small></b>: User-defined key-value pairs associated with the bucket. Use <code>resourceTags</code> instead.
+        <ul>
+            <li><b>tags.tagMap <small>(Deprecated)</small></b>: Contains the map of tag keys and values.</li>
+            <li><b>tags.tagMap.key <small>(Deprecated)</small></b>: The key of a tag.</li>
+            <li><b>tags.tagMap.value <small>(Deprecated)</small></b>: The value of a tag.</li>
+            <li><b>tags.lastUpdatedTime <small>(Deprecated)</small></b>: Indicates the last time the tags were updated.</li>
+        </ul>
+    </li>
+    <li><b>versioning</b>: Whether or not the bucket has versioning enabled. For more information, see <a href="https://cloud.google.com/storage/docs/object-versioning">Object Versioning</a>.</li>
+    <li><b>retentionPeriod</b>: The retention period of the bucket's retention policy in seconds.</li>
+    <li><b>retentionMode</b>: The retention mode of the bucket's retention policy. The possible values are <code>Locked</code> or <code>Unlocked</code>.</li>
+    <li><b>objectRetentionEnabled</b>: Whether Object Retention Lock is enabled on a bucket. If <code>True</code>, objects in the bucket can have object-level retention configurations.</li>
+    <li><b>defaultEventBasedHold</b>: Whether a bucket has a default event-based hold property enabled (<code>True</code> or <code>False</code>).</li>
+    <li><b>enforcedEncryptionAllowedTypes</b>: The encryption types allowed on the bucket: <code>GMEK</code> (Google-owned and Google-managed encryption keys), <code>CMEK</code> (customer-managed encryption keys), or <code>CSEK</code> (customer-supplied encryption keys).</li>
+    <li><b>defaultEncryptionType</b>: The default encryption type of the bucket. If <code>encryption.defaultKmsKeyName</code> is set, this value is <code>CMEK</code>; otherwise it is <code>GMEK</code>.</li>
+    <li><b>defaultKmsKeyName</b>: The default Cloud Key Management Service key configured for new objects in the bucket.</li>
+    <li><b>objectCount</b>: The total number of objects in the bucket.</li>
+    <li><b>totalSize</b>: The total size of the bucket in bytes.</li>
 </ul>
 </div>
 
@@ -429,6 +470,37 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
     </li>
     <li><b>selfLink</b>: A URL for this object.</li>
     <li><b>mediaLink</b>: A URL for downloading the object's data.</li>
+    <li><b>location</b>: The location of the bucket. Object data for objects in the bucket resides in physical storage within this location.</li>
+    <li><b>project</b>: The project number of the project the bucket belongs to.</li>
+    <li><b>contexts</b>: Contexts attached to an object, in key-value pairs.
+        <ul>
+            <li><b>contexts.key</b>: The key for the context entry (for example, <code>google:annotation:label-detector-v1</code>).</li>
+            <li><b>contexts.value</b>: The string value associated with the context key.</li>
+            <li><b>contexts.type</b>: The type of the context entry.</li>
+            <li><b>contexts.createTime</b>: The creation time of the context entry.</li>
+            <li><b>contexts.updateTime</b>: The update time of the context entry.</li>
+        </ul>
+    </li>
+    <li><b>ref</b>: A BigQuery <code>ObjectRef</code> value referencing the Cloud Storage object.
+        <ul>
+            <li><b>ref.uri</b>: The URI referencing the object.</li>
+            <li><b>ref.version</b>: The version of the reference.</li>
+            <li><b>ref.authorizer</b>: The authorizer of the reference.</li>
+            <li><b>ref.details</b>: Additional details for the reference.</li>
+        </ul>
+    </li>
+    <li><b>securityInsights</b>: Provides the public access status of the object, indicating whether it is publicly readable or writable.
+        <ul>
+            <li><b>securityInsights.publicAccessInsight</b>: Insights regarding the public accessibility of the object.</li>
+            <li><b>securityInsights.publicAccessInsight.readPublicAccess</b>: Indicates whether the object has public read access.</li>
+            <li><b>securityInsights.publicAccessInsight.writePublicAccess</b>: Indicates whether the object has public write access.</li>
+            <li><b>securityInsights.publicAccessInsight.readPublicAccessSource</b>: The source of the public read access configuration.</li>
+        </ul>
+    </li>
+    <li><b>retentionExpirationTimeSource</b>: Source of <code>retentionExpirationTime</code>.</li>
+    <li><b>retainUntilTime</b>: Indicates the time set by the object-level retention policy configuration, reflecting only the object-level setting. The effective date until which the object is retained is provided in the <code>retentionExpirationTime</code> field.</li>
+    <li><b>retainUntilTimeLockStatus</b>: Lock status of <code>retainUntilTime</code>, as set by the object-level retention policy configuration.</li>
+    <li><b>encryptionType</b>: The encryption type of the object: <code>GMEK</code> (Google-owned and Google-managed encryption keys), <code>CMEK</code> (customer-managed encryption keys), or <code>CSEK</code> (customer-supplied encryption keys).</li>
 </ul>
 </div>
 
@@ -436,7 +508,7 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
 
 <div style="text-align: justify; line-height: 1.5;">
 
-<p>The project metadata schema includes the <code>project_attributes_view</code> table. This table have the following fields:</p>
+<p>The project metadata schema includes the <code>project_attributes_view</code> table. This table has the following fields:</p>
 
 <ul>
     <li><b>snapshotTime</b>: The <code>snapshotTime</code> field stores the time of the project metadata snapshot refresh in <a href="https://datatracker.ietf.org/doc/html/rfc3339" target="_blank">RFC 3339</a> format. All records that are generated from the same snapshot refresh have the same <code>snapshotTime</code>.</li>
@@ -444,6 +516,33 @@ For questions/issues and feedback, reach out to <b><i>insights-customer-support@
     <li><b>projectId</b>: The project ID of the project.</li>
     <li><b>projectName</b>: The name of the project.</li>
 </ul>
+</div>
+
+# Object Contexts Catalog View
+
+<div style="text-align: justify; line-height: 1.5;">
+
+<p>The schema for the <code>object_contexts_catalog_view</code> table includes the following fields:</p>
+
+<ul>
+    <li><b>project</b>: The project number of the project that the bucket belongs to.</li>
+    <li><b>bucket</b>: The name of the bucket containing this object.</li>
+    <li><b>name</b>: The name of the object.</li>
+    <li><b>generation</b>: The content generation of this object.</li>
+    <li><b>location</b>: The location of the object.</li>
+    <li><b>timeCreated</b>: The creation time of the object.</li>
+    <li><b>contexts</b>: Array of context entries attached to the object.
+        <ul>
+            <li><b>contexts.key</b>: The key for the context entry (for example, <code>google:annotation:label-detector-v1</code>).</li>
+            <li><b>contexts.value</b>: The string value associated with the context key.</li>
+            <li><b>contexts.contextCreationTime</b>: Creation time of this specific context entry.</li>
+            <li><b>contexts.contextUpdateTime</b>: Last update time of this specific context entry.</li>
+            <li><b>contexts.extendedData</b>: JSON object containing structured extended data payloads for contexts (such as ML model bounding boxes and labels). This field is <code>NULL</code> if the context does not have extended data.</li>
+        </ul>
+    </li>
+    <li><b>catalogUpdatedTime</b>: The time at which the entry in the catalog was updated.</li>
+</ul>
+
 </div>
 
 # Regions Information CTE
@@ -457,7 +556,7 @@ This table has the following columns:
 
 <ul>
     <li><b>location</b>: The <a href="https://cloud.google.com/storage/docs/locations" target="_blank"> location</a> of the source bucket.</li>
-    <li><b>geographic_area</b>: The Gographic Area is determined by the bucket's location, as specified in the official documentation for <a href="https://cloud.google.com/storage/docs/locations#location-r" target="_blank"> location</a>. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa</li>
+    <li><b>geographic_area</b>: The Geographic Area is determined by the bucket's location, as specified in the official documentation for <a href="https://cloud.google.com/storage/docs/locations#location-r" target="_blank"> location</a>. The available zones are categorized into these regions: North America, South America, Europe, Asia, India, Indonesia, the Middle East, Australia, and Africa</li>
     <li><b>location_type</b>: The location type is contingent upon the region configuration. It may be Single-Region, Dual-Region, or Multi-Region.</li>
     <li><b>countries</b>: The different countries' combinations that are based on the selected region.</li>
     <li><b>state</b>: The different state combinations that are based on the selected region.</li>
@@ -493,6 +592,43 @@ This table has the following columns:
 <p><i>Note: If you encounter any technical issues during the installation process, please contact Looker Support for assistance.</i></p>
 </div>
 
+## Looker Explores & Dashboards Available
+
+<div style="text-align: justify; line-height: 1.5;">
+
+<p>The Google Cloud Storage Intelligence Looker block provides a comprehensive set of Explores and pre-built LookML Dashboards to help you analyze your storage footprint, govern object contexts, optimize costs, and monitor security.</p>
+
+<h3>Available Explores</h3>
+<p>Explores are the starting point for self-service analytics in Looker:</p>
+<ul>
+    <li><b><code>bucket_activity</code></b>: Analyze operation types, bytes transferred, HTTP response codes, and top prefix hotspots aggregated at the bucket level.</li>
+    <li><b><code>bucket_attributes</code></b>: View the latest snapshot of bucket metadata, including location, default storage class, lifecycle rules, IAM settings, and filtered object context coverage.</li>
+    <li><b><code>bucket_attributes_history</code></b>: Trace historical changes to bucket configurations and capacity over time.</li>
+    <li><b><code>bucket_region_activity</code></b>: Analyze cross-region traffic and data transfers between bucket locations and request origins.</li>
+    <li><b><code>error_attributes</code></b>: Troubleshoot configuration and permission errors that may prevent dataset generation or snapshot processing.</li>
+    <li><b><code>events</code></b>: Monitor internal system logs and manifest snapshots to verify when new Storage Intelligence data becomes available.</li>
+    <li><b><code>object_attributes</code></b>: Inspect the latest metadata of individual objects, including size, storage class, encryption keys, public access insights, and retention configurations.</li>
+    <li><b><code>object_contexts_catalog</code></b>: Explore object contexts, key-value annotations, and structured extended data payloads across buckets and projects.</li>
+    <li><b><code>object_events</code></b>: Query granular, event-level logs of object operations (creates, reads, updates, deletes) to investigate requests, status codes, and latency.</li>
+    <li><b><code>project_activity</code></b>: Evaluate your overall Google Cloud Storage footprint with aggregated project-level metrics for operations and bandwidth.</li>
+</ul>
+
+<h3>Out-of-the-Box Dashboards</h3>
+<p>The Looker block includes 9 pre-built operational dashboards:</p>
+<ul>
+    <li><b>General Analysis</b>: High-level executive summary of the storage environment, total storage footprint, operation counts, and active projects.</li>
+    <li><b>Cost Management</b>: Tracks storage class distribution, identifies unoptimized buckets without lifecycle policies or Autoclass, and highlights cost-saving opportunities.</li>
+    <li><b>Security &amp; Compliance</b>: Visualizes public access prevention status, uniform bucket-level access enablement, encryption types (GMEK/CMEK/CSEK), and retention policy adoption.</li>
+    <li><b>Context Catalog</b>: Tracks object context coverage across buckets, top context keys and values, extended data payloads, and prefix-level metadata annotations.</li>
+    <li><b>Bucket Activity</b>: Visualizes bucket-level traffic, byte transfers, error rates, and top prefixes experiencing rate limits (429s) or high operation volume.</li>
+    <li><b>Project Activity</b>: Provides a project-level comparison of requests, bandwidth, latency, and operation types.</li>
+    <li><b>Object Events</b>: Visualizes granular object-level operation logs, request processing times (95th percentile and average latency), and HTTP method breakdowns.</li>
+    <li><b>Bucket Region Activity</b>: Visualizes cross-region data transfers and regional egress flows (including Sankey flow analysis) to optimize bucket placement and network cost.</li>
+    <li><b>Dataset Status (Error &amp; Events)</b>: Displays dataset ingestion health, snapshot processing events, and diagnostic details for any permission or configuration errors.</li>
+</ul>
+
+</div>
+
 # Connection
 
 <div style="text-align: justify; line-height: 1.5;">
@@ -524,7 +660,7 @@ This section provides an overview of the necessary steps to connect your Google 
             <li>Once the files have been obtained, you may integrate these files into your enterprise Git repository.</li>
         </ol>
     </li>
-    <li>Create a New LookMl project:
+    <li>Create a New LookML project:
         <ol>
             <li><a href="https://cloud.google.com/looker/docs/dev-mode-prod-mode#switching_in_and_out_of_development_mode" target="_blank">Verify that you are in Development Mode</a>.</li>
             <li>Select <b>Projects</b> from the <b>Develop</b> section of the navigation panel.</li>

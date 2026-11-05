@@ -2,7 +2,7 @@
 # Owner: Google Cloud Storage
 # Contact Method: insights-customer-support@google.com
 # Created Date: March 24, 2025
-# Modified Date: Feb 12, 2026
+# Modified Date: Nov 4, 2026
 # Purpose: Contains information about the Events View inside the Storage Intelligence linked Dataset.
 # --------------------------------------------------------------------------
 
@@ -15,6 +15,7 @@ view: events {
   # --------------------------------------------------------------------------------------------------------
 
   dimension: primary_key {
+    label: "Primary key"
     hidden: yes
     primary_key: yes
     type: string
@@ -26,8 +27,8 @@ view: events {
             CAST(${TABLE}.eventTime AS STRING),
             COALESCE(${TABLE}.manifest.viewName, 'activity'),
             COALESCE(
-              ${TABLE}.manifest.location, 
-              ${TABLE}.activityJournal.location, 
+              ${TABLE}.manifest.location,
+              ${TABLE}.activityJournal.location,
               'global'
             ),
             COALESCE(
@@ -48,12 +49,13 @@ view: events {
   dimension: activity_location {
     type: string
     sql: ${TABLE}.activityJournal.location ;;
-    group_label: "Activity Journal"
+    group_label: "Activity journal"
     group_item_label: "Location"
     description: "The region or multi-region location of the source Google Cloud Storage (GCS). This field only applies for Activity tables."
   }
 
   dimension: event_code {
+    label: "Event code"
     type: number
     sql: ${TABLE}.eventCode ;;
     description: "A unique code identifying each distinct event type. 1: Regional bucket/object attributes; 2: All-region attribute tables; 3: Regional activity tables."
@@ -71,7 +73,7 @@ view: events {
     type: string
     sql: ${TABLE}.manifest.viewName ;;
     group_label: "Manifest"
-    group_item_label: "View Name"
+    group_item_label: "View name"
     description: "The type of table from which this data was derived. This field only applies for Metadata tables."
   }
 
@@ -80,6 +82,7 @@ view: events {
   # --------------------------------------------------------------------------------------------------------
 
   dimension_group: activity_journal_window_end {
+    label: "Activity journal window end"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.activityJournal.windowEndTime ;;
@@ -87,6 +90,7 @@ view: events {
   }
 
   dimension_group: activity_journal_window_start {
+    label: "Activity journal window start"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.activityJournal.windowStartTime ;;
@@ -94,7 +98,7 @@ view: events {
   }
 
   dimension_group: event {
-    group_label: "Event Time"
+    group_label: "Event time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year, hour_of_day]
     sql: ${TABLE}.eventTime ;;
@@ -102,6 +106,7 @@ view: events {
   }
 
   dimension_group: global_manifest_snapshot {
+    label: "Global manifest snapshot"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.globalManifest.snapshotTime ;;
@@ -122,7 +127,7 @@ view: events {
   dimension: code_label {
     type: string
     group_label: "General"
-    group_item_label: "Code Label"
+    group_item_label: "Code label"
     sql:
       CASE
         WHEN ${TABLE}.eventCode = 1 THEN 'Metadata Single Region - Event'
@@ -147,7 +152,7 @@ view: events {
   dimension: general_view_name {
     type: string
     group_label: "General"
-    group_item_label: "View Name"
+    group_item_label: "View name"
     sql:
       CASE
         WHEN ${TABLE}.manifest.location IS NOT NULL THEN ${TABLE}.manifest.viewName
@@ -162,7 +167,7 @@ view: events {
 
 
   dimension_group: general_display {
-    group_label: "General Display Time"
+    group_label: "General display time"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql:
@@ -174,8 +179,8 @@ view: events {
   }
 
   dimension: general_display_time_date_hour {
-    group_label: "General Display Time"
-    label: "Date and Hour"
+    group_label: "General display time"
+    label: "Date and hour"
     type: date_time
     sql: TIMESTAMP_TRUNC(${general_display_raw}, HOUR) ;;
     html: {{ value | date: "%Y-%m-%d %H:00" }} ;;
@@ -187,29 +192,34 @@ view: events {
   # --------------------------------------------------------------------------------------------------------
 
   measure: total_events {
+    label: "Total events"
     type: count
     description: "A measure that counts the total number of events."
   }
 
   measure: total_single_region_activity_events {
+    label: "Total single region activity events"
     type: number
     sql: COUNTIF(${event_code} = 3) ;;
     description: "The total count of activity events specific to a single region."
   }
 
   measure: total_single_region_events {
+    label: "Total single region events"
     type: number
     sql: COUNTIF(${event_code} IN (1, 3));;
     description: "The total count of events specific to a single region. This measure excludes global full-region injection events."
   }
 
   measure: total_single_region_metadata_events {
+    label: "Total single region metadata events"
     type: number
     sql: COUNTIF(${event_code} = 1) ;;
     description: "The total count of metadata events specific to a single region."
   }
 
   measure: total_snapshots {
+    label: "Total snapshots"
     type: count_distinct
     sql: ${manifest_snapshot_time} ;;
     description: "A measure that counts all the distinct snapshots."
