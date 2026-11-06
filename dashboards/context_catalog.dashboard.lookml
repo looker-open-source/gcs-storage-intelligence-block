@@ -4,7 +4,7 @@
   preferred_viewer: dashboards-next
   style: modern
   description: ''
-  preferred_slug: I6VNZW5MZ1oo8rGmEbt7WM
+  preferred_slug: SCpr22ENzLITkLlsgIxmBy
   theme_name: ''
   layout_granularity: granular
   layout: newspaper
@@ -35,7 +35,8 @@
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Displays the total count of object context annotations attached to objects within the currently selected scope.
+    note_text: Displays the total count of object context annotations attached to
+      objects within the currently selected scope.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -103,7 +104,8 @@
     enable_custom_tooltip: false
     note_state: collapsed
     note_display: hover
-    note_text: Displays the count of unique storage buckets that contain at least one object with attached context metadata.
+    note_text: Displays the count of unique storage buckets that contain at least
+      one object with attached context metadata.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -140,7 +142,8 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Displays the total count of unique storage objects that have one or more context key-value annotations attached.
+    note_text: Displays the total count of unique storage objects that have one or
+      more context key-value annotations attached.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -177,7 +180,8 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Displays the count of distinct context keys in use across the selected buckets and objects.
+    note_text: Displays the count of distinct context keys in use across the selected
+      buckets and objects.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -215,7 +219,8 @@
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Displays the count of objects whose context entries include structured JSON extended data payloads.
+    note_text: Displays the count of objects whose context entries include structured
+      JSON extended data payloads.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -305,7 +310,9 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Lists individual objects alongside their parent bucket, total attached context count, and total extended data entries to help audit metadata enrichment at the object level.
+    note_text: Lists individual objects alongside their parent bucket, total attached
+      context count, and total extended data entries to help audit metadata enrichment
+      at the object level.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -394,7 +401,8 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Provides a detailed catalog of objects with their attached Context Key, Context Value, and Context Creation Time for granular metadata inspection.
+    note_text: Provides a detailed catalog of objects with their attached Context
+      Key, Context Value, and Context Creation Time for granular metadata inspection.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -458,7 +466,8 @@
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Tracks the daily volume of newly created object context entries over time to monitor metadata tagging adoption and batch annotation runs.
+    note_text: Tracks the daily volume of newly created object context entries over
+      time to monitor metadata tagging adoption and batch annotation runs.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -549,7 +558,8 @@
     label_type: labPer
     note_state: collapsed
     note_display: hover
-    note_text: Ranks storage buckets in descending order by their total count of attached object contexts, highlighting where metadata tagging is most concentrated.
+    note_text: Ranks storage buckets in descending order by their total count of attached
+      object contexts, highlighting where metadata tagging is most concentrated.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -640,7 +650,8 @@
     label_type: labPer
     note_state: collapsed
     note_display: hover
-    note_text: Ranks context keys by the number of distinct objects tagged with each key, revealing the most widely adopted classification attributes.
+    note_text: Ranks context keys by the number of distinct objects tagged with each
+      key, revealing the most widely adopted classification attributes.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -724,7 +735,9 @@
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Compares each bucket's total object count against the count of objects matching the active context filters, calculating the Context Coverage percentage per bucket.
+    note_text: Compares each bucket's total object count against the count of objects
+      matching the active context filters, calculating the Context Coverage percentage
+      per bucket.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: bucket_attributes.bucket_name
@@ -791,7 +804,8 @@
     defaults_version: 1
     note_state: collapsed
     note_display: hover
-    note_text: Aggregates the total number of objects associated with each unique Context Key:Value pair to audit tag distribution.
+    note_text: Aggregates the total number of objects associated with each unique
+      Context Key:Value pair to audit tag distribution.
     listen:
       1 - Project ID: project_attributes.project_id
       2 - Bucket name: object_contexts_catalog.bucket_name
@@ -807,7 +821,7 @@
     name: Context flow by total objects
     model: gcs_storage_intelligence
     explore: object_contexts_catalog
-    type: marketplace_viz_sankey::sankey-marketplace
+    type: marketplace_viz_sankey::sankey
     fields: [object_contexts_catalog__contexts.key, object_contexts_catalog__contexts.value,
       object_contexts_catalog.object_count]
     sorts: [object_contexts_catalog.object_count desc]
@@ -823,7 +837,8 @@
     show_null_points: true
     note_state: collapsed
     note_display: hover
-    note_text: A Sankey diagram illustrating how object counts flow from Context Keys to their corresponding Context Values.
+    note_text: A Sankey diagram illustrating how object counts flow from Context Keys
+      to their corresponding Context Values.
     listen:
       2 - Bucket name: object_contexts_catalog.bucket_name
       3 - Location: object_contexts_catalog.location
@@ -837,7 +852,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -882,7 +896,7 @@
     height: 8
     tab_name: ''
   - type: button
-    name: button_550
+    name: button_574
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","href":"/dashboards/gcs_storage_intelligence::security_and_compliance","color":"#828487"}'
     row: 177
     col: 0
@@ -890,7 +904,7 @@
     height: 3
     tab_name: ''
   - type: button
-    name: button_551
+    name: button_575
     rich_content_json: '{"text":"Next","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","href":"/dashboards/gcs_storage_intelligence::bucket_activity","color":"#828487"}'
     row: 177
     col: 64

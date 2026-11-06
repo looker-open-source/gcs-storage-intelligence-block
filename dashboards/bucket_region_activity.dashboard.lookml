@@ -4,7 +4,7 @@
   preferred_viewer: dashboards-next
   style: modern
   description: ''
-  preferred_slug: 03XYfpAg6gzvI7yv3hFKas
+  preferred_slug: iokoyxiGP8UHgl56PJkVbE
   theme_name: ''
   layout_granularity: granular
   layout: newspaper
@@ -15,7 +15,6 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: "<div style=\"\n    font-family: 'Google Sans', Roboto, Arial, sans-serif;\
       \ \n    background-color: #ffffff; \n    border: 1px solid #dadce0; \n    border-radius:\
       \ 8px; \n    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);\n\
@@ -86,7 +85,8 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Displays the count of unique storage buckets with recorded regional activity during the selected period, alongside the period-over-period change.
+    note_text: Displays the count of unique storage buckets with recorded regional
+      activity during the selected period, alongside the period-over-period change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -121,7 +121,8 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Displays the count of distinct Google Cloud regions from which requests originated against the selected buckets, alongside the period-over-period change.
+    note_text: Displays the count of distinct Google Cloud regions from which requests
+      originated against the selected buckets, alongside the period-over-period change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -159,7 +160,9 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Displays the total volume of outbound data read from buckets across regional request paths during the selected period, alongside the period-over-period change.
+    note_text: Displays the total volume of outbound data read from buckets across
+      regional request paths during the selected period, alongside the period-over-period
+      change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -195,7 +198,9 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: Displays the total volume of inbound data written to buckets across regional request paths during the selected period, alongside the period-over-period change.
+    note_text: Displays the total volume of inbound data written to buckets across
+      regional request paths during the selected period, alongside the period-over-period
+      change.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -212,7 +217,7 @@
     name: Data Flow by Bucket and Request Location
     model: gcs_storage_intelligence
     explore: bucket_region_activity
-    type: marketplace_viz_sankey::sankey-marketplace
+    type: marketplace_viz_sankey::sankey
     fields: [bucket_region_activity.bucket_location, bucket_region_activity.request_location,
       bucket_region_activity.selected_measure]
     filters:
@@ -268,7 +273,9 @@
     hidden_pivots: {}
     note_state: collapsed
     note_display: hover
-    note_text: A Sankey flow diagram mapping traffic between the physical Bucket Location and the originating Request Location for the selected activity metric, highlighting cross-region data transfer patterns.
+    note_text: A Sankey flow diagram mapping traffic between the physical Bucket Location
+      and the originating Request Location for the selected activity metric, highlighting
+      cross-region data transfer patterns.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -304,7 +311,7 @@
     hide_totals: false
     hide_row_totals: false
     size_to_fit: true
-    table_theme: modern
+    table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: false
     header_text_alignment: left
@@ -312,6 +319,7 @@
     rows_font_size: '12'
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    modern2026: false
     show_sql_query_menu_options: false
     show_totals: true
     show_row_totals: true
@@ -333,6 +341,19 @@
           - "#F06292"
       bucket_region_activity.traffic_percentage:
         is_active: true
+    table_show_footer: false
+    table_enable_pagination: false
+    table_page_size_options: 20, 50, 100
+    table_column_hover_highlight_enable: false
+    table_show_headers: true
+    header_font_bold: false
+    header_font_italic: false
+    cell_font_weight: ''
+    cell_font_style: ''
+    cell_text_alignment: ''
+    table_custom_border_enable: false
+    table_custom_border_width:
+    table_custom_border_style: solid
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_y_axis_labels: true
@@ -360,10 +381,11 @@
     totals_color: "#808080"
     defaults_version: 1
     hidden_pivots: {}
-    modern2026: true
     note_state: collapsed
     note_display: hover
-    note_text: A granular breakdown of regional bucket traffic by Bucket Name, Project, Bucket Location, and Request Location. Contrasts the regional metric and traffic percentage against total bucket activity to pinpoint cross-region egress hotspots.
+    note_text: A granular breakdown of regional bucket traffic by Bucket Name, Project,
+      Bucket Location, and Request Location. Contrasts the regional metric and traffic
+      percentage against total bucket activity to pinpoint cross-region egress hotspots.
     listen:
       2 - Project Name: project_attributes.project_name
       3 - Bucket Name: bucket_region_activity.bucket_name
@@ -378,7 +400,7 @@
     height: 18
     tab_name: ''
   - type: button
-    name: button_517
+    name: button_583
     rich_content_json: '{"text":"Previous","description":"","newTab":false,"alignment":"center","size":"large","style":"OUTLINED","color":"#828487","href":"/dashboards/gcs_storage_intelligence::object_events"}'
     row: 60
     col: 0
